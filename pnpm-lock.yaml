@@ -44,6 +44,9 @@ importers:
       clsx:
         specifier: 2.1.1
         version: 2.1.1
+      drizzle-kit:
+        specifier: 0.31.7
+        version: 0.31.7
       graphql:
         specifier: ^16.15.0
         version: 16.15.0
