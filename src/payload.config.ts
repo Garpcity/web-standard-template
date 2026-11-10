@@ -23,7 +23,8 @@ export default buildConfig({
   secret:
     process.env.PAYLOAD_SECRET ??
     (() => {
-      if (process.env.NODE_ENV === "production")
+      // Kreves bare der Payload faktisk er CMS; mock/WordPress-bygg laster config uten å bruke den.
+      if (process.env.NODE_ENV === "production" && process.env.CMS_PROVIDER === "payload")
         throw new Error("PAYLOAD_SECRET mangler");
       return "dev-only-secret-change-me";
     })(),
