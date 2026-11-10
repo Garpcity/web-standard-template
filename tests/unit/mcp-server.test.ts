@@ -286,7 +286,7 @@ describe("Profilsjekk", () => {
 
 describe("Agent-nøkler", () => {
   it("parser nøkler og identifiserer via header eller bearer", () => {
-    const keys = parseAgentKeys("kunde-ai:abc123,studio:xyz:owner");
+    const keys = parseAgentKeys("kunde-ai:abc123,studio:xyz:owner,red:r1:editor");
     expect(
       identify(new Request("http://x", { headers: { "x-agent-key": "abc123" } }), keys),
     ).toEqual({ name: "kunde-ai", role: "agent" });
@@ -295,7 +295,7 @@ describe("Agent-nøkler", () => {
         new Request("http://x", { headers: { authorization: "Bearer xyz" } }),
         keys,
       ),
-    ).toEqual({ name: "studio", role: "owner" });
+    ).toEqual({ name: "studio", role: "agent" }); // owner via nøkkel nedgraderes
     expect(identify(new Request("http://x"), keys)).toBeNull();
   });
 });
