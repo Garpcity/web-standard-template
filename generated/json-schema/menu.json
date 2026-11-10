@@ -5,7 +5,11 @@
   "properties": {
     "name": {
       "type": "string",
-      "enum": ["main", "footer", "legal"]
+      "enum": [
+        "main",
+        "footer",
+        "legal"
+      ]
     },
     "items": {
       "type": "array",
@@ -43,13 +47,24 @@
                   "type": "string"
                 }
               },
-              "required": ["id", "label", "href"]
+              "required": [
+                "id",
+                "label",
+                "href"
+              ]
             }
           }
         },
-        "required": ["id", "label", "href"]
+        "required": [
+          "id",
+          "label",
+          "href"
+        ]
       }
     }
   },
-  "required": ["name", "items"]
+  "required": [
+    "name",
+    "items"
+  ]
 }

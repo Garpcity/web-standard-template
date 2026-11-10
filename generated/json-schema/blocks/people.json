@@ -13,7 +13,12 @@
     "tone": {
       "default": "default",
       "type": "string",
-      "enum": ["default", "muted", "brand", "dark"]
+      "enum": [
+        "default",
+        "muted",
+        "brand",
+        "dark"
+      ]
     },
     "_type": {
       "type": "string",
@@ -35,5 +40,8 @@
       }
     }
   },
-  "required": ["id", "_type"]
+  "required": [
+    "id",
+    "_type"
+  ]
 }

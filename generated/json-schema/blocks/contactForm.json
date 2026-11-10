@@ -13,7 +13,12 @@
     "tone": {
       "default": "default",
       "type": "string",
-      "enum": ["default", "muted", "brand", "dark"]
+      "enum": [
+        "default",
+        "muted",
+        "brand",
+        "dark"
+      ]
     },
     "_type": {
       "type": "string",
@@ -50,7 +55,13 @@
           "type": {
             "default": "text",
             "type": "string",
-            "enum": ["text", "email", "tel", "textarea", "select"]
+            "enum": [
+              "text",
+              "email",
+              "tel",
+              "textarea",
+              "select"
+            ]
           },
           "required": {
             "default": false,
@@ -63,7 +74,10 @@
             }
           }
         },
-        "required": ["name", "label"]
+        "required": [
+          "name",
+          "label"
+        ]
       }
     },
     "submitLabel": {
@@ -75,5 +89,9 @@
       "type": "string"
     }
   },
-  "required": ["id", "_type", "fields"]
+  "required": [
+    "id",
+    "_type",
+    "fields"
+  ]
 }

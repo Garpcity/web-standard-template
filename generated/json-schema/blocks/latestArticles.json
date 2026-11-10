@@ -13,7 +13,12 @@
     "tone": {
       "default": "default",
       "type": "string",
-      "enum": ["default", "muted", "brand", "dark"]
+      "enum": [
+        "default",
+        "muted",
+        "brand",
+        "dark"
+      ]
     },
     "_type": {
       "type": "string",
@@ -51,11 +56,21 @@
         "variant": {
           "default": "primary",
           "type": "string",
-          "enum": ["primary", "secondary", "ghost"]
+          "enum": [
+            "primary",
+            "secondary",
+            "ghost"
+          ]
         }
       },
-      "required": ["label", "href"]
+      "required": [
+        "label",
+        "href"
+      ]
     }
   },
-  "required": ["id", "_type"]
+  "required": [
+    "id",
+    "_type"
+  ]
 }

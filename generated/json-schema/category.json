@@ -19,5 +19,9 @@
       "type": "string"
     }
   },
-  "required": ["id", "slug", "name"]
+  "required": [
+    "id",
+    "slug",
+    "name"
+  ]
 }

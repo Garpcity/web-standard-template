@@ -13,7 +13,12 @@
     "tone": {
       "default": "default",
       "type": "string",
-      "enum": ["default", "muted", "brand", "dark"]
+      "enum": [
+        "default",
+        "muted",
+        "brand",
+        "dark"
+      ]
     },
     "_type": {
       "type": "string",
@@ -73,10 +78,17 @@
               "maximum": 1
             }
           },
-          "required": ["x", "y"]
+          "required": [
+            "x",
+            "y"
+          ]
         }
       },
-      "required": ["url", "width", "height"]
+      "required": [
+        "url",
+        "width",
+        "height"
+      ]
     },
     "links": {
       "default": [],
@@ -100,17 +112,32 @@
           "variant": {
             "default": "primary",
             "type": "string",
-            "enum": ["primary", "secondary", "ghost"]
+            "enum": [
+              "primary",
+              "secondary",
+              "ghost"
+            ]
           }
         },
-        "required": ["label", "href"]
+        "required": [
+          "label",
+          "href"
+        ]
       }
     },
     "layout": {
       "default": "split",
       "type": "string",
-      "enum": ["split", "centered", "fullBleed"]
+      "enum": [
+        "split",
+        "centered",
+        "fullBleed"
+      ]
     }
   },
-  "required": ["id", "_type", "heading"]
+  "required": [
+    "id",
+    "_type",
+    "heading"
+  ]
 }

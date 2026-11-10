@@ -13,7 +13,12 @@
     "tone": {
       "default": "default",
       "type": "string",
-      "enum": ["default", "muted", "brand", "dark"]
+      "enum": [
+        "default",
+        "muted",
+        "brand",
+        "dark"
+      ]
     },
     "_type": {
       "type": "string",
@@ -25,7 +30,12 @@
     },
     "provider": {
       "type": "string",
-      "enum": ["youtube", "vimeo", "map", "iframe"]
+      "enum": [
+        "youtube",
+        "vimeo",
+        "map",
+        "iframe"
+      ]
     },
     "src": {
       "type": "string",
@@ -38,8 +48,18 @@
     "aspect": {
       "default": "16/9",
       "type": "string",
-      "enum": ["16/9", "4/3", "1/1"]
+      "enum": [
+        "16/9",
+        "4/3",
+        "1/1"
+      ]
     }
   },
-  "required": ["id", "_type", "provider", "src", "title"]
+  "required": [
+    "id",
+    "_type",
+    "provider",
+    "src",
+    "title"
+  ]
 }

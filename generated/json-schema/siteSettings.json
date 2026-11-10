@@ -56,10 +56,17 @@
               "maximum": 1
             }
           },
-          "required": ["x", "y"]
+          "required": [
+            "x",
+            "y"
+          ]
         }
       },
-      "required": ["url", "width", "height"]
+      "required": [
+        "url",
+        "width",
+        "height"
+      ]
     },
     "logoDark": {
       "type": "object",
@@ -102,10 +109,17 @@
               "maximum": 1
             }
           },
-          "required": ["x", "y"]
+          "required": [
+            "x",
+            "y"
+          ]
         }
       },
-      "required": ["url", "width", "height"]
+      "required": [
+        "url",
+        "width",
+        "height"
+      ]
     },
     "defaultSeo": {
       "default": {
@@ -162,10 +176,17 @@
                   "maximum": 1
                 }
               },
-              "required": ["x", "y"]
+              "required": [
+                "x",
+                "y"
+              ]
             }
           },
-          "required": ["url", "width", "height"]
+          "required": [
+            "url",
+            "width",
+            "height"
+          ]
         },
         "noindex": {
           "default": false,
@@ -219,7 +240,10 @@
             "format": "uri"
           }
         },
-        "required": ["platform", "url"]
+        "required": [
+          "platform",
+          "url"
+        ]
       }
     },
     "footerText": {
@@ -234,5 +258,9 @@
       }
     }
   },
-  "required": ["name", "description", "contact"]
+  "required": [
+    "name",
+    "description",
+    "contact"
+  ]
 }

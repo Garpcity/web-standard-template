@@ -13,7 +13,12 @@
     "tone": {
       "default": "default",
       "type": "string",
-      "enum": ["default", "muted", "brand", "dark"]
+      "enum": [
+        "default",
+        "muted",
+        "brand",
+        "dark"
+      ]
     },
     "_type": {
       "type": "string",
@@ -68,17 +73,31 @@
                 "maximum": 1
               }
             },
-            "required": ["x", "y"]
+            "required": [
+              "x",
+              "y"
+            ]
           }
         },
-        "required": ["url", "width", "height"]
+        "required": [
+          "url",
+          "width",
+          "height"
+        ]
       }
     },
     "layout": {
       "default": "grid",
       "type": "string",
-      "enum": ["grid", "masonry"]
+      "enum": [
+        "grid",
+        "masonry"
+      ]
     }
   },
-  "required": ["id", "_type", "images"]
+  "required": [
+    "id",
+    "_type",
+    "images"
+  ]
 }

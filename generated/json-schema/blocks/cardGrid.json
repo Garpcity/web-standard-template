@@ -13,7 +13,12 @@
     "tone": {
       "default": "default",
       "type": "string",
-      "enum": ["default", "muted", "brand", "dark"]
+      "enum": [
+        "default",
+        "muted",
+        "brand",
+        "dark"
+      ]
     },
     "_type": {
       "type": "string",
@@ -108,10 +113,17 @@
                     "maximum": 1
                   }
                 },
-                "required": ["x", "y"]
+                "required": [
+                  "x",
+                  "y"
+                ]
               }
             },
-            "required": ["url", "width", "height"]
+            "required": [
+              "url",
+              "width",
+              "height"
+            ]
           },
           "link": {
             "type": "object",
@@ -131,15 +143,29 @@
               "variant": {
                 "default": "primary",
                 "type": "string",
-                "enum": ["primary", "secondary", "ghost"]
+                "enum": [
+                  "primary",
+                  "secondary",
+                  "ghost"
+                ]
               }
             },
-            "required": ["label", "href"]
+            "required": [
+              "label",
+              "href"
+            ]
           }
         },
-        "required": ["id", "title"]
+        "required": [
+          "id",
+          "title"
+        ]
       }
     }
   },
-  "required": ["id", "_type", "items"]
+  "required": [
+    "id",
+    "_type",
+    "items"
+  ]
 }

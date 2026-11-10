@@ -47,10 +47,17 @@
               "maximum": 1
             }
           },
-          "required": ["x", "y"]
+          "required": [
+            "x",
+            "y"
+          ]
         }
       },
-      "required": ["url", "width", "height"]
+      "required": [
+        "url",
+        "width",
+        "height"
+      ]
     },
     "tags": {
       "default": [],
@@ -60,5 +67,8 @@
       }
     }
   },
-  "required": ["id", "image"]
+  "required": [
+    "id",
+    "image"
+  ]
 }

@@ -25,7 +25,10 @@
     "status": {
       "default": "published",
       "type": "string",
-      "enum": ["draft", "published"]
+      "enum": [
+        "draft",
+        "published"
+      ]
     },
     "_type": {
       "default": "page",
@@ -55,7 +58,12 @@
               "tone": {
                 "default": "default",
                 "type": "string",
-                "enum": ["default", "muted", "brand", "dark"]
+                "enum": [
+                  "default",
+                  "muted",
+                  "brand",
+                  "dark"
+                ]
               },
               "_type": {
                 "type": "string",
@@ -115,10 +123,17 @@
                         "maximum": 1
                       }
                     },
-                    "required": ["x", "y"]
+                    "required": [
+                      "x",
+                      "y"
+                    ]
                   }
                 },
-                "required": ["url", "width", "height"]
+                "required": [
+                  "url",
+                  "width",
+                  "height"
+                ]
               },
               "links": {
                 "default": [],
@@ -142,19 +157,34 @@
                     "variant": {
                       "default": "primary",
                       "type": "string",
-                      "enum": ["primary", "secondary", "ghost"]
+                      "enum": [
+                        "primary",
+                        "secondary",
+                        "ghost"
+                      ]
                     }
                   },
-                  "required": ["label", "href"]
+                  "required": [
+                    "label",
+                    "href"
+                  ]
                 }
               },
               "layout": {
                 "default": "split",
                 "type": "string",
-                "enum": ["split", "centered", "fullBleed"]
+                "enum": [
+                  "split",
+                  "centered",
+                  "fullBleed"
+                ]
               }
             },
-            "required": ["id", "_type", "heading"]
+            "required": [
+              "id",
+              "_type",
+              "heading"
+            ]
           },
           {
             "type": "object",
@@ -169,7 +199,12 @@
               "tone": {
                 "default": "default",
                 "type": "string",
-                "enum": ["default", "muted", "brand", "dark"]
+                "enum": [
+                  "default",
+                  "muted",
+                  "brand",
+                  "dark"
+                ]
               },
               "_type": {
                 "type": "string",
@@ -193,11 +228,20 @@
                         "style": {
                           "default": "normal",
                           "type": "string",
-                          "enum": ["normal", "h2", "h3", "h4", "blockquote"]
+                          "enum": [
+                            "normal",
+                            "h2",
+                            "h3",
+                            "h4",
+                            "blockquote"
+                          ]
                         },
                         "listItem": {
                           "type": "string",
-                          "enum": ["bullet", "number"]
+                          "enum": [
+                            "bullet",
+                            "number"
+                          ]
                         },
                         "level": {
                           "type": "integer",
@@ -221,18 +265,29 @@
                                 "type": "array",
                                 "items": {
                                   "type": "string",
-                                  "enum": ["strong", "em", "code", "underline"]
+                                  "enum": [
+                                    "strong",
+                                    "em",
+                                    "code",
+                                    "underline"
+                                  ]
                                 }
                               },
                               "href": {
                                 "type": "string"
                               }
                             },
-                            "required": ["_type", "text"]
+                            "required": [
+                              "_type",
+                              "text"
+                            ]
                           }
                         }
                       },
-                      "required": ["_type", "children"]
+                      "required": [
+                        "_type",
+                        "children"
+                      ]
                     },
                     {
                       "type": "object",
@@ -282,13 +337,23 @@
                                   "maximum": 1
                                 }
                               },
-                              "required": ["x", "y"]
+                              "required": [
+                                "x",
+                                "y"
+                              ]
                             }
                           },
-                          "required": ["url", "width", "height"]
+                          "required": [
+                            "url",
+                            "width",
+                            "height"
+                          ]
                         }
                       },
-                      "required": ["_type", "image"]
+                      "required": [
+                        "_type",
+                        "image"
+                      ]
                     }
                   ]
                 }
@@ -296,10 +361,17 @@
               "width": {
                 "default": "narrow",
                 "type": "string",
-                "enum": ["narrow", "wide"]
+                "enum": [
+                  "narrow",
+                  "wide"
+                ]
               }
             },
-            "required": ["id", "_type", "body"]
+            "required": [
+              "id",
+              "_type",
+              "body"
+            ]
           },
           {
             "type": "object",
@@ -314,7 +386,12 @@
               "tone": {
                 "default": "default",
                 "type": "string",
-                "enum": ["default", "muted", "brand", "dark"]
+                "enum": [
+                  "default",
+                  "muted",
+                  "brand",
+                  "dark"
+                ]
               },
               "_type": {
                 "type": "string",
@@ -338,11 +415,20 @@
                         "style": {
                           "default": "normal",
                           "type": "string",
-                          "enum": ["normal", "h2", "h3", "h4", "blockquote"]
+                          "enum": [
+                            "normal",
+                            "h2",
+                            "h3",
+                            "h4",
+                            "blockquote"
+                          ]
                         },
                         "listItem": {
                           "type": "string",
-                          "enum": ["bullet", "number"]
+                          "enum": [
+                            "bullet",
+                            "number"
+                          ]
                         },
                         "level": {
                           "type": "integer",
@@ -366,18 +452,29 @@
                                 "type": "array",
                                 "items": {
                                   "type": "string",
-                                  "enum": ["strong", "em", "code", "underline"]
+                                  "enum": [
+                                    "strong",
+                                    "em",
+                                    "code",
+                                    "underline"
+                                  ]
                                 }
                               },
                               "href": {
                                 "type": "string"
                               }
                             },
-                            "required": ["_type", "text"]
+                            "required": [
+                              "_type",
+                              "text"
+                            ]
                           }
                         }
                       },
-                      "required": ["_type", "children"]
+                      "required": [
+                        "_type",
+                        "children"
+                      ]
                     },
                     {
                       "type": "object",
@@ -427,13 +524,23 @@
                                   "maximum": 1
                                 }
                               },
-                              "required": ["x", "y"]
+                              "required": [
+                                "x",
+                                "y"
+                              ]
                             }
                           },
-                          "required": ["url", "width", "height"]
+                          "required": [
+                            "url",
+                            "width",
+                            "height"
+                          ]
                         }
                       },
-                      "required": ["_type", "image"]
+                      "required": [
+                        "_type",
+                        "image"
+                      ]
                     }
                   ]
                 }
@@ -479,15 +586,25 @@
                         "maximum": 1
                       }
                     },
-                    "required": ["x", "y"]
+                    "required": [
+                      "x",
+                      "y"
+                    ]
                   }
                 },
-                "required": ["url", "width", "height"]
+                "required": [
+                  "url",
+                  "width",
+                  "height"
+                ]
               },
               "imagePosition": {
                 "default": "right",
                 "type": "string",
-                "enum": ["left", "right"]
+                "enum": [
+                  "left",
+                  "right"
+                ]
               },
               "link": {
                 "type": "object",
@@ -507,13 +624,25 @@
                   "variant": {
                     "default": "primary",
                     "type": "string",
-                    "enum": ["primary", "secondary", "ghost"]
+                    "enum": [
+                      "primary",
+                      "secondary",
+                      "ghost"
+                    ]
                   }
                 },
-                "required": ["label", "href"]
+                "required": [
+                  "label",
+                  "href"
+                ]
               }
             },
-            "required": ["id", "_type", "body", "image"]
+            "required": [
+              "id",
+              "_type",
+              "body",
+              "image"
+            ]
           },
           {
             "type": "object",
@@ -528,7 +657,12 @@
               "tone": {
                 "default": "default",
                 "type": "string",
-                "enum": ["default", "muted", "brand", "dark"]
+                "enum": [
+                  "default",
+                  "muted",
+                  "brand",
+                  "dark"
+                ]
               },
               "_type": {
                 "type": "string",
@@ -623,10 +757,17 @@
                               "maximum": 1
                             }
                           },
-                          "required": ["x", "y"]
+                          "required": [
+                            "x",
+                            "y"
+                          ]
                         }
                       },
-                      "required": ["url", "width", "height"]
+                      "required": [
+                        "url",
+                        "width",
+                        "height"
+                      ]
                     },
                     "link": {
                       "type": "object",
@@ -646,17 +787,31 @@
                         "variant": {
                           "default": "primary",
                           "type": "string",
-                          "enum": ["primary", "secondary", "ghost"]
+                          "enum": [
+                            "primary",
+                            "secondary",
+                            "ghost"
+                          ]
                         }
                       },
-                      "required": ["label", "href"]
+                      "required": [
+                        "label",
+                        "href"
+                      ]
                     }
                   },
-                  "required": ["id", "title"]
+                  "required": [
+                    "id",
+                    "title"
+                  ]
                 }
               }
             },
-            "required": ["id", "_type", "items"]
+            "required": [
+              "id",
+              "_type",
+              "items"
+            ]
           },
           {
             "type": "object",
@@ -671,7 +826,12 @@
               "tone": {
                 "default": "default",
                 "type": "string",
-                "enum": ["default", "muted", "brand", "dark"]
+                "enum": [
+                  "default",
+                  "muted",
+                  "brand",
+                  "dark"
+                ]
               },
               "_type": {
                 "type": "string",
@@ -693,7 +853,10 @@
                 }
               }
             },
-            "required": ["id", "_type"]
+            "required": [
+              "id",
+              "_type"
+            ]
           },
           {
             "type": "object",
@@ -708,7 +871,12 @@
               "tone": {
                 "default": "default",
                 "type": "string",
-                "enum": ["default", "muted", "brand", "dark"]
+                "enum": [
+                  "default",
+                  "muted",
+                  "brand",
+                  "dark"
+                ]
               },
               "_type": {
                 "type": "string",
@@ -746,13 +914,23 @@
                   "variant": {
                     "default": "primary",
                     "type": "string",
-                    "enum": ["primary", "secondary", "ghost"]
+                    "enum": [
+                      "primary",
+                      "secondary",
+                      "ghost"
+                    ]
                   }
                 },
-                "required": ["label", "href"]
+                "required": [
+                  "label",
+                  "href"
+                ]
               }
             },
-            "required": ["id", "_type"]
+            "required": [
+              "id",
+              "_type"
+            ]
           },
           {
             "type": "object",
@@ -767,7 +945,12 @@
               "tone": {
                 "default": "default",
                 "type": "string",
-                "enum": ["default", "muted", "brand", "dark"]
+                "enum": [
+                  "default",
+                  "muted",
+                  "brand",
+                  "dark"
+                ]
               },
               "_type": {
                 "type": "string",
@@ -822,19 +1005,33 @@
                           "maximum": 1
                         }
                       },
-                      "required": ["x", "y"]
+                      "required": [
+                        "x",
+                        "y"
+                      ]
                     }
                   },
-                  "required": ["url", "width", "height"]
+                  "required": [
+                    "url",
+                    "width",
+                    "height"
+                  ]
                 }
               },
               "layout": {
                 "default": "grid",
                 "type": "string",
-                "enum": ["grid", "masonry"]
+                "enum": [
+                  "grid",
+                  "masonry"
+                ]
               }
             },
-            "required": ["id", "_type", "images"]
+            "required": [
+              "id",
+              "_type",
+              "images"
+            ]
           },
           {
             "type": "object",
@@ -849,7 +1046,12 @@
               "tone": {
                 "default": "default",
                 "type": "string",
-                "enum": ["default", "muted", "brand", "dark"]
+                "enum": [
+                  "default",
+                  "muted",
+                  "brand",
+                  "dark"
+                ]
               },
               "_type": {
                 "type": "string",
@@ -909,13 +1111,24 @@
                         "maximum": 1
                       }
                     },
-                    "required": ["x", "y"]
+                    "required": [
+                      "x",
+                      "y"
+                    ]
                   }
                 },
-                "required": ["url", "width", "height"]
+                "required": [
+                  "url",
+                  "width",
+                  "height"
+                ]
               }
             },
-            "required": ["id", "_type", "quote"]
+            "required": [
+              "id",
+              "_type",
+              "quote"
+            ]
           },
           {
             "type": "object",
@@ -930,7 +1143,12 @@
               "tone": {
                 "default": "default",
                 "type": "string",
-                "enum": ["default", "muted", "brand", "dark"]
+                "enum": [
+                  "default",
+                  "muted",
+                  "brand",
+                  "dark"
+                ]
               },
               "_type": {
                 "type": "string",
@@ -974,11 +1192,20 @@
                               "style": {
                                 "default": "normal",
                                 "type": "string",
-                                "enum": ["normal", "h2", "h3", "h4", "blockquote"]
+                                "enum": [
+                                  "normal",
+                                  "h2",
+                                  "h3",
+                                  "h4",
+                                  "blockquote"
+                                ]
                               },
                               "listItem": {
                                 "type": "string",
-                                "enum": ["bullet", "number"]
+                                "enum": [
+                                  "bullet",
+                                  "number"
+                                ]
                               },
                               "level": {
                                 "type": "integer",
@@ -1002,18 +1229,29 @@
                                       "type": "array",
                                       "items": {
                                         "type": "string",
-                                        "enum": ["strong", "em", "code", "underline"]
+                                        "enum": [
+                                          "strong",
+                                          "em",
+                                          "code",
+                                          "underline"
+                                        ]
                                       }
                                     },
                                     "href": {
                                       "type": "string"
                                     }
                                   },
-                                  "required": ["_type", "text"]
+                                  "required": [
+                                    "_type",
+                                    "text"
+                                  ]
                                 }
                               }
                             },
-                            "required": ["_type", "children"]
+                            "required": [
+                              "_type",
+                              "children"
+                            ]
                           },
                           {
                             "type": "object",
@@ -1063,23 +1301,41 @@
                                         "maximum": 1
                                       }
                                     },
-                                    "required": ["x", "y"]
+                                    "required": [
+                                      "x",
+                                      "y"
+                                    ]
                                   }
                                 },
-                                "required": ["url", "width", "height"]
+                                "required": [
+                                  "url",
+                                  "width",
+                                  "height"
+                                ]
                               }
                             },
-                            "required": ["_type", "image"]
+                            "required": [
+                              "_type",
+                              "image"
+                            ]
                           }
                         ]
                       }
                     }
                   },
-                  "required": ["id", "question", "answer"]
+                  "required": [
+                    "id",
+                    "question",
+                    "answer"
+                  ]
                 }
               }
             },
-            "required": ["id", "_type", "items"]
+            "required": [
+              "id",
+              "_type",
+              "items"
+            ]
           },
           {
             "type": "object",
@@ -1094,7 +1350,12 @@
               "tone": {
                 "default": "default",
                 "type": "string",
-                "enum": ["default", "muted", "brand", "dark"]
+                "enum": [
+                  "default",
+                  "muted",
+                  "brand",
+                  "dark"
+                ]
               },
               "_type": {
                 "type": "string",
@@ -1131,7 +1392,13 @@
                     "type": {
                       "default": "text",
                       "type": "string",
-                      "enum": ["text", "email", "tel", "textarea", "select"]
+                      "enum": [
+                        "text",
+                        "email",
+                        "tel",
+                        "textarea",
+                        "select"
+                      ]
                     },
                     "required": {
                       "default": false,
@@ -1144,7 +1411,10 @@
                       }
                     }
                   },
-                  "required": ["name", "label"]
+                  "required": [
+                    "name",
+                    "label"
+                  ]
                 }
               },
               "submitLabel": {
@@ -1156,7 +1426,11 @@
                 "type": "string"
               }
             },
-            "required": ["id", "_type", "fields"]
+            "required": [
+              "id",
+              "_type",
+              "fields"
+            ]
           },
           {
             "type": "object",
@@ -1171,7 +1445,12 @@
               "tone": {
                 "default": "default",
                 "type": "string",
-                "enum": ["default", "muted", "brand", "dark"]
+                "enum": [
+                  "default",
+                  "muted",
+                  "brand",
+                  "dark"
+                ]
               },
               "_type": {
                 "type": "string",
@@ -1183,7 +1462,12 @@
               },
               "provider": {
                 "type": "string",
-                "enum": ["youtube", "vimeo", "map", "iframe"]
+                "enum": [
+                  "youtube",
+                  "vimeo",
+                  "map",
+                  "iframe"
+                ]
               },
               "src": {
                 "type": "string",
@@ -1196,10 +1480,20 @@
               "aspect": {
                 "default": "16/9",
                 "type": "string",
-                "enum": ["16/9", "4/3", "1/1"]
+                "enum": [
+                  "16/9",
+                  "4/3",
+                  "1/1"
+                ]
               }
             },
-            "required": ["id", "_type", "provider", "src", "title"]
+            "required": [
+              "id",
+              "_type",
+              "provider",
+              "src",
+              "title"
+            ]
           },
           {
             "type": "object",
@@ -1214,7 +1508,12 @@
               "tone": {
                 "default": "default",
                 "type": "string",
-                "enum": ["default", "muted", "brand", "dark"]
+                "enum": [
+                  "default",
+                  "muted",
+                  "brand",
+                  "dark"
+                ]
               },
               "_type": {
                 "type": "string",
@@ -1251,14 +1550,26 @@
                     "variant": {
                       "default": "primary",
                       "type": "string",
-                      "enum": ["primary", "secondary", "ghost"]
+                      "enum": [
+                        "primary",
+                        "secondary",
+                        "ghost"
+                      ]
                     }
                   },
-                  "required": ["label", "href"]
+                  "required": [
+                    "label",
+                    "href"
+                  ]
                 }
               }
             },
-            "required": ["id", "_type", "heading", "links"]
+            "required": [
+              "id",
+              "_type",
+              "heading",
+              "links"
+            ]
           },
           {
             "type": "object",
@@ -1273,7 +1584,12 @@
               "tone": {
                 "default": "default",
                 "type": "string",
-                "enum": ["default", "muted", "brand", "dark"]
+                "enum": [
+                  "default",
+                  "muted",
+                  "brand",
+                  "dark"
+                ]
               },
               "_type": {
                 "type": "string",
@@ -1310,11 +1626,19 @@
                       "maxLength": 60
                     }
                   },
-                  "required": ["id", "value", "label"]
+                  "required": [
+                    "id",
+                    "value",
+                    "label"
+                  ]
                 }
               }
             },
-            "required": ["id", "_type", "items"]
+            "required": [
+              "id",
+              "_type",
+              "items"
+            ]
           }
         ]
       }
@@ -1374,10 +1698,17 @@
                   "maximum": 1
                 }
               },
-              "required": ["x", "y"]
+              "required": [
+                "x",
+                "y"
+              ]
             }
           },
-          "required": ["url", "width", "height"]
+          "required": [
+            "url",
+            "width",
+            "height"
+          ]
         },
         "noindex": {
           "default": false,
@@ -1393,5 +1724,11 @@
       "type": "string"
     }
   },
-  "required": ["id", "slug", "createdAt", "updatedAt", "title"]
+  "required": [
+    "id",
+    "slug",
+    "createdAt",
+    "updatedAt",
+    "title"
+  ]
 }
