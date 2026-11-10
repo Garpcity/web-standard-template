@@ -1,6 +1,6 @@
 {
   "identity": {
-    "name": "Nordvik Digital",
+    "name": "AD.Moment",
     "oneLiner": "Nettsider som blir funnet, lest og sitert.",
     "purpose": "Gi norske bedrifter nettsider de eier selv, som er raske for mennesker og troverdige for AI-søk.",
     "values": ["Åpenhet", "Presisjon", "Ro"],
@@ -17,8 +17,13 @@
   },
   "facts": [
     {
-      "claim": "Nordvik Digital har levert 24 nettsider siste 12 måneder.",
-      "source": "Intern prosjektlogg",
+      "claim": "AD.Moment har organisasjonsnummer 838 722 822.",
+      "source": "Brønnøysundregistrene",
+      "approved": true
+    },
+    {
+      "claim": "AD.Moment har tre ansatte.",
+      "source": "Kunden, 2026-11-10",
       "approved": true
     },
     {

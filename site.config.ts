@@ -6,7 +6,7 @@
  */
 export const siteConfig = {
   /** Kort teknisk navn, brukes i logger og generert kode. */
-  slug: "web-standard-template",
+  slug: "admoment",
 
   /** Standardspråk og eventuelle flere språk. */
   locale: "nb-NO" as const,

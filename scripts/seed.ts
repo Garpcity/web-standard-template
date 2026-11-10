@@ -2,8 +2,9 @@
  * seed.ts – skriver eksempelinnhold til mock-adapteren og lager plassholderbilder.
  * Kjør: pnpm seed
  *
- * Innholdet er for en fiktiv norsk bedrift ("Nordvik Digital") og byttes ut ved
- * `pnpm setup`. Det følger reglene for siterbart innhold: svar først, fakta, kilder.
+ * Innholdet er for pilot A: AD.Moment (org.nr. 838 722 822). Personnavn, roller og
+ * bilder er plassholdere til kunden leverer reelle data. Fakta som ikke er
+ * bekreftet er merket approved: false i profilmanualen. Det følger reglene for siterbart innhold: svar først, fakta, kilder.
  */
 import { promises as fs } from "node:fs";
 import path from "node:path";
@@ -63,7 +64,7 @@ const images = {
   article1: svg("article-1", 1600, 900, "#0f4c5c", "#1f7a4d", "Artikkel"),
   article2: svg("article-2", 1600, 900, "#b7791f", "#e36414", "Artikkel"),
   article3: svg("article-3", 1600, 900, "#16181d", "#0f4c5c", "Artikkel"),
-  og: svg("og-default", 1200, 630, "#0f4c5c", "#e36414", "Nordvik Digital"),
+  og: svg("og-default", 1200, 630, "#0f4c5c", "#e36414", "AD.Moment"),
 };
 
 const p = (text: string, style: "normal" | "h2" | "h3" = "normal"): RichText[number] => ({
@@ -80,23 +81,23 @@ const li = (text: string): RichText[number] => ({
 });
 
 const site = siteSettings.parse({
-  name: "Nordvik Digital",
+  name: "AD.Moment",
   tagline: "Nettsider som blir funnet, lest og sitert",
   description:
-    "Nordvik Digital bygger raske, åpne nettsider for norske bedrifter – med innhold som AI-søk og mennesker stoler på.",
+    "AD.Moment bygger raske, åpne nettsider for norske bedrifter – med innhold som AI-søk og mennesker stoler på.",
   logo: undefined,
-  defaultSeo: { image: images.og.ref("Nordvik Digital"), noindex: false },
+  defaultSeo: { image: images.og.ref("AD.Moment"), noindex: false },
   contact: {
-    email: "hei@nordvik.example",
+    email: "post@admoment.example",
     phone: "+47 400 00 000",
-    address: "Tvetenveien 1, 0671 Oslo",
-    orgNumber: "999 999 999",
+    address: "Adresse fylles inn",
+    orgNumber: "838 722 822",
   },
   social: [
     { platform: "linkedin", url: "https://www.linkedin.com/company/example" },
     { platform: "instagram", url: "https://www.instagram.com/example" },
   ],
-  footerText: "© Nordvik Digital. Bygget på vår åpne standard for nettsideutvikling.",
+  footerText: "© AD.Moment. Bygget på vår åpne standard for nettsideutvikling.",
   sameAs: ["https://www.linkedin.com/company/example", "https://www.proff.no/"],
 });
 
@@ -127,48 +128,44 @@ const menus = [
 
 const people = [
   person.parse({
-    id: "p-kari",
-    slug: "kari-johansen",
+    id: "p-1",
+    slug: "ansatt-1",
     createdAt: now,
     updatedAt: now,
-    name: "Kari Johansen",
-    role: "Daglig leder og rådgiver",
-    image: images.person1.ref("Kari Johansen"),
+    name: "Ansatt 1 (navn kommer)",
+    role: "Daglig leder",
+    image: images.person1.ref("Ansatt 1"),
+    bio: [p("Leder AD.Moment og standardarbeidet. Bio fylles inn av kunden.")],
+    knowsAbout: ["Headless CMS", "WordPress", "Søkemotoroptimalisering", "AI-synlighet"],
+    credentials: [],
+  }),
+  person.parse({
+    id: "p-2",
+    slug: "ansatt-2",
+    createdAt: now,
+    updatedAt: now,
+    name: "Ansatt 2 (navn kommer)",
+    role: "Utvikler",
+    image: images.person2.ref("Ansatt 2"),
+    bio: [p("Bygger frontend og integrasjoner. Bio fylles inn av kunden.")],
+    knowsAbout: ["Next.js", "TypeScript", "n8n", "Payload CMS"],
+    credentials: [],
+  }),
+  person.parse({
+    id: "p-3",
+    slug: "ansatt-3",
+    createdAt: now,
+    updatedAt: now,
+    name: "Ansatt 3 (navn kommer)",
+    role: "Designer og 3D",
+    image: images.person3.ref("Ansatt 3"),
     bio: [
       p(
-        "Kari har bygget nettsider for norske bedrifter siden 2009 og leder standardarbeidet i Nordvik Digital.",
+        "Ansvar for estetikklaget, bevegelse og 3D-produksjon i Cinema 4D. Bio fylles inn av kunden.",
       ),
     ],
-    email: "kari@nordvik.example",
-    knowsAbout: ["Headless CMS", "WordPress", "Søkemotoroptimalisering", "AI-synlighet"],
-    credentials: ["Siviløkonom, NHH", "Google Analytics-sertifisert"],
-    sameAs: ["https://www.linkedin.com/in/example"],
-  }),
-  person.parse({
-    id: "p-martin",
-    slug: "martin-haug",
-    createdAt: now,
-    updatedAt: now,
-    name: "Martin Haug",
-    role: "Utvikler",
-    image: images.person2.ref("Martin Haug"),
-    bio: [p("Martin bygger frontend og integrasjoner, og eier template-repoet.")],
-    knowsAbout: ["Next.js", "TypeScript", "n8n", "Payload CMS"],
-    credentials: ["B.Sc. Informatikk, UiO"],
-  }),
-  person.parse({
-    id: "p-sara",
-    slug: "sara-ali",
-    createdAt: now,
-    updatedAt: now,
-    name: "Sara Ali",
-    role: "Designer og 3D",
-    image: images.person3.ref("Sara Ali"),
-    bio: [
-      p("Sara har ansvar for estetikklaget, bevegelse og 3D-produksjon i Cinema 4D."),
-    ],
     knowsAbout: ["Visuell design", "Motion design", "Cinema 4D", "Tilgjengelighet"],
-    credentials: ["B.A. Visuell kommunikasjon, KHiO"],
+    credentials: [],
   }),
 ];
 
@@ -194,7 +191,7 @@ const articles = [
     summary:
       "AI-motorer som ChatGPT, Perplexity og Google AI Overviews siterer kilder med dokumentert erfaring, navngitte fagpersoner og originale data. En analyse av 15 847 AI Overview-svar fant at 96 % av siteringene kom fra kilder med sterke E-E-A-T-signaler.",
     image: images.article1.ref("Illustrasjon: AI-søk og kilder"),
-    authorId: "p-kari",
+    authorId: "p-1",
     categoryIds: ["c-seo"],
     body: [
       p("Tre ting avgjør", "h2"),
@@ -229,7 +226,7 @@ const articles = [
     summary:
       "Alle kjernekomponenter i nettsidene våre har MIT- eller GPL-lisens og kan selvhostes. Da kan kunden flytte, forke og videreføre løsningen uansett hva som skjer med leverandøren – eller med oss.",
     image: images.article2.ref("Illustrasjon: åpen kildekode"),
-    authorId: "p-martin",
+    authorId: "p-2",
     categoryIds: ["c-tech"],
     body: [
       p("Eieren kan endre seg. Lisensen består.", "h2"),
@@ -254,7 +251,7 @@ const articles = [
     summary:
       "Animasjon på nettsider skal vise rekkefølge, retning eller respons. Vi bruker sju navngitte oppskrifter – fra reveal til countUp – og alle har en fallback for brukere som har skrudd av bevegelse.",
     image: images.article3.ref("Illustrasjon: bevegelse"),
-    authorId: "p-sara",
+    authorId: "p-3",
     categoryIds: ["c-design"],
     body: [
       p("Regelen", "h2"),
@@ -277,9 +274,9 @@ const pages = [
     slug: "forside",
     createdAt: now,
     updatedAt: now,
-    title: "Nordvik Digital – nettsider som blir funnet, lest og sitert",
+    title: "AD.Moment – nettsider som blir funnet, lest og sitert",
     seo: {
-      title: "Nordvik Digital – nettsider for norske bedrifter",
+      title: "AD.Moment – nettsider for norske bedrifter",
       description:
         "Raske, åpne nettsider med innhold AI-søk og mennesker stoler på. Bygget på vår standard, levert på dager.",
       noindex: false,
@@ -313,12 +310,12 @@ const pages = [
         _type: "stats",
         id: "b2",
         tone: "muted",
-        heading: "Tall fra siste 12 måneder",
+        heading: "Standarden i tall",
         items: [
-          { id: "s1", value: 24, label: "nettsider lansert" },
-          { id: "s2", value: 96, suffix: "%", label: "Lighthouse-score, median" },
-          { id: "s3", value: 11, label: "dager fra oppstart til lansering, median" },
-          { id: "s4", value: 100, suffix: "%", label: "åpen kildekode i kjernen" },
+          { id: "s1", value: 100, suffix: "%", label: "åpen kildekode i kjernen" },
+          { id: "s2", value: 100, label: "Lighthouse-score på templaten" },
+          { id: "s3", value: 13, label: "ferdige innholdsblokker" },
+          { id: "s4", value: 3, label: "ansatte" },
         ],
       },
       {
@@ -406,10 +403,9 @@ const pages = [
         _type: "quote",
         id: "b6",
         tone: "brand",
-        quote:
-          "Vi gikk fra null til å bli sitert av Perplexity på tre av fem kjernespørsmål på to måneder.",
-        author: "Kunde i pilotprosjekt",
-        role: "Daglig leder, B2B-tjenester",
+        quote: "Sitat fra en kunde kommer her når det er godkjent.",
+        author: "Kundenavn",
+        role: "Rolle, bedrift",
       },
       {
         _type: "faq",
@@ -529,7 +525,7 @@ const pages = [
     updatedAt: now,
     title: "Om oss",
     seo: {
-      description: "Teamet bak Nordvik Digital og standarden vi bygger på.",
+      description: "Teamet bak AD.Moment og standarden vi bygger på.",
       noindex: false,
     },
     blocks: [
@@ -566,7 +562,7 @@ const pages = [
     createdAt: now,
     updatedAt: now,
     title: "Kontakt",
-    seo: { description: "Ta kontakt med Nordvik Digital.", noindex: false },
+    seo: { description: "Ta kontakt med AD.Moment.", noindex: false },
     blocks: [
       {
         _type: "hero",
@@ -630,7 +626,7 @@ const redirects = [redirect.parse({ from: "/home", to: "/", permanent: true })];
 
 const guide = brandGuide.parse({
   identity: {
-    name: "Nordvik Digital",
+    name: "AD.Moment",
     oneLiner: "Nettsider som blir funnet, lest og sitert.",
     purpose:
       "Gi norske bedrifter nettsider de eier selv, som er raske for mennesker og troverdige for AI-søk.",
@@ -648,10 +644,11 @@ const guide = brandGuide.parse({
   },
   facts: [
     {
-      claim: "Nordvik Digital har levert 24 nettsider siste 12 måneder.",
-      source: "Intern prosjektlogg",
+      claim: "AD.Moment har organisasjonsnummer 838 722 822.",
+      source: "Brønnøysundregistrene",
       approved: true,
     },
+    { claim: "AD.Moment har tre ansatte.", source: "Kunden, 2026-11-10", approved: true },
     {
       claim: "Alle kjernekomponenter er MIT- eller GPL-lisensiert.",
       source: "Standard for nettsideutvikling",

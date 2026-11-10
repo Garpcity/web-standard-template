@@ -6,7 +6,7 @@
     "updatedAt": "2026-11-10T09:00:00.000Z",
     "status": "published",
     "_type": "page",
-    "title": "Nordvik Digital – nettsider som blir funnet, lest og sitert",
+    "title": "AD.Moment – nettsider som blir funnet, lest og sitert",
     "blocks": [
       {
         "id": "b1",
@@ -41,29 +41,28 @@
         "id": "b2",
         "tone": "muted",
         "_type": "stats",
-        "heading": "Tall fra siste 12 måneder",
+        "heading": "Standarden i tall",
         "items": [
           {
             "id": "s1",
-            "value": 24,
-            "label": "nettsider lansert"
-          },
-          {
-            "id": "s2",
-            "value": 96,
-            "suffix": "%",
-            "label": "Lighthouse-score, median"
-          },
-          {
-            "id": "s3",
-            "value": 11,
-            "label": "dager fra oppstart til lansering, median"
-          },
-          {
-            "id": "s4",
             "value": 100,
             "suffix": "%",
             "label": "åpen kildekode i kjernen"
+          },
+          {
+            "id": "s2",
+            "value": 100,
+            "label": "Lighthouse-score på templaten"
+          },
+          {
+            "id": "s3",
+            "value": 13,
+            "label": "ferdige innholdsblokker"
+          },
+          {
+            "id": "s4",
+            "value": 3,
+            "label": "ansatte"
           }
         ]
       },
@@ -173,9 +172,9 @@
         "id": "b6",
         "tone": "brand",
         "_type": "quote",
-        "quote": "Vi gikk fra null til å bli sitert av Perplexity på tre av fem kjernespørsmål på to måneder.",
-        "author": "Kunde i pilotprosjekt",
-        "role": "Daglig leder, B2B-tjenester"
+        "quote": "Sitat fra en kunde kommer her når det er godkjent.",
+        "author": "Kundenavn",
+        "role": "Rolle, bedrift"
       },
       {
         "id": "b7",
@@ -253,7 +252,7 @@
       }
     ],
     "seo": {
-      "title": "Nordvik Digital – nettsider for norske bedrifter",
+      "title": "AD.Moment – nettsider for norske bedrifter",
       "description": "Raske, åpne nettsider med innhold AI-søk og mennesker stoler på. Bygget på vår standard, levert på dager.",
       "noindex": false
     }
@@ -396,7 +395,7 @@
       }
     ],
     "seo": {
-      "description": "Teamet bak Nordvik Digital og standarden vi bygger på.",
+      "description": "Teamet bak AD.Moment og standarden vi bygger på.",
       "noindex": false
     }
   },
@@ -455,7 +454,7 @@
       }
     ],
     "seo": {
-      "description": "Ta kontakt med Nordvik Digital.",
+      "description": "Ta kontakt med AD.Moment.",
       "noindex": false
     }
   },

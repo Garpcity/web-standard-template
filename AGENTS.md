@@ -5,7 +5,7 @@ Dette repoet følger **Standard for nettsideutvikling**. Les denne filen før du
 
 ## Prosjekt
 
-- Navn: `web-standard-template` (byttes ved `pnpm setup`)
+- Navn: `web-standard-template` – pilot A: **AD.Moment** (org.nr. 838 722 822)
 - CMS: `CMS_PROVIDER` i `.env.local` – `mock` (standard i template), `wordpress`, `payload`
 - Avvik fra standard: ingen. Oppdater denne linjen hvis det endres.
 

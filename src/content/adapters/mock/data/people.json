@@ -1,16 +1,16 @@
 [
   {
-    "id": "p-kari",
-    "slug": "kari-johansen",
+    "id": "p-1",
+    "slug": "ansatt-1",
     "createdAt": "2026-11-10T09:00:00.000Z",
     "updatedAt": "2026-11-10T09:00:00.000Z",
     "status": "published",
     "_type": "person",
-    "name": "Kari Johansen",
-    "role": "Daglig leder og rådgiver",
+    "name": "Ansatt 1 (navn kommer)",
+    "role": "Daglig leder",
     "image": {
       "url": "/images/person-1.svg",
-      "alt": "Kari Johansen",
+      "alt": "Ansatt 1",
       "width": 800,
       "height": 800
     },
@@ -21,34 +21,33 @@
         "children": [
           {
             "_type": "span",
-            "text": "Kari har bygget nettsider for norske bedrifter siden 2009 og leder standardarbeidet i Nordvik Digital.",
+            "text": "Leder AD.Moment og standardarbeidet. Bio fylles inn av kunden.",
             "marks": []
           }
         ]
       }
     ],
-    "email": "kari@nordvik.example",
     "knowsAbout": [
       "Headless CMS",
       "WordPress",
       "Søkemotoroptimalisering",
       "AI-synlighet"
     ],
-    "credentials": ["Siviløkonom, NHH", "Google Analytics-sertifisert"],
-    "sameAs": ["https://www.linkedin.com/in/example"]
+    "credentials": [],
+    "sameAs": []
   },
   {
-    "id": "p-martin",
-    "slug": "martin-haug",
+    "id": "p-2",
+    "slug": "ansatt-2",
     "createdAt": "2026-11-10T09:00:00.000Z",
     "updatedAt": "2026-11-10T09:00:00.000Z",
     "status": "published",
     "_type": "person",
-    "name": "Martin Haug",
+    "name": "Ansatt 2 (navn kommer)",
     "role": "Utvikler",
     "image": {
       "url": "/images/person-2.svg",
-      "alt": "Martin Haug",
+      "alt": "Ansatt 2",
       "width": 800,
       "height": 800
     },
@@ -59,28 +58,28 @@
         "children": [
           {
             "_type": "span",
-            "text": "Martin bygger frontend og integrasjoner, og eier template-repoet.",
+            "text": "Bygger frontend og integrasjoner. Bio fylles inn av kunden.",
             "marks": []
           }
         ]
       }
     ],
     "knowsAbout": ["Next.js", "TypeScript", "n8n", "Payload CMS"],
-    "credentials": ["B.Sc. Informatikk, UiO"],
+    "credentials": [],
     "sameAs": []
   },
   {
-    "id": "p-sara",
-    "slug": "sara-ali",
+    "id": "p-3",
+    "slug": "ansatt-3",
     "createdAt": "2026-11-10T09:00:00.000Z",
     "updatedAt": "2026-11-10T09:00:00.000Z",
     "status": "published",
     "_type": "person",
-    "name": "Sara Ali",
+    "name": "Ansatt 3 (navn kommer)",
     "role": "Designer og 3D",
     "image": {
       "url": "/images/person-3.svg",
-      "alt": "Sara Ali",
+      "alt": "Ansatt 3",
       "width": 800,
       "height": 800
     },
@@ -91,14 +90,14 @@
         "children": [
           {
             "_type": "span",
-            "text": "Sara har ansvar for estetikklaget, bevegelse og 3D-produksjon i Cinema 4D.",
+            "text": "Ansvar for estetikklaget, bevegelse og 3D-produksjon i Cinema 4D. Bio fylles inn av kunden.",
             "marks": []
           }
         ]
       }
     ],
     "knowsAbout": ["Visuell design", "Motion design", "Cinema 4D", "Tilgjengelighet"],
-    "credentials": ["B.A. Visuell kommunikasjon, KHiO"],
+    "credentials": [],
     "sameAs": []
   }
 ]
