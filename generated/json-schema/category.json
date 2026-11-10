@@ -1,0 +1,23 @@
+{
+  "$comment": "Generert fra src/content/schema – ikke rediger manuelt",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "required": ["id", "slug", "name"]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "Nordvik Digital",
+  "tagline": "Nettsider som blir funnet, lest og sitert",
+  "description": "Nordvik Digital bygger raske, åpne nettsider for norske bedrifter – med innhold som AI-søk og mennesker stoler på.",
+  "defaultSeo": {
+    "image": {
+      "url": "/images/og-default.svg",
+      "alt": "Nordvik Digital",
+      "width": 1200,
+      "height": 630
+    },
+    "noindex": false
+  },
+  "contact": {
+    "email": "hei@nordvik.example",
+    "phone": "+47 400 00 000",
+    "address": "Tvetenveien 1, 0671 Oslo",
+    "orgNumber": "999 999 999"
+  },
+  "social": [
+    {
+      "platform": "linkedin",
+      "url": "https://www.linkedin.com/company/example"
+    },
+    {
+      "platform": "instagram",
+      "url": "https://www.instagram.com/example"
+    }
+  ],
+  "footerText": "© Nordvik Digital. Bygget på vår åpne standard for nettsideutvikling.",
+  "sameAs": ["https://www.linkedin.com/company/example", "https://www.proff.no/"]
+}

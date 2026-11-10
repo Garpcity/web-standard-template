@@ -1,0 +1,45 @@
+{
+  "$comment": "Generert fra src/content/schema/blocks.ts – ikke rediger manuelt",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "anchor": {
+      "type": "string"
+    },
+    "tone": {
+      "default": "default",
+      "type": "string",
+      "enum": ["default", "muted", "brand", "dark"]
+    },
+    "_type": {
+      "type": "string",
+      "const": "embed"
+    },
+    "heading": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "provider": {
+      "type": "string",
+      "enum": ["youtube", "vimeo", "map", "iframe"]
+    },
+    "src": {
+      "type": "string",
+      "format": "uri"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "aspect": {
+      "default": "16/9",
+      "type": "string",
+      "enum": ["16/9", "4/3", "1/1"]
+    }
+  },
+  "required": ["id", "_type", "provider", "src", "title"]
+}

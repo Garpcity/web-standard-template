@@ -1,0 +1,54 @@
+{
+  "identity": {
+    "name": "Nordvik Digital",
+    "oneLiner": "Nettsider som blir funnet, lest og sitert.",
+    "purpose": "Gi norske bedrifter nettsider de eier selv, som er raske for mennesker og troverdige for AI-søk.",
+    "values": ["Åpenhet", "Presisjon", "Ro"],
+    "audiences": ["Daglige ledere i SMB", "Markedsansvarlige"]
+  },
+  "voice": {
+    "tone": ["Direkte", "Konkret", "Rolig"],
+    "language": "nb",
+    "addressForm": "du",
+    "useWords": ["bygge", "eie", "måle", "standard"],
+    "avoidWords": ["sømløs", "banebrytende", "løsning"],
+    "goodExamples": ["Du eier kode, innhold og domene."],
+    "badExamples": ["Vår banebrytende løsning gir sømløs synergi."]
+  },
+  "facts": [
+    {
+      "claim": "Nordvik Digital har levert 24 nettsider siste 12 måneder.",
+      "source": "Intern prosjektlogg",
+      "approved": true
+    },
+    {
+      "claim": "Alle kjernekomponenter er MIT- eller GPL-lisensiert.",
+      "source": "Standard for nettsideutvikling",
+      "approved": true
+    }
+  ],
+  "neverClaim": ["Garantert førsteplass i Google", "Kundetall vi ikke kan dokumentere"],
+  "channels": [
+    {
+      "name": "LinkedIn",
+      "format": "Tekst + ett bilde",
+      "maxLength": 1300,
+      "frequency": "2 per uke",
+      "hashtags": ["#nettside", "#aisøk"]
+    },
+    {
+      "name": "Nyhetsbrev",
+      "format": "Én sak, én lenke",
+      "maxLength": 600,
+      "frequency": "Månedlig",
+      "hashtags": []
+    }
+  ],
+  "legal": {
+    "requiresApproval": ["Priser", "Kundenavn", "Tall om resultater"],
+    "forbiddenTopics": ["Politikk", "Konkurrenter ved navn"],
+    "imageRights": "Kun egne bilder eller bilder med dokumentert lisens."
+  },
+  "version": "1.0.0",
+  "updatedAt": "2026-11-10T09:00:00.000Z"
+}

@@ -1,0 +1,507 @@
+[
+  {
+    "id": "pg-home",
+    "slug": "forside",
+    "createdAt": "2026-11-10T09:00:00.000Z",
+    "updatedAt": "2026-11-10T09:00:00.000Z",
+    "status": "published",
+    "_type": "page",
+    "title": "Nordvik Digital – nettsider som blir funnet, lest og sitert",
+    "blocks": [
+      {
+        "id": "b1",
+        "tone": "default",
+        "_type": "hero",
+        "eyebrow": "Nettsider for norske bedrifter",
+        "heading": "Bli funnet. Bli lest. Bli sitert.",
+        "lead": "Vi bygger nettsider på en åpen standard som gjør dem raske for mennesker og troverdige for AI-søk. Fra idé til lansert side på dager, ikke måneder.",
+        "image": {
+          "url": "/images/hero.svg",
+          "alt": "Abstrakt illustrasjon i merkevarefarger",
+          "width": 1600,
+          "height": 1200
+        },
+        "links": [
+          {
+            "label": "Se hva vi gjør",
+            "href": "/tjenester",
+            "external": false,
+            "variant": "primary"
+          },
+          {
+            "label": "Ta kontakt",
+            "href": "/kontakt",
+            "external": false,
+            "variant": "secondary"
+          }
+        ],
+        "layout": "split"
+      },
+      {
+        "id": "b2",
+        "tone": "muted",
+        "_type": "stats",
+        "heading": "Tall fra siste 12 måneder",
+        "items": [
+          {
+            "id": "s1",
+            "value": 24,
+            "label": "nettsider lansert"
+          },
+          {
+            "id": "s2",
+            "value": 96,
+            "suffix": "%",
+            "label": "Lighthouse-score, median"
+          },
+          {
+            "id": "s3",
+            "value": 11,
+            "label": "dager fra oppstart til lansering, median"
+          },
+          {
+            "id": "s4",
+            "value": 100,
+            "suffix": "%",
+            "label": "åpen kildekode i kjernen"
+          }
+        ]
+      },
+      {
+        "id": "b3",
+        "tone": "default",
+        "_type": "cardGrid",
+        "heading": "Det vi leverer",
+        "lead": "Tre ting, gjort ordentlig.",
+        "columns": 3,
+        "items": [
+          {
+            "id": "c1",
+            "title": "Nettside på standarden",
+            "text": "Next.js-frontend, åpent CMS, visuell redigering. Du eier alt.",
+            "icon": "layout",
+            "link": {
+              "label": "Les mer",
+              "href": "/tjenester",
+              "external": false,
+              "variant": "ghost"
+            }
+          },
+          {
+            "id": "c2",
+            "title": "Synlighet i AI-søk",
+            "text": "E-E-A-T-strukturert innhold, strukturerte data og månedlig måling av siteringer.",
+            "icon": "search",
+            "link": {
+              "label": "Les mer",
+              "href": "/tjenester",
+              "external": false,
+              "variant": "ghost"
+            }
+          },
+          {
+            "id": "c3",
+            "title": "Dine egne agenter",
+            "text": "Koble din AI til nettsiden via MCP og produser innhold som følger profilen din.",
+            "icon": "bot",
+            "link": {
+              "label": "Les mer",
+              "href": "/tjenester",
+              "external": false,
+              "variant": "ghost"
+            }
+          }
+        ]
+      },
+      {
+        "id": "b4",
+        "tone": "default",
+        "_type": "textImage",
+        "heading": "Åpen standard, ingen låsing",
+        "body": [
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "Alle kjernekomponenter er åpen kildekode og kan selvhostes. Kunden eier repo, database og domene.",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "Det gjør at løsningen kan flyttes, forkes og videreføres – uansett hva som skjer med leverandøren.",
+                "marks": []
+              }
+            ]
+          }
+        ],
+        "image": {
+          "url": "/images/office.svg",
+          "alt": "Kontoret vårt",
+          "width": 1600,
+          "height": 1067
+        },
+        "imagePosition": "left",
+        "link": {
+          "label": "Hvorfor åpen kildekode",
+          "href": "/artikler/hvorfor-vi-bygger-pa-apen-kildekode",
+          "external": false,
+          "variant": "secondary"
+        }
+      },
+      {
+        "id": "b5",
+        "tone": "muted",
+        "_type": "latestArticles",
+        "heading": "Siste artikler",
+        "limit": 3,
+        "link": {
+          "label": "Alle artikler",
+          "href": "/artikler",
+          "external": false,
+          "variant": "ghost"
+        }
+      },
+      {
+        "id": "b6",
+        "tone": "brand",
+        "_type": "quote",
+        "quote": "Vi gikk fra null til å bli sitert av Perplexity på tre av fem kjernespørsmål på to måneder.",
+        "author": "Kunde i pilotprosjekt",
+        "role": "Daglig leder, B2B-tjenester"
+      },
+      {
+        "id": "b7",
+        "tone": "default",
+        "_type": "faq",
+        "heading": "Ofte stilte spørsmål",
+        "items": [
+          {
+            "id": "q1",
+            "question": "Hvor lang tid tar det å lage en nettside?",
+            "answer": [
+              {
+                "_type": "block",
+                "style": "normal",
+                "children": [
+                  {
+                    "_type": "span",
+                    "text": "En standard bedriftsside med 8–12 sider tar typisk 10–15 arbeidsdager fra oppstart til lansering. Tiden går mest til innhold, ikke teknikk.",
+                    "marks": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "q2",
+            "question": "Eier jeg nettsiden selv?",
+            "answer": [
+              {
+                "_type": "block",
+                "style": "normal",
+                "children": [
+                  {
+                    "_type": "span",
+                    "text": "Ja. Du eier kode, innhold, database og domene. Vi har tilgang, ikke eierskap, og dokumenterer hvordan andre kan ta over.",
+                    "marks": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "q3",
+            "question": "Kan jeg redigere selv?",
+            "answer": [
+              {
+                "_type": "block",
+                "style": "normal",
+                "children": [
+                  {
+                    "_type": "span",
+                    "text": "Ja, i en visuell editor der du bygger sider av godkjente blokker. Utseendet er låst slik at profilen holder; innholdet er ditt.",
+                    "marks": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "b8",
+        "tone": "dark",
+        "_type": "cta",
+        "heading": "Klar for en nettside som jobber for deg?",
+        "text": "Fortell oss om bedriften din, så viser vi hvordan standarden passer.",
+        "links": [
+          {
+            "label": "Ta kontakt",
+            "href": "/kontakt",
+            "external": false,
+            "variant": "primary"
+          }
+        ]
+      }
+    ],
+    "seo": {
+      "title": "Nordvik Digital – nettsider for norske bedrifter",
+      "description": "Raske, åpne nettsider med innhold AI-søk og mennesker stoler på. Bygget på vår standard, levert på dager.",
+      "noindex": false
+    }
+  },
+  {
+    "id": "pg-services",
+    "slug": "tjenester",
+    "createdAt": "2026-11-10T09:00:00.000Z",
+    "updatedAt": "2026-11-10T09:00:00.000Z",
+    "status": "published",
+    "_type": "page",
+    "title": "Tjenester",
+    "blocks": [
+      {
+        "id": "t1",
+        "tone": "default",
+        "_type": "hero",
+        "heading": "Tjenester",
+        "lead": "Vi gjør tre ting, og vi gjør dem på samme måte hver gang. Det er derfor det går fort.",
+        "links": [],
+        "layout": "centered"
+      },
+      {
+        "id": "t2",
+        "tone": "default",
+        "_type": "cardGrid",
+        "columns": 3,
+        "items": [
+          {
+            "id": "t2a",
+            "title": "Nettside på standarden",
+            "text": "Frontend i Next.js, åpent CMS (WordPress eller Payload), visuell editor, SEO og analytics ferdig satt opp.",
+            "image": {
+              "url": "/images/case-1.svg",
+              "alt": "Case 1",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "t2b",
+            "title": "Synlighet i AI-søk",
+            "text": "Forfattersider, strukturerte data, siterbart innhold og månedlig måling mot ChatGPT, Perplexity og Gemini.",
+            "image": {
+              "url": "/images/case-2.svg",
+              "alt": "Case 2",
+              "width": 1200,
+              "height": 800
+            }
+          },
+          {
+            "id": "t2c",
+            "title": "MCP for dine agenter",
+            "text": "Koble din egen AI til nettsiden og produser sider, poster og materiell som følger profilmanualen.",
+            "image": {
+              "url": "/images/case-3.svg",
+              "alt": "Case 3",
+              "width": 1200,
+              "height": 800
+            }
+          }
+        ]
+      },
+      {
+        "id": "t3",
+        "tone": "brand",
+        "_type": "cta",
+        "heading": "Vil du se standarden?",
+        "text": "Vi viser gjerne template-repoet og hvordan et prosjekt bygges.",
+        "links": [
+          {
+            "label": "Book en gjennomgang",
+            "href": "/kontakt",
+            "external": false,
+            "variant": "primary"
+          }
+        ]
+      }
+    ],
+    "seo": {
+      "description": "Nettside på åpen standard, synlighet i AI-søk, og MCP-tilgang for dine egne agenter.",
+      "noindex": false
+    }
+  },
+  {
+    "id": "pg-about",
+    "slug": "om-oss",
+    "createdAt": "2026-11-10T09:00:00.000Z",
+    "updatedAt": "2026-11-10T09:00:00.000Z",
+    "status": "published",
+    "_type": "page",
+    "title": "Om oss",
+    "blocks": [
+      {
+        "id": "o1",
+        "tone": "default",
+        "_type": "hero",
+        "heading": "Om oss",
+        "lead": "Et lite team som har bestemt seg for å bygge nettsider på én måte – og gjøre den måten bedre hvert kvartal.",
+        "links": [],
+        "layout": "centered"
+      },
+      {
+        "id": "o2",
+        "tone": "default",
+        "_type": "people",
+        "heading": "Folkene",
+        "personIds": []
+      },
+      {
+        "id": "o3",
+        "tone": "muted",
+        "_type": "text",
+        "heading": "Hvordan vi jobber",
+        "body": [
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "Alt vi bygger starter fra samme template-repo. Hver forbedring i et kundeprosjekt føres tilbake, slik at neste prosjekt starter fra et bedre sted.",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "Hvert kvartal evaluerer vi standarden mot bransjen, med en ekstern stemme som har i oppdrag å finne det svakeste leddet.",
+                "marks": []
+              }
+            ]
+          }
+        ],
+        "width": "narrow"
+      }
+    ],
+    "seo": {
+      "description": "Teamet bak Nordvik Digital og standarden vi bygger på.",
+      "noindex": false
+    }
+  },
+  {
+    "id": "pg-contact",
+    "slug": "kontakt",
+    "createdAt": "2026-11-10T09:00:00.000Z",
+    "updatedAt": "2026-11-10T09:00:00.000Z",
+    "status": "published",
+    "_type": "page",
+    "title": "Kontakt",
+    "blocks": [
+      {
+        "id": "k1",
+        "tone": "default",
+        "_type": "hero",
+        "heading": "Kontakt",
+        "lead": "Fortell oss kort om bedriften og hva du trenger. Vi svarer innen én arbeidsdag.",
+        "links": [],
+        "layout": "centered"
+      },
+      {
+        "id": "k2",
+        "tone": "default",
+        "_type": "contactForm",
+        "heading": "Send en melding",
+        "formId": "contact",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Navn",
+            "type": "text",
+            "required": true
+          },
+          {
+            "name": "email",
+            "label": "E-post",
+            "type": "email",
+            "required": true
+          },
+          {
+            "name": "company",
+            "label": "Bedrift",
+            "type": "text",
+            "required": false
+          },
+          {
+            "name": "message",
+            "label": "Hva kan vi hjelpe med?",
+            "type": "textarea",
+            "required": true
+          }
+        ],
+        "submitLabel": "Send melding",
+        "successMessage": "Takk! Vi tar kontakt innen én arbeidsdag."
+      }
+    ],
+    "seo": {
+      "description": "Ta kontakt med Nordvik Digital.",
+      "noindex": false
+    }
+  },
+  {
+    "id": "pg-privacy",
+    "slug": "personvern",
+    "createdAt": "2026-11-10T09:00:00.000Z",
+    "updatedAt": "2026-11-10T09:00:00.000Z",
+    "status": "published",
+    "_type": "page",
+    "title": "Personvern",
+    "blocks": [
+      {
+        "id": "pv1",
+        "tone": "default",
+        "_type": "text",
+        "heading": "Personvernerklæring",
+        "body": [
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "Denne siden beskriver hvordan vi behandler personopplysninger. Teksten tilpasses per kunde ved oppsett.",
+                "marks": []
+              }
+            ]
+          },
+          {
+            "_type": "block",
+            "style": "normal",
+            "children": [
+              {
+                "_type": "span",
+                "text": "Vi bruker personvernvennlig analyse uten cookies. Skjemainnsendinger lagres i vårt CMS og behandles i henhold til GDPR.",
+                "marks": []
+              }
+            ]
+          }
+        ],
+        "width": "narrow"
+      }
+    ],
+    "seo": {
+      "noindex": false
+    }
+  }
+]

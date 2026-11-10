@@ -1,0 +1,79 @@
+{
+  "$comment": "Generert fra src/content/schema/blocks.ts – ikke rediger manuelt",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "anchor": {
+      "type": "string"
+    },
+    "tone": {
+      "default": "default",
+      "type": "string",
+      "enum": ["default", "muted", "brand", "dark"]
+    },
+    "_type": {
+      "type": "string",
+      "const": "contactForm"
+    },
+    "heading": {
+      "default": "Kontakt oss",
+      "type": "string",
+      "maxLength": 120
+    },
+    "lead": {
+      "type": "string",
+      "maxLength": 300
+    },
+    "formId": {
+      "default": "contact",
+      "type": "string",
+      "minLength": 1
+    },
+    "fields": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "default": "text",
+            "type": "string",
+            "enum": ["text", "email", "tel", "textarea", "select"]
+          },
+          "required": {
+            "default": false,
+            "type": "boolean"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["name", "label"]
+      }
+    },
+    "submitLabel": {
+      "default": "Send",
+      "type": "string"
+    },
+    "successMessage": {
+      "default": "Takk! Vi tar kontakt snart.",
+      "type": "string"
+    }
+  },
+  "required": ["id", "_type", "fields"]
+}

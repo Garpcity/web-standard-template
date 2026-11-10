@@ -1,0 +1,61 @@
+{
+  "$comment": "Generert fra src/content/schema/blocks.ts – ikke rediger manuelt",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "anchor": {
+      "type": "string"
+    },
+    "tone": {
+      "default": "default",
+      "type": "string",
+      "enum": ["default", "muted", "brand", "dark"]
+    },
+    "_type": {
+      "type": "string",
+      "const": "latestArticles"
+    },
+    "heading": {
+      "default": "Siste nytt",
+      "type": "string",
+      "maxLength": 120
+    },
+    "limit": {
+      "default": 3,
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 12
+    },
+    "categoryId": {
+      "type": "string"
+    },
+    "link": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "href": {
+          "type": "string",
+          "minLength": 1
+        },
+        "external": {
+          "default": false,
+          "type": "boolean"
+        },
+        "variant": {
+          "default": "primary",
+          "type": "string",
+          "enum": ["primary", "secondary", "ghost"]
+        }
+      },
+      "required": ["label", "href"]
+    }
+  },
+  "required": ["id", "_type"]
+}

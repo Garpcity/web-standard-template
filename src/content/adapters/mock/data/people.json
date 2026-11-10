@@ -1,0 +1,104 @@
+[
+  {
+    "id": "p-kari",
+    "slug": "kari-johansen",
+    "createdAt": "2026-11-10T09:00:00.000Z",
+    "updatedAt": "2026-11-10T09:00:00.000Z",
+    "status": "published",
+    "_type": "person",
+    "name": "Kari Johansen",
+    "role": "Daglig leder og rådgiver",
+    "image": {
+      "url": "/images/person-1.svg",
+      "alt": "Kari Johansen",
+      "width": 800,
+      "height": 800
+    },
+    "bio": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Kari har bygget nettsider for norske bedrifter siden 2009 og leder standardarbeidet i Nordvik Digital.",
+            "marks": []
+          }
+        ]
+      }
+    ],
+    "email": "kari@nordvik.example",
+    "knowsAbout": [
+      "Headless CMS",
+      "WordPress",
+      "Søkemotoroptimalisering",
+      "AI-synlighet"
+    ],
+    "credentials": ["Siviløkonom, NHH", "Google Analytics-sertifisert"],
+    "sameAs": ["https://www.linkedin.com/in/example"]
+  },
+  {
+    "id": "p-martin",
+    "slug": "martin-haug",
+    "createdAt": "2026-11-10T09:00:00.000Z",
+    "updatedAt": "2026-11-10T09:00:00.000Z",
+    "status": "published",
+    "_type": "person",
+    "name": "Martin Haug",
+    "role": "Utvikler",
+    "image": {
+      "url": "/images/person-2.svg",
+      "alt": "Martin Haug",
+      "width": 800,
+      "height": 800
+    },
+    "bio": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Martin bygger frontend og integrasjoner, og eier template-repoet.",
+            "marks": []
+          }
+        ]
+      }
+    ],
+    "knowsAbout": ["Next.js", "TypeScript", "n8n", "Payload CMS"],
+    "credentials": ["B.Sc. Informatikk, UiO"],
+    "sameAs": []
+  },
+  {
+    "id": "p-sara",
+    "slug": "sara-ali",
+    "createdAt": "2026-11-10T09:00:00.000Z",
+    "updatedAt": "2026-11-10T09:00:00.000Z",
+    "status": "published",
+    "_type": "person",
+    "name": "Sara Ali",
+    "role": "Designer og 3D",
+    "image": {
+      "url": "/images/person-3.svg",
+      "alt": "Sara Ali",
+      "width": 800,
+      "height": 800
+    },
+    "bio": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Sara har ansvar for estetikklaget, bevegelse og 3D-produksjon i Cinema 4D.",
+            "marks": []
+          }
+        ]
+      }
+    ],
+    "knowsAbout": ["Visuell design", "Motion design", "Cinema 4D", "Tilgjengelighet"],
+    "credentials": ["B.A. Visuell kommunikasjon, KHiO"],
+    "sameAs": []
+  }
+]

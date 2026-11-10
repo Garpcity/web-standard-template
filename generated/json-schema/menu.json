@@ -1,0 +1,55 @@
+{
+  "$comment": "Generert fra src/content/schema – ikke rediger manuelt",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "enum": ["main", "footer", "legal"]
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "href": {
+            "type": "string",
+            "minLength": 1
+          },
+          "external": {
+            "default": false,
+            "type": "boolean"
+          },
+          "children": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "href": {
+                  "type": "string"
+                }
+              },
+              "required": ["id", "label", "href"]
+            }
+          }
+        },
+        "required": ["id", "label", "href"]
+      }
+    }
+  },
+  "required": ["name", "items"]
+}

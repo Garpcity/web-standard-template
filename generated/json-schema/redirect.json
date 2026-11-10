@@ -1,0 +1,20 @@
+{
+  "$comment": "Generert fra src/content/schema – ikke rediger manuelt",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "from": {
+      "type": "string",
+      "minLength": 1
+    },
+    "to": {
+      "type": "string",
+      "minLength": 1
+    },
+    "permanent": {
+      "default": true,
+      "type": "boolean"
+    }
+  },
+  "required": ["from", "to"]
+}

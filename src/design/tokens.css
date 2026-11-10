@@ -1,0 +1,87 @@
+/*
+ * tokens.css – design-tokens. Dette er den ENESTE filen som byttes per kunde.
+ * Komponenter leser disse via Tailwind-klasser definert i globals.css (@theme).
+ */
+:root {
+  /* Merkevarefarger */
+  --brand: #0f4c5c;
+  --brand-strong: #0a3540;
+  --brand-soft: #e3eff2;
+  --accent: #c2460a;
+  --accent-strong: #9c3706;
+  --accent-soft: #fdebdd;
+
+  /* Nøytrale */
+  --bg: #fbfaf8;
+  --surface: #ffffff;
+  --surface-muted: #f3f1ec;
+  --border: #e4e0d8;
+  --fg: #16181d;
+  --fg-muted: #5c6068;
+  --fg-inverse: #ffffff;
+
+  /* Status */
+  --success: #1f7a4d;
+  --warning: #b7791f;
+  --danger: #b3261e;
+
+  /* Typografi */
+  --font-display: var(--font-display-loaded, "Inter Tight", system-ui, sans-serif);
+  --font-body: var(--font-body-loaded, "Inter", system-ui, sans-serif);
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.75rem;
+  --text-4xl: 3.75rem;
+  --text-5xl: 5rem;
+
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-normal: 1.6;
+
+  /* Avstand */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-section: clamp(4rem, 10vw, 8rem);
+  --container: 72rem;
+  --container-narrow: 44rem;
+
+  /* Form */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-card: 1rem;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgb(22 24 29 / 0.06);
+  --shadow-md: 0 6px 20px rgb(22 24 29 / 0.08);
+  --shadow-lg: 0 20px 50px rgb(22 24 29 / 0.14);
+
+  /* Bevegelse */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 150ms;
+  --duration-base: 350ms;
+  --duration-slow: 600ms;
+}
+
+[data-theme="dark"] {
+  --bg: #0f1115;
+  --surface: #171a20;
+  --surface-muted: #1f232b;
+  --border: #2a2f39;
+  --fg: #f2f2f0;
+  --fg-muted: #a3a7b0;
+  --brand-soft: #14323a;
+  --accent-soft: #3a2415;
+}

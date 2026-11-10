@@ -1,0 +1,58 @@
+{
+  "$comment": "Generert fra src/content/schema/blocks.ts – ikke rediger manuelt",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "anchor": {
+      "type": "string"
+    },
+    "tone": {
+      "default": "default",
+      "type": "string",
+      "enum": ["default", "muted", "brand", "dark"]
+    },
+    "_type": {
+      "type": "string",
+      "const": "stats"
+    },
+    "heading": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "items": {
+      "minItems": 2,
+      "maxItems": 6,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "suffix": {
+            "type": "string",
+            "maxLength": 10
+          },
+          "prefix": {
+            "type": "string",
+            "maxLength": 10
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60
+          }
+        },
+        "required": ["id", "value", "label"]
+      }
+    }
+  },
+  "required": ["id", "_type", "items"]
+}

@@ -1,26 +1,218 @@
 @import "tailwindcss";
+@import "../design/tokens.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Kobler tokens til Tailwind-klasser. Komponenter bruker kun disse navnene. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-soft: var(--brand-soft);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-inverse: var(--fg-inverse);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+
+  --text-xs: var(--text-xs);
+  --text-sm: var(--text-sm);
+  --text-base: var(--text-base);
+  --text-lg: var(--text-lg);
+  --text-xl: var(--text-xl);
+  --text-2xl: var(--text-2xl);
+  --text-3xl: var(--text-3xl);
+  --text-4xl: var(--text-4xl);
+  --text-5xl: var(--text-5xl);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-card: var(--radius-card);
+  --radius-pill: var(--radius-pill);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  --spacing-section: var(--space-section);
+  --container-site: var(--container);
+  --container-narrow: var(--container-narrow);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    line-height: var(--leading-tight);
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: var(--space-6);
+  }
+  .container-narrow {
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    padding-inline: var(--space-6);
+  }
+  .prose-site {
+    max-width: var(--container-narrow);
+  }
+  .prose-site h2 {
+    font-size: var(--text-2xl);
+    margin-top: var(--space-12);
+    margin-bottom: var(--space-4);
+  }
+  .prose-site h3 {
+    font-size: var(--text-xl);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+  }
+  .prose-site p,
+  .prose-site ul,
+  .prose-site ol,
+  .prose-site blockquote {
+    margin-bottom: var(--space-4);
+  }
+  .prose-site ul {
+    list-style: disc;
+    padding-left: 1.4em;
+  }
+  .prose-site ol {
+    list-style: decimal;
+    padding-left: 1.4em;
+  }
+  .prose-site a {
+    color: var(--brand);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .prose-site blockquote {
+    border-left: 3px solid var(--accent);
+    padding-left: var(--space-4);
+    color: var(--fg-muted);
+    font-style: italic;
+  }
+}
+
+/* ---------- Bevegelsesoppskrifter (se src/design/motion.ts og DESIGN.md) ---------- */
+@layer utilities {
+  /* reveal: synlig uten JS. Med JS (html.js) skjules til is-visible settes av RevealObserver. */
+  @media (prefers-reduced-motion: no-preference) {
+    html.js [data-reveal] {
+      transition:
+        opacity var(--duration-slow) var(--ease-out),
+        transform var(--duration-slow) var(--ease-out);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+    html.js [data-reveal]:not(.is-visible) {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    html.js [data-reveal="scale"]:not(.is-visible) {
+      transform: scale(0.9);
+    }
+    /* stagger: 60 ms forskyvning per barn */
+    html.js [data-stagger] > :nth-child(2) {
+      --reveal-delay: 60ms;
+    }
+    html.js [data-stagger] > :nth-child(3) {
+      --reveal-delay: 120ms;
+    }
+    html.js [data-stagger] > :nth-child(4) {
+      --reveal-delay: 180ms;
+    }
+    html.js [data-stagger] > :nth-child(5) {
+      --reveal-delay: 240ms;
+    }
+    html.js [data-stagger] > :nth-child(6) {
+      --reveal-delay: 300ms;
+    }
+    html.js [data-stagger] > :nth-child(7) {
+      --reveal-delay: 360ms;
+    }
+    html.js [data-stagger] > :nth-child(8) {
+      --reveal-delay: 420ms;
+    }
+    html.js [data-stagger] > :nth-child(n + 9) {
+      --reveal-delay: 480ms;
+    }
+
+    /* heroIn: innlasting av hero uten JS-avhengighet */
+    .hero-in {
+      animation: hero-in var(--duration-slow) var(--ease-out) both;
+    }
+    .hero-in-delayed {
+      animation: hero-in var(--duration-slow) var(--ease-out) 120ms both;
+    }
+  }
+  /* hoverLift */
+  .hover-lift {
+    transition:
+      transform var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out);
+  }
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }

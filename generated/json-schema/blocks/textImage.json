@@ -1,0 +1,216 @@
+{
+  "$comment": "Generert fra src/content/schema/blocks.ts – ikke rediger manuelt",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "anchor": {
+      "type": "string"
+    },
+    "tone": {
+      "default": "default",
+      "type": "string",
+      "enum": ["default", "muted", "brand", "dark"]
+    },
+    "_type": {
+      "type": "string",
+      "const": "textImage"
+    },
+    "heading": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "body": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "_type": {
+                "type": "string",
+                "const": "block"
+              },
+              "style": {
+                "default": "normal",
+                "type": "string",
+                "enum": ["normal", "h2", "h3", "h4", "blockquote"]
+              },
+              "listItem": {
+                "type": "string",
+                "enum": ["bullet", "number"]
+              },
+              "level": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 3
+              },
+              "children": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_type": {
+                      "type": "string",
+                      "const": "span"
+                    },
+                    "text": {
+                      "type": "string"
+                    },
+                    "marks": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": ["strong", "em", "code", "underline"]
+                      }
+                    },
+                    "href": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["_type", "text"]
+                }
+              }
+            },
+            "required": ["_type", "children"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "_type": {
+                "type": "string",
+                "const": "image"
+              },
+              "image": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "alt": {
+                    "default": "",
+                    "type": "string"
+                  },
+                  "width": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "height": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "caption": {
+                    "type": "string"
+                  },
+                  "blurDataURL": {
+                    "type": "string"
+                  },
+                  "focal": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "y": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      }
+                    },
+                    "required": ["x", "y"]
+                  }
+                },
+                "required": ["url", "width", "height"]
+              }
+            },
+            "required": ["_type", "image"]
+          }
+        ]
+      }
+    },
+    "image": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "alt": {
+          "default": "",
+          "type": "string"
+        },
+        "width": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "height": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "caption": {
+          "type": "string"
+        },
+        "blurDataURL": {
+          "type": "string"
+        },
+        "focal": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "y": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": ["x", "y"]
+        }
+      },
+      "required": ["url", "width", "height"]
+    },
+    "imagePosition": {
+      "default": "right",
+      "type": "string",
+      "enum": ["left", "right"]
+    },
+    "link": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "href": {
+          "type": "string",
+          "minLength": 1
+        },
+        "external": {
+          "default": false,
+          "type": "boolean"
+        },
+        "variant": {
+          "default": "primary",
+          "type": "string",
+          "enum": ["primary", "secondary", "ghost"]
+        }
+      },
+      "required": ["label", "href"]
+    }
+  },
+  "required": ["id", "_type", "body", "image"]
+}

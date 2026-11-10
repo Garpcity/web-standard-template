@@ -1,0 +1,283 @@
+[
+  {
+    "id": "a-1",
+    "slug": "slik-blir-bedriften-din-sitert-av-ai",
+    "createdAt": "2026-11-10T09:00:00.000Z",
+    "updatedAt": "2026-11-10T09:00:00.000Z",
+    "status": "published",
+    "_type": "article",
+    "title": "Slik blir bedriften din sitert av AI-søk",
+    "summary": "AI-motorer som ChatGPT, Perplexity og Google AI Overviews siterer kilder med dokumentert erfaring, navngitte fagpersoner og originale data. En analyse av 15 847 AI Overview-svar fant at 96 % av siteringene kom fra kilder med sterke E-E-A-T-signaler.",
+    "image": {
+      "url": "/images/article-1.svg",
+      "alt": "Illustrasjon: AI-søk og kilder",
+      "width": 1600,
+      "height": 900
+    },
+    "authorId": "p-kari",
+    "publishedAt": "2026-11-03T08:00:00.000Z",
+    "categoryIds": ["c-seo"],
+    "body": [
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Tre ting avgjør",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Det er ikke domeneautoritet som avgjør om AI siterer deg. Korrelasjonen mellom domeneautoritet og sitering er svak (r=0,18), mens E-E-A-T-signaler korrelerer sterkt (r=0,81).",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "children": [
+          {
+            "_type": "span",
+            "text": "Navngitte fagpersoner med reell bakgrunn, ikke «Redaksjonen».",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "children": [
+          {
+            "_type": "span",
+            "text": "Minst én side med originale data – egne tall, målinger eller priser.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "children": [
+          {
+            "_type": "span",
+            "text": "Omtale utenfor eget domene: bransjeregistre, fagmedier, partnere.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Hva du gjør i dag",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Start med forfattersidene. Legg inn hva hver person kan og hvor det er dokumentert. Deretter: finn ett spørsmål kundene dine stiller som ingen har svart godt på, og svar på det med tall.",
+            "marks": []
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "LaunchCodex: E-E-A-T og AI Overviews",
+        "href": "https://launchcodex.com/?p=3403",
+        "external": true,
+        "variant": "ghost"
+      }
+    ],
+    "seo": {
+      "noindex": false
+    }
+  },
+  {
+    "id": "a-2",
+    "slug": "hvorfor-vi-bygger-pa-apen-kildekode",
+    "createdAt": "2026-11-10T09:00:00.000Z",
+    "updatedAt": "2026-11-10T09:00:00.000Z",
+    "status": "published",
+    "_type": "article",
+    "title": "Hvorfor vi bygger på åpen kildekode",
+    "summary": "Alle kjernekomponenter i nettsidene våre har MIT- eller GPL-lisens og kan selvhostes. Da kan kunden flytte, forke og videreføre løsningen uansett hva som skjer med leverandøren – eller med oss.",
+    "image": {
+      "url": "/images/article-2.svg",
+      "alt": "Illustrasjon: åpen kildekode",
+      "width": 1600,
+      "height": 900
+    },
+    "authorId": "p-martin",
+    "publishedAt": "2026-10-20T08:00:00.000Z",
+    "categoryIds": ["c-tech"],
+    "body": [
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Eieren kan endre seg. Lisensen består.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "I 2026 ble Payload CMS kjøpt av Figma, og WordPress-prosjektet har hatt en langvarig styringskrise. Ingen av delene har stoppet prosjektene, fordi koden er åpen og kan forkes.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Det vi gjør",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "children": [
+          {
+            "_type": "span",
+            "text": "Next.js, Payload, Puck, Motion og Tailwind: alle MIT.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "children": [
+          {
+            "_type": "span",
+            "text": "Kunden eier repo, database og domene. Vi har tilgang, ikke eierskap.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "listItem": "bullet",
+        "level": 1,
+        "children": [
+          {
+            "_type": "span",
+            "text": "README beskriver hvordan en annen leverandør kan ta over.",
+            "marks": []
+          }
+        ]
+      }
+    ],
+    "sources": [],
+    "seo": {
+      "noindex": false
+    }
+  },
+  {
+    "id": "a-3",
+    "slug": "bevegelse-som-forklarer",
+    "createdAt": "2026-11-10T09:00:00.000Z",
+    "updatedAt": "2026-11-10T09:00:00.000Z",
+    "status": "published",
+    "_type": "article",
+    "title": "Bevegelse som forklarer, ikke pynter",
+    "summary": "Animasjon på nettsider skal vise rekkefølge, retning eller respons. Vi bruker sju navngitte oppskrifter – fra reveal til countUp – og alle har en fallback for brukere som har skrudd av bevegelse.",
+    "image": {
+      "url": "/images/article-3.svg",
+      "alt": "Illustrasjon: bevegelse",
+      "width": 1600,
+      "height": 900
+    },
+    "authorId": "p-sara",
+    "publishedAt": "2026-10-06T08:00:00.000Z",
+    "categoryIds": ["c-design"],
+    "body": [
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Regelen",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Hvis du ikke kan si hva en animasjon forklarer, fjern den. Det er den eneste regelen vi trenger.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Oppskriftene",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "children": [
+          {
+            "_type": "span",
+            "text": "Alle animasjoner i prosjektene våre kommer fra én fil, motion.ts. Det gjør at AI kan bruke dem riktig, og at hele siden beveger seg med samme rytme.",
+            "marks": []
+          }
+        ]
+      }
+    ],
+    "sources": [],
+    "seo": {
+      "noindex": false
+    }
+  }
+]

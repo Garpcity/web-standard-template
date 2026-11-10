@@ -1,0 +1,18 @@
+[
+  {
+    "id": "c-seo",
+    "slug": "synlighet",
+    "name": "Synlighet",
+    "description": "SEO, AEO og GEO"
+  },
+  {
+    "id": "c-tech",
+    "slug": "teknologi",
+    "name": "Teknologi"
+  },
+  {
+    "id": "c-design",
+    "slug": "design",
+    "name": "Design"
+  }
+]

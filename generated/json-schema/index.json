@@ -1,0 +1,30 @@
+{
+  "generatedFrom": "src/content/schema",
+  "documents": [
+    "siteSettings",
+    "menu",
+    "page",
+    "article",
+    "person",
+    "category",
+    "media",
+    "formSubmission",
+    "redirect",
+    "brandGuide"
+  ],
+  "blocks": [
+    "hero",
+    "text",
+    "textImage",
+    "cardGrid",
+    "people",
+    "latestArticles",
+    "gallery",
+    "quote",
+    "faq",
+    "contactForm",
+    "embed",
+    "cta",
+    "stats"
+  ]
+}

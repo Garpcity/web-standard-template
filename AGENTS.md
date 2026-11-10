@@ -1,9 +1,81 @@
-<!-- BEGIN:nextjs-agent-rules -->
+# AGENTS.md – konvensjoner for AI-assistert utvikling
 
-## This is NOT the Next.js you know
+Dette repoet følger **Standard for nettsideutvikling**. Les denne filen før du skriver kode.
+`CLAUDE.md`, `.cursorrules` og tilsvarende peker hit; alle LLM-verktøy skal lese samme fil.
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+## Prosjekt
 
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+- Navn: `web-standard-template` (byttes ved `pnpm setup`)
+- CMS: `CMS_PROVIDER` i `.env.local` – `mock` (standard i template), `wordpress`, `payload`
+- Avvik fra standard: ingen. Oppdater denne linjen hvis det endres.
 
-<!-- END:nextjs-agent-rules -->
+## Kommandoer
+
+| Kommando | Gjør |
+| --- | --- |
+| `pnpm dev` | Start utvikling på http://localhost:3000 |
+| `pnpm check` | Lint, typer, formatering, enhetstester. **Kjør alltid før PR.** |
+| `pnpm test:e2e` | Playwright mot bygget side |
+| `pnpm generate:schema` | Regenererer `generated/` fra Zod-skjemaene. Kjør etter skjemaendring. |
+| `pnpm seed` | Skriver eksempelinnhold til mock-adapteren |
+| `docker compose --profile wordpress up` | WordPress lokalt på :8080 |
+
+## Arkitektur – de tre lagene
+
+1. **Frontend** (`src/app`, `src/components`) – vet ingenting om CMS.
+2. **Innholdslaget / kontrakten** (`src/content`) – `types.ts` er utledet fra Zod-skjemaene i `schema/`; `index.ts` eksponerer `getPage`, `getArticles`, `getArticle`, `getPeople`, `getMenu`, `getSiteSettings`, `getBrandGuide`, `getPreviewContext`.
+3. **Adaptere** (`src/content/adapters/<cms>`) – én per CMS, implementerer `ContentAdapter`.
+
+Regler:
+
+- **Importer aldri fra `src/content/adapters/*` i frontend.** ESLint stopper det. Bruk `@/content`.
+- Ny innholdstype: `schema/` → `pnpm generate:schema` → adapter → komponent → test. I den rekkefølgen.
+- Hver innholdsblokk har **ett** Zod-skjema i `schema/blocks.ts`, **én** komponent i `components/blocks/<Navn>.tsx` med samme navn, og **én** registrering i `puck/config.tsx`.
+- Rik tekst er alltid normalisert `RichTextNode[]`; render med `<RichText>`.
+- Bilder er alltid `ImageRef` (`url, alt, width, height`) og rendres med `next/image`.
+
+## Design
+
+- Tokens i `src/design/tokens.css`. **Ingen hardkodede farger, fonter eller avstander i komponenter** – bruk Tailwind-klasser som leser tokens (`bg-surface`, `text-fg`, `text-brand`).
+- Animasjon: bruk oppskriftene i `src/design/motion.ts` (`reveal`, `stagger`, `heroParallax` …). Ikke skriv ad hoc-animasjon. Mangler en oppskrift, legg den til der med navn og beskrivelse i `DESIGN.md`.
+- Les `src/design/DESIGN.md` før du lager eller endrer blokker.
+- Alltid `prefers-reduced-motion`-fallback. Oppskriftene håndterer dette; bruk dem.
+
+## Kode
+
+- TypeScript strict. Ingen `any` uten `// why:`-kommentar.
+- Server Components som standard. `"use client"` kun der interaksjon eller Motion krever det, og da i minst mulig komponent.
+- Komponenter: PascalCase, én per fil, `Props`-type øverst, named export.
+- Feltnavn engelsk i kode, norske labels i CMS og Puck (`label:`).
+- Commit-meldinger på norsk, imperativ: `Legg til FAQ-blokk`.
+- Tester: enhetstest for skjema og rene funksjoner; e2e for sidetyper. Ny blokk = minst én rendertest.
+
+## SEO, AEO, GEO
+
+- Hver side har `generateMetadata` fra `src/seo/metadata.ts` og JSON-LD via `<JsonLd>` med builders fra `src/seo/schema/`.
+- Aldri håndskrevet JSON-LD i komponenter.
+- Innhold skal følge «siterbart innhold»-reglene: svar først, faktatetthet, kilder inline, datert.
+- `robots.txt` slipper AI-crawlere inn som standard. Endres kun i `site.config.ts` etter beslutning fra kunden.
+
+## Rettigheter
+
+- `src/content/permissions.ts` er kilden for roller og redigeringsnivåer. Puck og CMS leser derfra.
+- Globale ting (header, footer, tokens, juridiske sider) er `locked`.
+
+## Grensen mot n8n
+
+- Nettsiden eier: innhold, visning, skjemainnsending (lagring + webhook).
+- n8n eier: alt som skjer *etter* at data er sendt – CRM, e-post, varsler, rapporter, overvåking.
+- Nettsiden kaller aldri eksterne tjenester direkte fra en handler; den poster til `FORMS_WEBHOOK_URL`.
+
+## Gjør aldri
+
+- Ikke endre `schema/` uten å kjøre `pnpm generate:schema` og oppdatere alle adaptere i repoet.
+- Ikke skru av lint-regler eller tester for å få grønt.
+- Ikke legg hemmeligheter i kode. `.env.local` og `.env.example`.
+- Ikke slett migreringer som er kjørt i produksjon.
+- Ikke legg til avhengigheter uten begrunnelse i PR-beskrivelsen. Foretrekk det vi har.
+
+## Når du er usikker
+
+Spør, eller skriv antakelsen din øverst i PR-beskrivelsen. Ikke gjett stille.

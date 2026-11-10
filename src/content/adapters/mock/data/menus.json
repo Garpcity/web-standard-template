@@ -1,0 +1,80 @@
+[
+  {
+    "name": "main",
+    "items": [
+      {
+        "id": "m1",
+        "label": "Tjenester",
+        "href": "/tjenester",
+        "external": false,
+        "children": []
+      },
+      {
+        "id": "m2",
+        "label": "Om oss",
+        "href": "/om-oss",
+        "external": false,
+        "children": []
+      },
+      {
+        "id": "m3",
+        "label": "Artikler",
+        "href": "/artikler",
+        "external": false,
+        "children": []
+      },
+      {
+        "id": "m4",
+        "label": "Kontakt",
+        "href": "/kontakt",
+        "external": false,
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "footer",
+    "items": [
+      {
+        "id": "f1",
+        "label": "Tjenester",
+        "href": "/tjenester",
+        "external": false,
+        "children": []
+      },
+      {
+        "id": "f2",
+        "label": "Om oss",
+        "href": "/om-oss",
+        "external": false,
+        "children": []
+      },
+      {
+        "id": "f3",
+        "label": "Artikler",
+        "href": "/artikler",
+        "external": false,
+        "children": []
+      },
+      {
+        "id": "f4",
+        "label": "Profilmanual",
+        "href": "/profil",
+        "external": false,
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "legal",
+    "items": [
+      {
+        "id": "l1",
+        "label": "Personvern",
+        "href": "/personvern",
+        "external": false,
+        "children": []
+      }
+    ]
+  }
+]
