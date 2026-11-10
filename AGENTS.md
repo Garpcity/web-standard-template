@@ -73,6 +73,7 @@ Regler:
 
 - `src/content/permissions.ts` er kilden for roller og redigeringsnivåer. Puck og CMS leser derfra.
 - Globale ting (header, footer, tokens, juridiske sider) er `locked`.
+- Låste felt håndheves på serversiden av `applyLockedFields()` i `src/content/permissions.ts`, brukt av `/api/puck`, MCP og Payload-hooken. Puck-UI skjuler dem bare. Identitet for `/edit` og `/api/puck` kommer fra `src/lib/editor-auth.ts` (Payload-bruker, ellers `EDITOR_PASSWORD`).
 
 ## Grensen mot n8n
 

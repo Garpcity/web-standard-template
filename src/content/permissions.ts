@@ -70,3 +70,28 @@ export function canEditField(role: Role, blockType: string, field: string): bool
   if (role === "owner") return true;
   return !(lockedBlockFields[blockType] ?? []).includes(field);
 }
+
+/**
+ * Håndhev låste felt på serversiden. Brukes av /api/puck, MCP og Payload-hook, så
+ * regelen gjelder uansett hvilken vei innholdet kommer. Ikke-owner får låste verdier
+ * fra eksisterende blokk med samme id, ellers fjernes feltet (Zod setter standard).
+ */
+export function applyLockedFields<T extends { id?: string; _type?: string }>(
+  role: Role,
+  incoming: T[],
+  existing: { id?: string; _type?: string }[] = [],
+): T[] {
+  if (roleCan[role].editStructure) return incoming;
+  return incoming.map((block) => {
+    const locked = lockedBlockFields[String(block._type ?? "")] ?? [];
+    if (!locked.length) return block;
+    const copy: Record<string, unknown> = { ...block };
+    const prev = existing.find((b) => b.id && b.id === block.id) as
+      Record<string, unknown> | undefined;
+    for (const field of locked) {
+      if (prev && field in prev) copy[field] = prev[field];
+      else delete copy[field];
+    }
+    return copy as T;
+  });
+}

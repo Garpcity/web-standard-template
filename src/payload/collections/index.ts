@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
-import { roles } from "@/content/permissions";
+import { applyLockedFields, roles, type Role } from "@/content/permissions";
 import { block as blockSchema } from "@/content/schema";
 import {
   canEditContent,
@@ -154,7 +154,13 @@ export const Pages: CollectionConfig = {
   versions: { drafts: false, maxPerDoc: 20 },
   hooks: {
     beforeValidate: [
-      ({ data }) => {
+      ({ data, req, originalDoc }) => {
+        // Låste felt håndheves også her (admin, REST), med samme funksjon som /api/puck og MCP.
+        // Uten bruker (seed, system) gjelder ingen begrensning.
+        if (req.user && data?.blocks && Array.isArray(data.blocks)) {
+          const role = ((req.user as { role?: Role }).role ?? "contributor") as Role;
+          data.blocks = applyLockedFields(role, data.blocks, originalDoc?.blocks ?? []);
+        }
         // Kontrakten håndhever blokkene: ugyldige blokker stoppes før lagring.
         if (data?.blocks && Array.isArray(data.blocks)) {
           data.blocks.forEach((b: unknown, i: number) => {

@@ -15,7 +15,7 @@ import {
   type SocialPost,
 } from "@/content/schema";
 import type { ContentAdapter } from "@/content/types";
-import { lockedBlockFields } from "@/content/permissions";
+import { applyLockedFields, lockedBlockFields } from "@/content/permissions";
 import { siteConfig } from "../../site.config";
 import { markdownToRichText } from "@/content/markdown";
 import { iconNames } from "@/design/icons";
@@ -233,18 +233,14 @@ export function createMcpServer({ adapter, agent, tokensCss }: Deps): McpServer 
       if (!adapter.savePage)
         return text({ error: "Dette CMS-et støtter ikke lagring via MCP." });
       const existing = await adapter.getPage(slug, { includeDrafts: true });
-      const cleaned = blocks.map((b, i) => {
-        const type = String(b._type ?? "");
-        const locked = new Set(lockedBlockFields[type] ?? []);
+      const withIds = blocks.map((b, i) => {
         const copy: Record<string, unknown> = { id: `b-${i + 1}`, ...b };
-        for (const k of locked) delete copy[k];
         // Agenter kan sende body som Markdown i text/textImage-blokker.
         if (typeof copy.body === "string") copy.body = markdownToRichText(copy.body);
-        // Behold låste verdier fra eksisterende blokk med samme id, ellers standard.
-        const prev = existing?.blocks.find((x) => x.id === copy.id);
-        if (prev) for (const k of locked) copy[k] = (prev as Record<string, unknown>)[k];
-        return copy;
+        return copy as { id: string; _type?: string };
       });
+      // Låste felt håndheves med samme funksjon som /api/puck og Payload-hooken.
+      const cleaned = applyLockedFields(agent.role, withIds, existing?.blocks ?? []);
       const parsed = z.array(blockSchema).safeParse(cleaned);
       if (!parsed.success)
         return text({

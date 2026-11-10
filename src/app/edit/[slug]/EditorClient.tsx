@@ -21,6 +21,14 @@ export function EditorClient({ slug, role }: Props) {
     fetch(`/api/puck?slug=${encodeURIComponent(slug)}`, { headers })
       .then(async (r) => {
         if (r.status === 401) {
+          // Payload-modus: sesjonen mangler → serveren redirecter til /admin/login; her bare meld fra.
+          if (
+            document.cookie.includes("payload-token") ||
+            !window.confirm("Ingen tilgang. Logg inn med editor-nøkkel?")
+          ) {
+            setStatus("Ikke autorisert. Logg inn i CMS-et og last siden på nytt.");
+            return null;
+          }
           const k = window.prompt("Editor-nøkkel");
           if (k) {
             sessionStorage.setItem("editor-key", k);

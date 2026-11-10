@@ -91,3 +91,35 @@ describe("siteUrl", () => {
     expect(siteUrl("https://cdn.example/a.png")).toBe("https://cdn.example/a.png");
   });
 });
+
+describe("applyLockedFields", () => {
+  it("fjerner låste felt for editor, beholder verdi fra eksisterende blokk, lar owner være", async () => {
+    const { applyLockedFields, lockedBlockFields } =
+      await import("@/content/permissions");
+    const locked = lockedBlockFields.hero[0];
+    const incoming = [{ id: "b1", _type: "hero", heading: "Ny", [locked]: "hacket" }];
+    const existing = [{ id: "b1", _type: "hero", [locked]: "original" }];
+    expect(
+      (applyLockedFields("editor", incoming, existing)[0] as Record<string, unknown>)[
+        locked
+      ],
+    ).toBe("original");
+    expect(
+      (applyLockedFields("editor", incoming, [])[0] as Record<string, unknown>)[locked],
+    ).toBeUndefined();
+    expect(
+      (applyLockedFields("agent", incoming, existing)[0] as Record<string, unknown>)[
+        locked
+      ],
+    ).toBe("original");
+    expect(
+      (applyLockedFields("owner", incoming, existing)[0] as Record<string, unknown>)[
+        locked
+      ],
+    ).toBe("hacket");
+    expect(
+      (applyLockedFields("editor", incoming, existing)[0] as Record<string, unknown>)
+        .heading,
+    ).toBe("Ny");
+  });
+});
