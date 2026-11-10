@@ -20,6 +20,7 @@ Dette repoet følger **Standard for nettsideutvikling**. Les denne filen før du
 | `pnpm seed` | Skriver eksempelinnhold til mock-adapteren |
 | `docker compose --profile wordpress up` | WordPress lokalt på :8080 |
 | `scripts/wp-seed.sh "<wp-cli>"` | Importerer mock-innhold til WordPress med site-core |
+| `pnpm dev` + `curl -X POST localhost:3000/api/seed -H "x-payload-secret: $PAYLOAD_SECRET"` | Seeder Payload (SQLite lokalt). Admin på /admin |
 
 ## Arkitektur – de tre lagene
 
@@ -27,6 +28,7 @@ Dette repoet følger **Standard for nettsideutvikling**. Les denne filen før du
 2. **Innholdslaget / kontrakten** (`src/content`) – `types.ts` er utledet fra Zod-skjemaene i `schema/`; `index.ts` eksponerer `getPage`, `getArticles`, `getArticle`, `getPeople`, `getMenu`, `getSiteSettings`, `getBrandGuide`, `getPreviewContext`.
 3. **Adaptere** (`src/content/adapters/<cms>`) – én per CMS, implementerer `ContentAdapter`.
    - `wordpress/`: `queries.ts` (WPGraphQL), `normalize.ts` (rene funksjoner, testes med fixtures), `index.ts`. Pluginen i `wordpress/plugins/site-core` er den andre halvdelen; endrer du et felt, endre begge.
+   - `payload/`: `normalize.ts` (Lexical → RichText m.m.), `index.ts` (lokalt API). Collections/globals i `src/payload/` speiler Zod-skjemaene; endrer du et felt, endre begge. Admin-UI i `src/app/(payload)`. Rettigheter i `src/payload/access.ts` leser `permissions.ts`.
 
 Regler:
 

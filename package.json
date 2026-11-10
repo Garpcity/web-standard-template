@@ -19,20 +19,31 @@
     "check": "pnpm lint && pnpm typecheck && pnpm format:check && pnpm test",
     "generate:schema": "tsx scripts/generate-schema.ts",
     "seed": "tsx scripts/seed.ts",
-    "setup": "tsx scripts/setup.ts"
+    "setup": "tsx scripts/setup.ts",
+    "payload": "payload",
+    "generate:types": "payload generate:types",
+    "generate:importmap": "payload generate:importmap",
+    "seed:payload": "tsx scripts/seed-payload.mts"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",
     "@fontsource-variable/inter-tight": "^5.3.0",
+    "@payloadcms/db-postgres": "3.93.0",
+    "@payloadcms/db-sqlite": "3.93.0",
+    "@payloadcms/next": "3.93.0",
+    "@payloadcms/richtext-lexical": "3.93.0",
     "@puckeditor/core": "0.24.0",
     "clsx": "2.1.1",
+    "graphql": "^16.15.0",
     "lucide-react": "1.71.0",
     "motion": "14.12.0",
     "next": "16.4.6",
+    "payload": "3.93.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "schema-dts": "2.1.0",
     "server-only": "^0.0.1",
+    "sharp": "^0.35.5",
     "tailwind-merge": "3.7.0",
     "zod": "4.6.7"
   },
@@ -59,5 +70,14 @@
   "packageManager": "pnpm@10.28.0",
   "engines": {
     "node": ">=22"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "@libsql/client",
+      "libsql",
+      "better-sqlite3"
+    ]
   }
 }

@@ -39,6 +39,24 @@ export async function POST(req: Request) {
     pageUrl,
   };
 
+  // Lagres i CMS når det støtter det (Payload). WordPress: kun webhook (n8n lagrer).
+  if (process.env.CMS_PROVIDER === "payload") {
+    try {
+      const [{ getPayload }, { default: config }] = await Promise.all([
+        import("payload"),
+        import("@payload-config"),
+      ]);
+      const payload = await getPayload({ config });
+      await payload.create({
+        collection: "form-submissions",
+        data: submission,
+        overrideAccess: true,
+      });
+    } catch (err) {
+      console.error("Kunne ikke lagre innsending i Payload", err);
+    }
+  }
+
   const webhook = process.env.FORMS_WEBHOOK_URL;
   if (webhook) {
     try {

@@ -1,12 +1,6 @@
-import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { EditorClient } from "./EditorClient";
 import { siteConfig } from "../../../../site.config";
-
-export const metadata: Metadata = {
-  title: "Rediger",
-  robots: { index: false, follow: false },
-};
 
 /**
  * Visuell editor (Puck) på /edit/[slug].
