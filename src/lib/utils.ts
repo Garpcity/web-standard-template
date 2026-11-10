@@ -14,6 +14,7 @@ export function formatDate(iso: string, locale = "nb-NO") {
 }
 
 export function siteUrl(path = "/") {
+  if (/^https?:\/\//.test(path)) return path; // allerede absolutt (f.eks. Payload-media)
   const base = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(
     /\/$/,
     "",

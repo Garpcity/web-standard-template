@@ -253,3 +253,25 @@ describe("Agent-nøkler", () => {
     expect(identify(new Request("http://x"), keys)).toBeNull();
   });
 });
+
+describe("guard: tone og løfter", () => {
+  const guide = brandGuide.parse(guideJson);
+  it("stopper skrik, caps og garantier", () => {
+    const r = checkAgainstGuide(
+      "KJØP NÅ!!! Beste i verden, garantert 100% resultat.",
+      guide,
+    );
+    expect(r.ok).toBe(false);
+    expect(r.issues.map((i) => i.rule)).toEqual(
+      expect.arrayContaining([
+        "shouting",
+        "unsubstantiated-promise",
+        "unverified-number",
+      ]),
+    );
+  });
+  it("slipper rolig tekst", () => {
+    const r = checkAgainstGuide("Vi bygger nettsider du kan redigere selv.", guide);
+    expect(r.ok).toBe(true);
+  });
+});

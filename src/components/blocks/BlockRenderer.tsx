@@ -22,7 +22,9 @@ import { Model3d } from "./Model3d";
 export async function BlockRenderer({ blocks }: { blocks: Block[] }) {
   return (
     <>
-      {blocks.map(async (block) => {
+      {blocks.map(async (block, index) => {
+        // Første blokk på siden er sannsynlig over folden: bildene der skal lastes med prioritet (LCP).
+        const aboveFold = index === 0;
         switch (block._type) {
           case "hero":
             return <Hero key={block.id} block={block} />;
@@ -31,7 +33,7 @@ export async function BlockRenderer({ blocks }: { blocks: Block[] }) {
           case "textImage":
             return <TextImage key={block.id} block={block} />;
           case "cardGrid":
-            return <CardGrid key={block.id} block={block} />;
+            return <CardGrid key={block.id} block={block} aboveFold={aboveFold} />;
           case "people": {
             const people = await getPeople(block.personIds);
             return <People key={block.id} block={block} people={people} />;
@@ -41,7 +43,14 @@ export async function BlockRenderer({ blocks }: { blocks: Block[] }) {
               limit: block.limit,
               categoryId: block.categoryId,
             });
-            return <LatestArticles key={block.id} block={block} articles={articles} />;
+            return (
+              <LatestArticles
+                key={block.id}
+                block={block}
+                articles={articles}
+                aboveFold={aboveFold}
+              />
+            );
           }
           case "gallery":
             return <Gallery key={block.id} block={block} />;

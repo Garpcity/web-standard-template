@@ -83,3 +83,11 @@ describe("rettigheter", () => {
     for (const t of types) expect(lockedBlockFields[t]).toBeDefined();
   });
 });
+
+describe("siteUrl", () => {
+  it("prefikser relative stier og lar absolutte være", async () => {
+    const { siteUrl } = await import("@/lib/utils");
+    expect(siteUrl("/x")).toMatch(/^https?:\/\/.+\/x$/);
+    expect(siteUrl("https://cdn.example/a.png")).toBe("https://cdn.example/a.png");
+  });
+});

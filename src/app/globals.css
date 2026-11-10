@@ -160,6 +160,12 @@
     html.js [data-reveal="scale"]:not(.is-visible) {
       transform: scale(0.9);
     }
+    /* eager: over folden – synlig umiddelbart, animeres inn med keyframes (LCP-trygt) */
+    html.js [data-reveal="eager"]:not(.is-visible) {
+      opacity: 1;
+      transform: none;
+      animation: hero-in var(--duration-slow) var(--ease-out) both;
+    }
     /* stagger: 60 ms forskyvning per barn */
     html.js [data-stagger] > :nth-child(2) {
       --reveal-delay: 60ms;

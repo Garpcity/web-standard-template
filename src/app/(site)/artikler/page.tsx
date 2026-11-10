@@ -33,9 +33,9 @@ export default async function ArticlesPage() {
       <Section>
         <h1 className="mb-12 text-4xl font-semibold">Artikler</h1>
         <Stagger className="grid gap-10 md:grid-cols-2 lg:grid-cols-3" as="ul">
-          {articles.map((a) => (
-            <RevealChild key={a.id} as="li">
-              <ArticleCard article={a} />
+          {articles.map((a, i) => (
+            <RevealChild key={a.id} as="li" eager={i === 0}>
+              <ArticleCard article={a} priority={i === 0} headingLevel={2} />
             </RevealChild>
           ))}
         </Stagger>

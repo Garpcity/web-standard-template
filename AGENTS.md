@@ -53,6 +53,7 @@ Regler:
 - Feltnavn engelsk i kode, norske labels i CMS og Puck (`label:`).
 - Commit-meldinger på norsk, imperativ: `Legg til FAQ-blokk`.
 - Tester: enhetstest for skjema og rene funksjoner; e2e for sidetyper. Ny blokk = minst én rendertest.
+- Første bilde over folden får `priority` og `eager`-reveal (se DESIGN.md, LCP-regel). Ikoner velges fra `src/design/icons.ts`, aldri `import * as` fra lucide.
 
 ## SEO, AEO, GEO
 

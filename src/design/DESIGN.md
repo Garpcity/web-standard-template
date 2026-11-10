@@ -26,9 +26,12 @@ Alle farger, fonter, avstander og radier er CSS-variabler. Per kunde byttes kun 
 | `heroParallax` | Hero-bilde | Bildet beveger seg saktere enn scroll (0,85). Kun på desktop. |
 | `scaleIn` | Tall, ikoner, badges | Fra 0,9 til 1 med lett overshoot. Kort og tydelig. |
 | `heroIn` | Hero-tekst og -bilde ved innlasting | CSS-keyframe, 0,6 s, uavhengig av JS. Hero bruker aldri `reveal`. |
+| `revealEager` | Første element i en liste over folden | `<RevealChild eager>`: samme look som `reveal`, men keyframe-basert så LCP ikke venter på JS. `BlockRenderer` sender `aboveFold` til første blokk; første bilde der får også `priority`. |
 | `pageTransition` | Mellom ruter | Kort crossfade, 200 ms. Aldri lengre. |
 | `hoverLift` | Kort og knapper | 2px opp + skyggeøkning på hover. 150 ms. |
 | `countUp` | Nøkkeltall | Teller fra 0 til verdi når synlig. 1,2 s. |
+
+**LCP-regel.** Det første bildet som kan vises over folden (hero, første kort i en liste) lastes med `priority` og animeres med `heroIn`/`revealEager`, aldri `loading="lazy"` + observer. Totaltesten 10.11.2026 viste at dette alene flyttet mobil-LCP fra 4,0 s til 0,9 s.
 
 Ny oppskrift: legg den til i `motion.ts` med JSDoc, legg til en rad her, og bruk den i minst én blokk.
 

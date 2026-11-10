@@ -85,7 +85,8 @@ export function checkAgainstGuide(
 
   // Fakta: tall og prosenter i teksten som ikke finnes i godkjente fakta flagges.
   const approved = guide.facts.filter((f) => f.approved).map((f) => norm(f.claim));
-  const numbers = text.match(/\b\d[\d\s.,]*\s?(%|kr|kroner|kunder|år|prosent)\b/gi) ?? [];
+  const numbers =
+    text.match(/\b\d[\d\s.,]*\s?(%|\b(?:kr|kroner|kunder|år|prosent)\b)/gi) ?? [];
   for (const n of numbers) {
     const token = norm(n).replace(/\s+/g, " ").trim();
     const known = approved.some((c) =>
@@ -125,6 +126,39 @@ export function checkAgainstGuide(
         rule: "unknown-channel",
         message: `Kanalen «${opts.channel}» finnes ikke i profilmanualen.`,
       });
+  }
+
+  // Tone: skrik og garantiløfter stopper alltid, uansett profilmanual.
+  if (/[!?]{2,}/.test(text)) {
+    issues.push({
+      severity: "error",
+      rule: "shouting",
+      message: "Flere utropstegn/spørsmålstegn på rad. Skriv rolig.",
+      excerpt: snippet(text, text.search(/[!?]{2,}/)),
+    });
+  }
+  const capsWords = text.match(/\b[A-ZÆØÅ]{4,}\b/g) ?? [];
+  if (capsWords.length >= 2) {
+    issues.push({
+      severity: "error",
+      rule: "shouting",
+      message: `Ord i store bokstaver (${capsWords.slice(0, 3).join(", ")}). Bruk normal skrift.`,
+    });
+  }
+  if (
+    /\b(garanter\w*|best i verden|markedets beste|100 ?% (sikker|resultat|fornøyd))\b/i.test(
+      text,
+    )
+  ) {
+    issues.push({
+      severity: "error",
+      rule: "unsubstantiated-promise",
+      message: "Garantier og superlativer uten dokumentasjon er ikke tillatt (E-E-A-T).",
+      excerpt: snippet(
+        text,
+        text.search(/garanter|best i verden|markedets beste|100 ?%/i),
+      ),
+    });
   }
 
   if (

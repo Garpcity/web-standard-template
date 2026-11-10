@@ -5,6 +5,7 @@
  * Én registrering per blokk. Feltene speiler Zod-skjemaet i schema/blocks.ts.
  * Låste felt (permissions.ts) skjules for roller under `owner`.
  */
+import { iconNames } from "@/design/icons";
 import type { Config, Fields } from "@puckeditor/core";
 import type { Block, BlockOf, ImageRef, LinkRef } from "@/content/schema";
 import { lockedBlockFields, type Role } from "@/content/permissions";
@@ -262,7 +263,14 @@ export function buildPuckConfig(role: Role = "editor"): Config {
               id: { type: "text", label: "ID" },
               title: { type: "text", label: "Tittel" },
               text: { type: "textarea", label: "Tekst" },
-              icon: { type: "text", label: "Ikon (lucide-navn)" },
+              icon: {
+                type: "select",
+                label: "Ikon",
+                options: [
+                  { label: "Ingen", value: "" },
+                  ...iconNames.map((n) => ({ label: n, value: n })),
+                ],
+              },
               image: imageField,
               link: linkField,
             },

@@ -56,17 +56,23 @@ export function RevealChild({
   children,
   className,
   scale,
+  eager,
   as = "div",
 }: {
   children: React.ReactNode;
   className?: string;
   /** Oppskrift scaleIn i stedet for reveal. */
   scale?: boolean;
+  /**
+   * Over folden: animer inn med én gang via CSS-keyframes, uten å vente på JS/observer.
+   * Bruk på første element i lister som kan være LCP (artikkelkort, kortgrid).
+   */
+  eager?: boolean;
   as?: "div" | "li" | "article";
 }) {
   const Tag = as;
   return (
-    <Tag data-reveal={scale ? "scale" : ""} className={cn(className)}>
+    <Tag data-reveal={eager ? "eager" : scale ? "scale" : ""} className={cn(className)}>
       {children}
     </Tag>
   );

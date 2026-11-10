@@ -17,6 +17,8 @@ import {
 import type { ContentAdapter } from "@/content/types";
 import { lockedBlockFields } from "@/content/permissions";
 import { siteConfig } from "../../site.config";
+import { markdownToRichText } from "@/content/markdown";
+import { iconNames } from "@/design/icons";
 import { checkAgainstGuide } from "./guard";
 import { prompts } from "./prompts";
 import type { AgentIdentity } from "./auth";
@@ -167,10 +169,11 @@ export function createMcpServer({ adapter, agent, tokensCss }: Deps): McpServer 
     {
       title: "Design-tokens",
       description:
-        "Farger, typografi og avstander (lesing). Agenter endrer aldri tokens.",
+        "Farger, typografi, avstander og tilgjengelige ikonnavn (lesing). Agenter endrer aldri tokens.",
       inputSchema: {},
     },
-    async () => text(tokensCss ?? "tokens.css ikke tilgjengelig"),
+    async () =>
+      text({ icons: iconNames, tokensCss: tokensCss ?? "tokens.css ikke tilgjengelig" }),
   );
 
   /* ---------- Sjekk ---------- */
@@ -224,6 +227,8 @@ export function createMcpServer({ adapter, agent, tokensCss }: Deps): McpServer 
         const locked = new Set(lockedBlockFields[type] ?? []);
         const copy: Record<string, unknown> = { id: `b-${i + 1}`, ...b };
         for (const k of locked) delete copy[k];
+        // Agenter kan sende body som Markdown i text/textImage-blokker.
+        if (typeof copy.body === "string") copy.body = markdownToRichText(copy.body);
         // Behold låste verdier fra eksisterende blokk med samme id, ellers standard.
         const prev = existing?.blocks.find((x) => x.id === copy.id);
         if (prev) for (const k of locked) copy[k] = (prev as Record<string, unknown>)[k];
@@ -272,13 +277,16 @@ export function createMcpServer({ adapter, agent, tokensCss }: Deps): McpServer 
     {
       title: "Lag artikkelutkast",
       description:
-        "Oppretter en artikkel som UTKAST. summary = svaret i 40–60 ord. body = RichText-noder. Kilder inline + i sources.",
+        "Oppretter en artikkel som UTKAST. summary = svaret i 40–60 ord. body = Markdown (## overskrifter, avsnitt, lister, > sitat, **fet**, [lenke](url)) – eller RichText-noder hvis du kjenner formatet. Kilder inline + i sources.",
       inputSchema: {
         slug: slugSchema,
         title: z.string().min(1).max(140),
         summary: z.string().min(1).max(400),
         authorSlug: z.string().min(1),
-        body: z.array(z.record(z.string(), z.unknown())).min(1),
+        body: z.union([
+          z.string().min(1),
+          z.array(z.record(z.string(), z.unknown())).min(1),
+        ]),
         sources: z
           .array(z.object({ label: z.string(), href: z.string().url() }))
           .default([]),
@@ -305,7 +313,9 @@ export function createMcpServer({ adapter, agent, tokensCss }: Deps): McpServer 
         return text({
           error: `Fant ikke forfatter "${authorSlug}". Bruk search_content for å finne personer.`,
         });
-      const parsedBody = richTextSchema.safeParse(body);
+      const parsedBody = richTextSchema.safeParse(
+        typeof body === "string" ? markdownToRichText(body) : body,
+      );
       if (!parsedBody.success)
         return text({
           error: "Ugyldig body (RichText)",
