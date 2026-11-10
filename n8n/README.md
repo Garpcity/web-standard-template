@@ -21,3 +21,7 @@ Bytt verdiene i «Innstillinger»-noden i hver flyt (e-post, domene, kjernespør
 ## Status 2026-11-10
 - 01 og 02 er importert i n8n Cloud for AD.Moment (ikke aktivert; sett webhookSecret og bekreft credentials først).
 - 03 venter på Search Console-credential og CrUX-nøkkel.
+
+## Loopen for AI-synlighet (02)
+
+Flyten henter kjernespørsmål fra Studio (`GET /api/sites/{slug}/visibility`), måler, og leverer tilbake (`POST` samme rute). Studio skriver `ai_cited_rate`/`ai_mentioned_rate` og oppretter én `content`-oppgave per spørsmål uten sitering. Spørsmål vedlikeholdes i Studio, ikke i n8n. Credential: «Custom Auth» med header `x-studio-key`.

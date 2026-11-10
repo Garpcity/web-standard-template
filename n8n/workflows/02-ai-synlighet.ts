@@ -1,11 +1,16 @@
 /**
  * Nettside – månedlig AI-synlighet (GEO-måling)
- * Kjører kundens kjernespørsmål mot en AI-motor med websøk, sjekker om domenet siteres
- * eller nevnes, og sender rapport + liste over spørsmål uten sitering (= innholdsoppgaver).
+ * Loopen går gjennom Studio:
+ *   1. GET  {studio}/api/sites/{slug}/visibility → kjernespørsmål, domene, merke, e-post
+ *   2. hvert spørsmål mot en AI-motor med websøk; sitert/nevnt vurderes
+ *   3. POST {studio}/api/sites/{slug}/visibility → Studio skriver ai_cited_rate og lager
+ *      én content-oppgave per spørsmål uten sitering
+ *   4. rapport på e-post
  *
- * Bytt per kunde: domain, brand, notifyEmail, questions (20–50 spørsmål), credentials.
- * Utvidelse: legg til Perplexity (HTTP, sonar-modell) og Gemini som parallelle grener og slå sammen.
- * Importert i n8n Cloud 2026-11-10 som «AD.Moment – nettside: månedlig AI-synlighet».
+ * Per kunde: bare studioUrl + siteSlug i «Studio»-noden. Spørsmål vedlikeholdes i Studio.
+ * Credentials: httpHeaderAuth med header x-studio-key (Studio), openAiApi, smtp.
+ * Utvidelse: Perplexity (sonar) og Gemini som parallelle grener; send engine-feltet til Studio.
+ * Importert i n8n Cloud 2026-11-10 som «AD.Moment – nettside: månedlig AI-synlighet (via Studio)» (1sdcYcKDHJ2XE1Xt).
  */
 import { workflow, node, trigger, expr } from "@n8n/workflow-sdk";
 
@@ -20,28 +25,42 @@ const monthly = trigger({
   },
 });
 
-const config = node({
+const studio = node({
   type: "n8n-nodes-base.set",
   version: 3.4,
   config: {
-    name: "Kjernespørsmål og domene",
+    name: "Studio",
     parameters: {
       mode: "manual",
       includeOtherFields: false,
       assignments: {
         assignments: [
-          { id: "c1", name: "domain", value: "kunde.no", type: "string" },
-          { id: "c2", name: "brand", value: "Kundenavn", type: "string" },
-          { id: "c3", name: "notifyEmail", value: "post@kunde.no", type: "string" },
           {
-            id: "c4",
-            name: "questions",
-            value: '["Spørsmål 1","Spørsmål 2"]',
-            type: "array",
+            id: "s1",
+            name: "studioUrl",
+            value: "https://studio.admoment.no",
+            type: "string",
           },
+          { id: "s2", name: "siteSlug", value: "admoment", type: "string" },
         ],
       },
     },
+  },
+});
+
+const fetchConfig = node({
+  type: "n8n-nodes-base.httpRequest",
+  version: 4.4,
+  config: {
+    name: "Hent kjernespørsmål fra Studio",
+    parameters: {
+      method: "GET",
+      url: expr("={{ $json.studioUrl }}/api/sites/{{ $json.siteSlug }}/visibility"),
+      authentication: "genericCredentialType",
+      genericAuthType: "httpTemplatedCustomAuth", // credential: header x-studio-key = STUDIO_API_KEY
+      options: { timeout: 15000 },
+    },
+    // credentials: { httpHeaderAuth: { id: '<studio-key-credential-id>', name: 'Studio x-studio-key' } },
   },
 });
 
@@ -92,9 +111,9 @@ const texts = []; const urls = [];
 for (const out of res.output || []) for (const c of out.content || []) { if (c.text) texts.push(c.text); for (const a of c.annotations || []) if (a.url) urls.push(a.url); }
 const text = texts.join('\\n');
 const domain = (cfg.domain || '').toLowerCase(); const brand = (cfg.brand || '').toLowerCase();
-const cited = urls.some(u => u.toLowerCase().includes(domain));
-const mentioned = text.toLowerCase().includes(brand) || text.toLowerCase().includes(domain);
-return { json: { question: cfg.question, mentioned, cited, citedUrls: urls.filter(u => u.toLowerCase().includes(domain)), allSources: urls.slice(0, 8), answerPreview: text.slice(0, 300), domain, brand, notifyEmail: cfg.notifyEmail, engine: 'openai' } };`,
+const cited = domain !== '' && urls.some(u => u.toLowerCase().includes(domain));
+const mentioned = (brand !== '' && text.toLowerCase().includes(brand)) || (domain !== '' && text.toLowerCase().includes(domain));
+return { json: { question: cfg.question, mentioned, cited, citedUrls: urls.filter(u => domain && u.toLowerCase().includes(domain)), allSources: urls.slice(0, 8), answerPreview: text.slice(0, 300), domain, brand, notifyEmail: cfg.notifyEmail, engine: 'openai' } };`,
     },
   },
 });
@@ -112,8 +131,28 @@ const month = new Date().toISOString().slice(0, 7);
 const lines = rows.map(r => \`\${r.cited ? '✅' : r.mentioned ? '🟡' : '❌'} \${r.question}\${r.cited ? ' → ' + r.citedUrls.join(', ') : ''}\`);
 const missing = rows.filter(r => !r.cited).map(r => '- ' + r.question);
 const text = [\`AI-synlighet \${month} for \${rows[0]?.brand}\`, \`Sitert: \${cited}/\${total} (\${Math.round(100*cited/Math.max(total,1))} %) · Nevnt: \${mentioned}/\${total}\`, '', ...lines, '', 'Neste måneds innholdsoppgaver (spørsmål uten sitering):', ...missing].join('\\n');
-return [{ json: { month, total, cited, mentioned, rate: cited / Math.max(total, 1), text, notifyEmail: rows[0]?.notifyEmail, brand: rows[0]?.brand, rows } }];`,
+const studio = $('Studio').first().json;
+return [{ json: { month, total, cited, mentioned, rate: cited / Math.max(total, 1), text, notifyEmail: rows[0]?.notifyEmail || studio.notifyEmail, brand: rows[0]?.brand, studioUrl: studio.studioUrl, siteSlug: studio.siteSlug, report: { period: month, engine: rows[0]?.engine || 'openai', rows: rows.map(r => ({ question: r.question, cited: r.cited, mentioned: r.mentioned, citedUrls: r.citedUrls, allSources: r.allSources })) } } }];`,
     },
+  },
+});
+
+const deliver = node({
+  type: "n8n-nodes-base.httpRequest",
+  version: 4.4,
+  config: {
+    name: "Lever til Studio (metrikker + innholdsoppgaver)",
+    parameters: {
+      method: "POST",
+      url: expr("={{ $json.studioUrl }}/api/sites/{{ $json.siteSlug }}/visibility"),
+      authentication: "genericCredentialType",
+      genericAuthType: "httpTemplatedCustomAuth", // credential: header x-studio-key = STUDIO_API_KEY
+      sendBody: true,
+      specifyBody: "json",
+      jsonBody: expr("={{ JSON.stringify($json.report) }}"),
+      options: { timeout: 30000 },
+    },
+    // credentials: { httpHeaderAuth: { id: '<studio-key-credential-id>', name: 'Studio x-studio-key' } },
   },
 });
 
@@ -124,12 +163,14 @@ const email = node({
     name: "Send rapport",
     parameters: {
       fromEmail: "noreply@kunde.no",
-      toEmail: expr("{{ $json.notifyEmail }}"),
+      toEmail: expr("{{ $('Bygg rapport').first().json.notifyEmail }}"),
       subject: expr(
-        "AI-synlighet {{ $json.month }}: {{ $json.cited }}/{{ $json.total }} spørsmål sitert – {{ $json.brand }}",
+        "AI-synlighet {{ $('Bygg rapport').first().json.month }}: {{ $('Bygg rapport').first().json.cited }}/{{ $('Bygg rapport').first().json.total }} spørsmål sitert – {{ $('Bygg rapport').first().json.brand }}",
       ),
       emailFormat: "text",
-      text: expr("{{ $json.text }}"),
+      text: expr(
+        "{{ $('Bygg rapport').first().json.text }}\n\nStudio opprettet {{ $json.tasksCreated }} nye innholdsoppgaver.",
+      ),
       options: {},
     },
     // credentials: { smtp: { id: '<smtp-credential-id>', name: 'SMTP' } },
@@ -138,9 +179,11 @@ const email = node({
 
 export default workflow("nettside-ai-synlighet", "Nettside – månedlig AI-synlighet")
   .add(monthly)
-  .to(config)
+  .to(studio)
+  .to(fetchConfig)
   .to(split)
   .to(ask)
   .to(evaluate)
   .to(aggregate)
+  .to(deliver)
   .to(email);
