@@ -1,0 +1,10 @@
+# Caddy henter Let's Encrypt-sertifikat automatisk for begge domener.
+{$SITE_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy site:3000
+}
+
+{$STUDIO_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy studio:3100
+}

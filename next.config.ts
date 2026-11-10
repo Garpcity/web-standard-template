@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import { withPayload } from "@payloadcms/next/withPayload";
 
 const nextConfig: NextConfig = {
+  output: "standalone", // Docker: kopier .next/standalone + .next/static + public
   reactStrictMode: true,
   // Next 16 vil generere AGENTS.md selv; vår er håndskrevet og er kilden.
   agentRules: false,

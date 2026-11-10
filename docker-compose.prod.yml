@@ -1,0 +1,83 @@
+# Produksjon på én VPS (ServeTheWorld): nettside + Studio + Postgres bak Caddy (automatisk HTTPS).
+# Bruk: cp .env.prod.example .env.prod && rediger → docker compose -f docker-compose.prod.yml --env-file .env.prod up -d --build
+# Se docs/hosting-servetheworld.md for stegvis veiledning.
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    environment:
+      SITE_DOMAIN: ${SITE_DOMAIN}
+      STUDIO_DOMAIN: ${STUDIO_DOMAIN}
+    depends_on: [site, studio]
+
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: app
+    volumes:
+      [
+        "postgres-data:/var/lib/postgresql/data",
+        "./deploy/init-db.sql:/docker-entrypoint-initdb.d/init.sql:ro",
+      ]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  site:
+    build:
+      context: .
+      args:
+        CMS_PROVIDER: payload
+        NEXT_PUBLIC_SITE_URL: https://${SITE_DOMAIN}
+    restart: unless-stopped
+    environment:
+      CMS_PROVIDER: payload
+      NEXT_PUBLIC_SITE_URL: https://${SITE_DOMAIN}
+      DATABASE_URL: postgres://app:${POSTGRES_PASSWORD}@postgres:5432/site
+      PAYLOAD_SECRET: ${SITE_PAYLOAD_SECRET}
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET}
+      AGENT_API_KEYS: ${AGENT_API_KEYS}
+      FORMS_WEBHOOK_URL: ${FORMS_WEBHOOK_URL}
+      FORMS_WEBHOOK_SECRET: ${FORMS_WEBHOOK_SECRET}
+      STUDIO_URL: http://studio:3100
+      STUDIO_API_KEY: ${STUDIO_API_KEY}
+      SITE_SLUG: ${SITE_SLUG}
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD}
+    volumes: ["site-media:/app/public/media"]
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  studio:
+    build:
+      context: ../web-studio
+    restart: unless-stopped
+    environment:
+      STUDIO_URL: https://${STUDIO_DOMAIN}
+      DATABASE_URL: postgres://app:${POSTGRES_PASSWORD}@postgres:5432/studio
+      PAYLOAD_SECRET: ${STUDIO_PAYLOAD_SECRET}
+      STUDIO_API_KEY: ${STUDIO_API_KEY}
+      STUDIO_MCP_KEY: ${STUDIO_MCP_KEY}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      GITHUB_ORG: ${GITHUB_ORG}
+      TEMPLATE_REPO: web-standard-template
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD}
+    depends_on:
+      postgres: { condition: service_healthy }
+
+volumes:
+  postgres-data:
+  site-media:
+  caddy-data:
+  caddy-config:

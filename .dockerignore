@@ -1,0 +1,15 @@
+node_modules
+.next
+.git
+*.db
+*.db-*
+payload.db*
+tests
+playwright-report
+test-results
+.env
+.env.*
+!.env.example
+n8n
+wordpress
+docs

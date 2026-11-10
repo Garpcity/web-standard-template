@@ -66,7 +66,7 @@ src/
 generated/json-schema/    Generert fra Zod – kilde for ACF/Payload-definisjoner
 scripts/                  seed, generate-schema, setup
 tests/                    unit/ (Vitest), e2e/ (Playwright)
-docs/                     launch-checklist, seo-playbook, decisions/
+docs/                     launch-checklist, seo-playbook, hosting-servetheworld, mcp-for-kunder, decisions/
 ```
 
 ## Avvik fra standard
