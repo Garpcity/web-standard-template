@@ -38,6 +38,7 @@ Regler:
 - Rik tekst er alltid normalisert `RichTextNode[]`; render med `<RichText>`.
 - Bilder er alltid `ImageRef` (`url, alt, width, height`) og rendres med `next/image`.
 - Innhold revalideres on-demand: `revalidateContent(kind, slug)` i `src/lib/revalidate.ts` eier reglene. Payload kaller den fra hooks; WordPress-pluginen kaller `POST /api/revalidate` (REVALIDATE_SECRET). Sider har `revalidate = 3600` som sikkerhetsnett. Ny rute som viser innhold → legg den til i `revalidateContent`.
+- Payload er primær-CMS for nye kunder (ADR 0002). WordPress er migrasjonsspor: hold adapteren og pluginen i takt med kontrakten, men nye funksjoner lander i Payload først.
 
 ## Design
 

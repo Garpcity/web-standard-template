@@ -12,6 +12,8 @@ Startpunkt for alle nettsider bygget etter **Standard for nettsideutvikling**. K
 - **Kvalitet:** ESLint, Prettier, Vitest, Playwright, Lighthouse CI (100/100/100/100 på templaten)
 - **Lisens:** MIT. Alle avhengigheter i kjernen er MIT/Apache/GPL og kan selvhostes.
 
+> **CMS-valg:** Payload er standard for nye kunder; WordPress-sporet er for migrasjon fra eksisterende WordPress (se `docs/decisions/0002-payload-primaer-cms.md`).
+
 ## Kom i gang
 
 ```bash
