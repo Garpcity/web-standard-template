@@ -14,8 +14,8 @@ to domener/subdomener du kontrollerer DNS for, og GitHub-tilgang til de to repoe
 2. Noter den offentlige IPv4-adressen.
 3. Opprett A-poster i DNS (ServeTheWorld DNS eller der domenet ligger):
    - `admoment.no` → IP (og `www` som CNAME til `admoment.no`)
-   - `studio.admoment.no` → IP
-4. Vent til `dig +short studio.admoment.no` viser IP-en før steg 5 (Caddy trenger det for sertifikat).
+   - `studio.trygo.no` → IP
+4. Vent til `dig +short studio.trygo.no` viser IP-en før steg 5 (Caddy trenger det for sertifikat).
 
 ## 2. Grunnsikring av serveren (10 min)
 
@@ -90,7 +90,7 @@ Første bygg tar 5–10 minutter. Når loggene viser `Ready` for `site` og `stud
 
 ```bash
 curl -I https://admoment.no/robots.txt          # 200, gyldig sertifikat
-curl -I https://studio.admoment.no/admin/login   # 200
+curl -I https://studio.trygo.no/admin/login   # 200
 ```
 
 Feilsøking: `docker compose ... ps` viser helsestatus; `docker compose ... logs caddy` viser
@@ -116,10 +116,10 @@ miljø (production) med samme URL – da måler helse-sjekken riktig adresse.
 1. I n8n: *Credentials → New → Custom Auth*. Navn «Studio x-studio-key». JSON:
    `{ "headers": { "x-studio-key": "<STUDIO_API_KEY fra .env.prod>" } }`.
 2. Åpne flyten «AD.Moment – nettside: månedlig AI-synlighet (via Studio)». I noden «Studio»:
-   sett `studioUrl` til `https://studio.admoment.no`. Velg credentialen på «Hent kjernespørsmål fra
+   sett `studioUrl` til `https://studio.trygo.no`. Velg credentialen på «Hent kjernespørsmål fra
    Studio» og «Lever til Studio». Kjør flyten manuelt én gang og se at Studio får metrikker og
    innholdsoppgaver.
-3. Lag en enkel «hvert 5. minutt»-flyt (Schedule → HTTP POST `https://studio.admoment.no/api/health/run`
+3. Lag en enkel «hvert 5. minutt»-flyt (Schedule → HTTP POST `https://studio.trygo.no/api/health/run`
    med samme credential). Det er helse-sjekken.
 4. Skjema-flyten (01): sett `webhookSecret` i n8n lik `FORMS_WEBHOOK_SECRET`.
 5. Arkiver den gamle AI-synlighet-flyten.
@@ -127,7 +127,7 @@ miljø (production) med samme URL – da måler helse-sjekken riktig adresse.
 ## 9. Kundens agenter (MCP)
 
 Gi kunden `https://admoment.no/api/mcp` og nøkkelen fra `AGENT_API_KEYS` (format `navn:nøkkel`).
-Instruksjonene ligger i `docs/mcp-for-kunder.md`. Studios egen MCP: `https://studio.admoment.no/api/mcp`
+Instruksjonene ligger i `docs/mcp-for-kunder.md`. Studios egen MCP: `https://studio.trygo.no/api/mcp`
 med `STUDIO_MCP_KEY` – for deg, ikke kunden.
 
 ## 10. Oppdateringer og drift

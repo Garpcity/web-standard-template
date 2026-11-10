@@ -38,7 +38,7 @@ const studio = node({
           {
             id: "s1",
             name: "studioUrl",
-            value: "https://studio.admoment.no",
+            value: "https://studio.trygo.no",
             type: "string",
           },
           { id: "s2", name: "siteSlug", value: "admoment", type: "string" },
