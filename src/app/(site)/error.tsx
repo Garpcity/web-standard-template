@@ -14,7 +14,7 @@ export default function ErrorPage({
       <p className="text-sm text-fg-muted">500</p>
       <h1 className="mt-2 text-4xl font-semibold">Noe gikk galt</h1>
       <p className="mt-4 text-lg text-fg-muted">
-        Vi har fått beskjed. Prøv igjen om et øyeblikk.
+        Feilen er logget hos oss. Prøv igjen om et øyeblikk, eller gå til forsiden.
       </p>
       <div className="mt-8 flex gap-3">
         <Button onClick={reset}>Prøv igjen</Button>

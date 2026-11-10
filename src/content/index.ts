@@ -3,6 +3,7 @@
  * Hvilken adapter som er aktiv velges med CMS_PROVIDER.
  */
 import "server-only";
+import { withLastKnownGood } from "@/lib/resilience";
 import type { ContentAdapter } from "./types";
 
 export type * from "./types";
@@ -33,9 +34,10 @@ export function getAdapter(): Promise<ContentAdapter> {
   return adapterPromise;
 }
 
-export const getSiteSettings = async () => (await getAdapter()).getSiteSettings();
+export const getSiteSettings = async () =>
+  withLastKnownGood("settings", async () => (await getAdapter()).getSiteSettings());
 export const getMenu = async (name: "main" | "footer" | "legal") =>
-  (await getAdapter()).getMenu(name);
+  withLastKnownGood(`menu:${name}`, async () => (await getAdapter()).getMenu(name));
 export const getPage = async (slug: string, opts?: { includeDrafts?: boolean }) =>
   (await getAdapter()).getPage(slug, opts);
 export const getPages = async () => (await getAdapter()).getPages();

@@ -81,6 +81,7 @@ Regler:
 - Nettsiden eier: innhold, visning, skjemainnsending (lagring + webhook).
 - n8n eier: alt som skjer *etter* at data er sendt – CRM, e-post, varsler, rapporter, overvåking.
 - Nettsiden kaller aldri eksterne tjenester direkte fra en handler; den poster til `FORMS_WEBHOOK_URL`.
+- Nedetid: `getSiteSettings`/`getMenu` serverer sist kjente verdi via `withLastKnownGood`; uhåndterte serverfeil går via `instrumentation.ts` → `reportError` → Studio (`STUDIO_URL`, `STUDIO_API_KEY`, `SITE_SLUG`), som lager varsel. Lov aldri i UI noe koden ikke gjør.
 
 ## Gjør aldri
 
