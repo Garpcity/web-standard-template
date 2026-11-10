@@ -19,12 +19,14 @@ Dette repoet følger **Standard for nettsideutvikling**. Les denne filen før du
 | `pnpm generate:schema` | Regenererer `generated/` fra Zod-skjemaene. Kjør etter skjemaendring. |
 | `pnpm seed` | Skriver eksempelinnhold til mock-adapteren |
 | `docker compose --profile wordpress up` | WordPress lokalt på :8080 |
+| `scripts/wp-seed.sh "<wp-cli>"` | Importerer mock-innhold til WordPress med site-core |
 
 ## Arkitektur – de tre lagene
 
 1. **Frontend** (`src/app`, `src/components`) – vet ingenting om CMS.
 2. **Innholdslaget / kontrakten** (`src/content`) – `types.ts` er utledet fra Zod-skjemaene i `schema/`; `index.ts` eksponerer `getPage`, `getArticles`, `getArticle`, `getPeople`, `getMenu`, `getSiteSettings`, `getBrandGuide`, `getPreviewContext`.
 3. **Adaptere** (`src/content/adapters/<cms>`) – én per CMS, implementerer `ContentAdapter`.
+   - `wordpress/`: `queries.ts` (WPGraphQL), `normalize.ts` (rene funksjoner, testes med fixtures), `index.ts`. Pluginen i `wordpress/plugins/site-core` er den andre halvdelen; endrer du et felt, endre begge.
 
 Regler:
 
