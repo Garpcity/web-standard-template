@@ -1,0 +1,95 @@
+# AI-oppgave: Studio (eller en person) oppretter et issue med label `ai-task`.
+# Denne workflowen lager en branch, kjører valgt agent-runner, og åpner PR med `pnpm check` som port.
+# Runner er pluggbar: sett repo-variabel AI_RUNNER til `claude-code`, `codex`, `aider` eller `none` (manuell).
+# LLM-nøkler legges som secrets (ANTHROPIC_API_KEY / OPENAI_API_KEY). Ingen nøkkel → workflowen avslutter med beskjed.
+name: AI-oppgave
+
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: Issue-nummer
+        required: true
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  run:
+    if: github.event_name == 'workflow_dispatch' || github.event.label.name == 'ai-task'
+    runs-on: ubuntu-latest
+    env:
+      ISSUE: ${{ github.event.issue.number || inputs.issue }}
+      AI_RUNNER: ${{ vars.AI_RUNNER || 'none' }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+
+      - name: Hent oppgaven
+        id: issue
+        env: { GH_TOKEN: ${{ github.token }} }
+        run: |
+          gh issue view "$ISSUE" --json title,body > /tmp/issue.json
+          echo "title=$(jq -r .title /tmp/issue.json)" >> "$GITHUB_OUTPUT"
+          { echo "# Oppgave"; jq -r .title /tmp/issue.json; echo; jq -r .body /tmp/issue.json; echo; echo "---"; echo "Følg AGENTS.md. Endre bare det oppgaven ber om. Kjør \`pnpm check\` og fiks feil før du er ferdig."; } > /tmp/task.md
+          git checkout -b "ai-task/$ISSUE"
+          git config user.name "ai-task[bot]"
+          git config user.email "ai-task@users.noreply.github.com"
+
+      - name: Kjør agent (claude-code)
+        if: env.AI_RUNNER == 'claude-code'
+        env: { ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }} }
+        run: |
+          test -n "$ANTHROPIC_API_KEY" || { echo "ANTHROPIC_API_KEY mangler"; exit 1; }
+          npm i -g @anthropic-ai/claude-code
+          claude -p "$(cat /tmp/task.md)" --allowedTools "Edit,Write,Read,Bash(pnpm *)" --max-turns 60
+
+      - name: Kjør agent (codex)
+        if: env.AI_RUNNER == 'codex'
+        env: { OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }} }
+        run: |
+          test -n "$OPENAI_API_KEY" || { echo "OPENAI_API_KEY mangler"; exit 1; }
+          npm i -g @openai/codex
+          codex exec --full-auto "$(cat /tmp/task.md)"
+
+      - name: Kjør agent (aider)
+        if: env.AI_RUNNER == 'aider'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          pipx install aider-chat
+          aider --yes-always --no-auto-commits --message-file /tmp/task.md
+
+      - name: Ingen runner konfigurert
+        if: env.AI_RUNNER == 'none'
+        env: { GH_TOKEN: ${{ github.token }} }
+        run: |
+          gh issue comment "$ISSUE" --body "Ingen AI-runner er satt opp i dette repoet (repo-variabel \`AI_RUNNER\`). Oppgaven må løses manuelt eller med lokal agent: \`git checkout -b ai-task/$ISSUE\`."
+          exit 0
+
+      - name: Kvalitetsport
+        if: env.AI_RUNNER != 'none'
+        id: check
+        continue-on-error: true
+        run: pnpm check
+
+      - name: Opprett PR
+        if: env.AI_RUNNER != 'none'
+        env: { GH_TOKEN: ${{ github.token }} }
+        run: |
+          if git diff --quiet && git diff --cached --quiet && [ -z "$(git status --porcelain)" ]; then
+            gh issue comment "$ISSUE" --body "Agenten ($AI_RUNNER) gjorde ingen endringer."; exit 0; fi
+          git add -A && git commit -m "AI-oppgave #$ISSUE: ${{ steps.issue.outputs.title }}" -m "Runner: $AI_RUNNER" -m "Closes #$ISSUE"
+          git push -u origin "ai-task/$ISSUE"
+          STATUS="✅ \`pnpm check\` grønn"; [ "${{ steps.check.outcome }}" = "success" ] || STATUS="⚠️ \`pnpm check\` feilet – se Actions-loggen"
+          gh pr create --title "AI: ${{ steps.issue.outputs.title }}" --body "$(printf 'Løser #%s.\n\nRunner: %s\n%s\n\n**Antakelser og avvik:** se agentens kommentar i loggen.\n\nPreview-lenke legges til av CI.' "$ISSUE" "$AI_RUNNER" "$STATUS")" --draft
