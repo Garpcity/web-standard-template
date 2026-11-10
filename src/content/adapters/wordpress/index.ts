@@ -44,6 +44,7 @@ export function createGraphQLFetcher(url: string, revalidate = 60): GraphQLFetch
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ query, variables }),
+      signal: AbortSignal.timeout(8000),
       next: { revalidate, tags: ["wordpress"] },
     });
     if (!res.ok) throw new Error(`WPGraphQL ${res.status}: ${await res.text()}`);
@@ -173,6 +174,12 @@ export function createWordPressAdapter(
     },
 
     async savePage(p: Page) {
+      // REST-endepunktet skriver rett i den publiserte siden og kjenner ikke status.
+      // Utkast fra agenter (MCP) må derfor avvises til pluginen får egen utkastlagring.
+      if (p.status === "draft")
+        throw new Error(
+          "WordPress-adapteren støtter ikke utkast via REST ennå. Bruk Payload for agentforslag, eller la redaktøren lime inn i Puck.",
+        );
       if (!appUser || !appPassword)
         throw new Error("WORDPRESS_APP_USER/WORDPRESS_APP_PASSWORD mangler for lagring.");
       const res = await fetch(

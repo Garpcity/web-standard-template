@@ -20,7 +20,13 @@ const db = databaseUrl.startsWith("postgres")
   : sqliteAdapter({ client: { url: databaseUrl || "file:./payload.db" }, push: true });
 
 export default buildConfig({
-  secret: process.env.PAYLOAD_SECRET ?? "dev-only-secret-change-me",
+  secret:
+    process.env.PAYLOAD_SECRET ??
+    (() => {
+      if (process.env.NODE_ENV === "production")
+        throw new Error("PAYLOAD_SECRET mangler");
+      return "dev-only-secret-change-me";
+    })(),
   serverURL: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   admin: {
     user: "users",

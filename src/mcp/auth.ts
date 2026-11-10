@@ -16,7 +16,10 @@ export function parseAgentKeys(
     .map((s) => s.trim())
     .filter(Boolean)) {
     const [name, key, role] = entry.split(":");
-    if (name && key) map.set(key, { name, role: (role as Role) || "agent" });
+    // Bare «agent» og «editor» kan gis via nøkkel; owner/admin krever innlogging i CMS.
+    const allowed: Role[] = ["agent", "editor"];
+    const safeRole = allowed.includes(role as Role) ? (role as Role) : "agent";
+    if (name && key) map.set(key, { name, role: safeRole });
   }
   return map;
 }

@@ -79,7 +79,7 @@ export function person(p: Person, s: SiteSettings): WithContext<SchemaPerson> {
     name: p.name,
     ...(p.role ? { jobTitle: p.role } : {}),
     ...(p.image ? { image: siteUrl(p.image.url) } : {}),
-    ...(p.email ? { email: p.email } : {}),
+    // E-post holdes utenfor offentlig JSON-LD (spam-høsting); den vises i UI der kunden vil.
     worksFor: { "@id": organizationId(), "@type": "Organization", name: s.name },
     ...(p.knowsAbout.length ? { knowsAbout: p.knowsAbout } : {}),
     ...(p.credentials.length

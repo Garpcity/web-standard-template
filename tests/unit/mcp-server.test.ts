@@ -141,6 +141,52 @@ describe("MCP-server", () => {
     expect(saved.articles[0].authorId).toBe("p-1");
   });
 
+  it("agentforslag rører aldri en publisert side (lagres som <slug>--forslag)", async () => {
+    const base = createMockAdapter();
+    const published = await base.getPage("tjenester");
+    expect(published?.status).toBe("published");
+    const before = JSON.stringify(published);
+    const r = jsonOf(
+      await client.callTool({
+        name: "create_draft_page",
+        arguments: {
+          slug: "tjenester",
+          title: "Tjenester (forslag fra agent)",
+          blocks: [{ _type: "hero", id: "b1", heading: "Nytt forslag", links: [] }],
+        },
+      }),
+    );
+    expect(r.ok).toBe(true);
+    expect(r.slug).toBe("tjenester--forslag");
+    expect(r.note).toContain("ble ikke endret");
+    const savedProposal = saved.pages.find((p) => p.slug === "tjenester--forslag");
+    expect(savedProposal?.status).toBe("draft");
+    expect(savedProposal?.seo.noindex).toBe(true);
+    expect(saved.pages.some((p) => p.slug === "tjenester")).toBe(false);
+    expect(JSON.stringify(await base.getPage("tjenester"))).toBe(before);
+  });
+
+  it("agentforslag rører aldri en publisert artikkel", async () => {
+    const base = createMockAdapter();
+    const [first] = await base.getArticles({ limit: 1 });
+    const r = jsonOf(
+      await client.callTool({
+        name: "create_draft_article",
+        arguments: {
+          slug: first.slug,
+          title: "Omskrevet av agent",
+          summary:
+            "Dette er et sammendrag på rundt førti ord som beskriver hva artikkelen handler om, slik at kort svar-regelen i verktøyet er tilfredsstilt og testen ikke gir unødvendige advarsler om lengde her.",
+          authorSlug: "ansatt-1",
+          body: "## Forslag\n\nNy tekst.",
+        },
+      }),
+    );
+    expect(r.ok).toBe(true);
+    expect(r.slug).toBe(`${first.slug}--forslag`);
+    expect(saved.articles.some((a) => a.slug === first.slug)).toBe(false);
+  });
+
   it("create_draft_page fjerner låste felt og lagrer som utkast", async () => {
     const r = jsonOf(
       await client.callTool({

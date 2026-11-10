@@ -1,7 +1,9 @@
 # AI-oppgave: Studio (eller en person) oppretter et issue med label `ai-task`.
-# Denne workflowen lager en branch, kjører valgt agent-runner, og åpner PR med `pnpm check` som port.
-# Runner er pluggbar: sett repo-variabel AI_RUNNER til `claude-code`, `codex`, `aider` eller `none` (manuell).
-# LLM-nøkler legges som secrets (ANTHROPIC_API_KEY / OPENAI_API_KEY). Ingen nøkkel → workflowen avslutter med beskjed.
+# To jobber med skille på rettigheter:
+#   1. agent  – kjører valgt runner UTEN skrivetoken (contents: read), kun LLM-nøkkel; leverer diff som artefakt.
+#   2. pr     – henter diffen, kjører `pnpm check` som ekte port, og åpner utkast-PR med minimal token.
+# Runner velges med repo-variabel AI_RUNNER: claude-code | codex | aider | none (manuell).
+# Issue-tekst er upålitelig input: den går aldri inn i shell-uttrykk, bare via env og filer.
 name: AI-oppgave
 
 on:
@@ -13,22 +15,25 @@ on:
         description: Issue-nummer
         required: true
 
-permissions:
-  contents: write
-  issues: write
-  pull-requests: write
+permissions: {}
 
 jobs:
-  run:
+  agent:
     if: github.event_name == 'workflow_dispatch' || github.event.label.name == 'ai-task'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
     env:
       ISSUE: ${{ github.event.issue.number || inputs.issue }}
       AI_RUNNER: ${{ vars.AI_RUNNER || 'none' }}
+    outputs:
+      has_diff: ${{ steps.diff.outputs.has_diff }}
+      runner: ${{ env.AI_RUNNER }}
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          persist-credentials: false
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
@@ -36,17 +41,25 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
-      - name: Hent oppgaven
-        id: issue
+      - name: Hent oppgaven (kun lesing)
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh issue view "$ISSUE" --json title,body > /tmp/issue.json
-          echo "title=$(jq -r .title /tmp/issue.json)" >> "$GITHUB_OUTPUT"
-          { echo "# Oppgave"; jq -r .title /tmp/issue.json; echo; jq -r .body /tmp/issue.json; echo; echo "---"; echo "Følg AGENTS.md. Endre bare det oppgaven ber om. Kjør \`pnpm check\` og fiks feil før du er ferdig."; } > /tmp/task.md
-          git checkout -b "ai-task/$ISSUE"
-          git config user.name "ai-task[bot]"
-          git config user.email "ai-task@users.noreply.github.com"
+          {
+            echo "# Oppgave"
+            jq -r .title /tmp/issue.json
+            echo
+            jq -r .body /tmp/issue.json
+            echo
+            echo "---"
+            echo "Følg AGENTS.md. Endre bare det oppgaven ber om. Ikke rør package.json-scripts, .github/ eller lockfilen."
+            echo "Kjør \`pnpm check\` og fiks feil før du er ferdig."
+          } > /tmp/task.md
+
+      - name: Ingen runner konfigurert
+        if: env.AI_RUNNER == 'none'
+        run: echo "AI_RUNNER er ikke satt; oppgaven må løses manuelt."
 
       - name: Kjør agent (claude-code)
         if: env.AI_RUNNER == 'claude-code'
@@ -55,7 +68,9 @@ jobs:
         run: |
           test -n "$ANTHROPIC_API_KEY" || { echo "ANTHROPIC_API_KEY mangler"; exit 1; }
           npm i -g @anthropic-ai/claude-code
-          claude -p "$(cat /tmp/task.md)" --allowedTools "Edit,Write,Read,Bash(pnpm *)" --max-turns 60
+          claude -p "$(cat /tmp/task.md)" \
+            --allowedTools "Edit,Write,Read,Glob,Grep,Bash(pnpm check),Bash(pnpm test),Bash(pnpm lint),Bash(pnpm typecheck),Bash(pnpm format)" \
+            --max-turns 60
 
       - name: Kjør agent (codex)
         if: env.AI_RUNNER == 'codex'
@@ -64,7 +79,7 @@ jobs:
         run: |
           test -n "$OPENAI_API_KEY" || { echo "OPENAI_API_KEY mangler"; exit 1; }
           npm i -g @openai/codex
-          codex exec --full-auto "$(cat /tmp/task.md)"
+          codex exec --sandbox workspace-write "$(cat /tmp/task.md)"
 
       - name: Kjør agent (aider)
         if: env.AI_RUNNER == 'aider'
@@ -75,28 +90,82 @@ jobs:
           pipx install aider-chat
           aider --yes-always --no-auto-commits --message-file /tmp/task.md
 
-      - name: Ingen runner konfigurert
-        if: env.AI_RUNNER == 'none'
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Lag diff (beskyttede filer tilbakestilles)
+        id: diff
         run: |
-          gh issue comment "$ISSUE" --body "Ingen AI-runner er satt opp i dette repoet (repo-variabel \`AI_RUNNER\`). Oppgaven må løses manuelt eller med lokal agent: \`git checkout -b ai-task/$ISSUE\`."
-          exit 0
+          if [ "$AI_RUNNER" = "none" ]; then echo "has_diff=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          git checkout -- package.json pnpm-lock.yaml .github 2>/dev/null || true
+          git add -A
+          if git diff --cached --quiet; then
+            echo "has_diff=false" >> "$GITHUB_OUTPUT"
+          else
+            git diff --cached --binary > /tmp/ai-task.patch
+            echo "has_diff=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: steps.diff.outputs.has_diff == 'true'
+        with:
+          name: ai-task-patch
+          path: /tmp/ai-task.patch
+          retention-days: 7
 
-      - name: Kvalitetsport
-        if: env.AI_RUNNER != 'none'
+  pr:
+    needs: agent
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    env:
+      ISSUE: ${{ github.event.issue.number || inputs.issue }}
+      AI_RUNNER: ${{ needs.agent.outputs.runner }}
+      HAS_DIFF: ${{ needs.agent.outputs.has_diff }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Ingen runner
+        if: env.AI_RUNNER == 'none'
+        run: |
+          gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body "Ingen AI-runner er satt opp i dette repoet (repo-variabel \`AI_RUNNER\`). Oppgaven må løses manuelt eller med lokal agent: \`git checkout -b ai-task/$ISSUE\`."
+
+      - name: Ingen endringer
+        if: env.AI_RUNNER != 'none' && env.HAS_DIFF != 'true'
+        run: gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body "Agenten ($AI_RUNNER) gjorde ingen endringer."
+
+      - uses: actions/checkout@v4
+        if: env.HAS_DIFF == 'true'
+      - uses: actions/download-artifact@v4
+        if: env.HAS_DIFF == 'true'
+        with:
+          name: ai-task-patch
+          path: /tmp
+      - uses: pnpm/action-setup@v4
+        if: env.HAS_DIFF == 'true'
+      - uses: actions/setup-node@v4
+        if: env.HAS_DIFF == 'true'
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Bruk diff og kjør kvalitetsport
+        if: env.HAS_DIFF == 'true'
         id: check
-        continue-on-error: true
-        run: pnpm check
+        run: |
+          git apply --index /tmp/ai-task.patch
+          pnpm install --frozen-lockfile
+          pnpm check
 
       - name: Opprett PR
-        if: env.AI_RUNNER != 'none'
+        if: env.HAS_DIFF == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
+          TITLE: ${{ github.event.issue.title || format('Issue #{0}', inputs.issue) }}
         run: |
-          if git diff --quiet && git diff --cached --quiet && [ -z "$(git status --porcelain)" ]; then
-            gh issue comment "$ISSUE" --body "Agenten ($AI_RUNNER) gjorde ingen endringer."; exit 0; fi
-          git add -A && git commit -m "AI-oppgave #$ISSUE: ${{ steps.issue.outputs.title }}" -m "Runner: $AI_RUNNER" -m "Closes #$ISSUE"
+          git config user.name "ai-task[bot]"
+          git config user.email "ai-task@users.noreply.github.com"
+          git checkout -b "ai-task/$ISSUE"
+          git commit -m "AI-oppgave #$ISSUE: $TITLE" -m "Runner: $AI_RUNNER" -m "Closes #$ISSUE"
           git push -u origin "ai-task/$ISSUE"
-          STATUS="✅ \`pnpm check\` grønn"; [ "${{ steps.check.outcome }}" = "success" ] || STATUS="⚠️ \`pnpm check\` feilet – se Actions-loggen"
-          gh pr create --title "AI: ${{ steps.issue.outputs.title }}" --body "$(printf 'Løser #%s.\n\nRunner: %s\n%s\n\n**Antakelser og avvik:** se agentens kommentar i loggen.\n\nPreview-lenke legges til av CI.' "$ISSUE" "$AI_RUNNER" "$STATUS")" --draft
+          printf 'Løser #%s.\n\nRunner: %s\n✅ `pnpm check` grønn.\n\n**Antakelser og avvik:** se agentens logg i Actions.\nPreview-lenke legges til av CI.\n' "$ISSUE" "$AI_RUNNER" > /tmp/pr-body.md
+          gh pr create --repo "$GITHUB_REPOSITORY" --head "ai-task/$ISSUE" --title "AI: $TITLE" --body-file /tmp/pr-body.md --draft
+
+      - name: Port feilet
+        if: failure() && steps.check.conclusion == 'failure'
+        run: gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body "Agenten ($AI_RUNNER) leverte endringer, men \`pnpm check\` feilet. Ingen PR opprettet. Se Actions-loggen."

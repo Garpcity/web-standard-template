@@ -32,6 +32,17 @@ type Deps = {
   tokensCss?: string;
 };
 
+/**
+ * Agentforslag rører aldri et publisert dokument. Er slugen publisert, lagres forslaget
+ * som eget utkast under `<slug>--forslag`; redaktøren tar det inn i Puck/CMS ved godkjenning.
+ */
+export const PROPOSAL_SUFFIX = "--forslag";
+export function proposalSlug(slug: string, publishedExists: boolean): string {
+  return publishedExists && !slug.endsWith(PROPOSAL_SUFFIX)
+    ? `${slug}${PROPOSAL_SUFFIX}`
+    : slug;
+}
+
 const text = (data: unknown) => ({
   content: [
     {
@@ -248,25 +259,44 @@ export function createMcpServer({ adapter, agent, tokensCss }: Deps): McpServer 
           report,
         });
       const now = new Date().toISOString();
+      const targetSlug = proposalSlug(slug, existing?.status === "published");
+      const target =
+        targetSlug === slug
+          ? existing
+          : await adapter.getPage(targetSlug, { includeDrafts: true });
       const page: Page = {
         _type: "page",
-        id: existing?.id ?? `pg-${slug}`,
-        slug,
+        id: target?.id ?? `pg-${targetSlug}`,
+        slug: targetSlug,
         title,
         blocks: parsed.data,
-        seo: { noindex: existing?.seo.noindex ?? false, ...existing?.seo, ...seo },
+        seo: {
+          noindex: existing?.seo.noindex ?? false,
+          ...existing?.seo,
+          ...seo,
+          ...(targetSlug !== slug ? { noindex: true } : {}),
+        },
         status: "draft",
-        createdAt: existing?.createdAt ?? now,
+        createdAt: target?.createdAt ?? now,
         updatedAt: now,
         ownerId: existing?.ownerId,
         agentMeta: meta(template, templateVersion, report.issues.length),
       };
-      await adapter.savePage(page);
+      try {
+        await adapter.savePage(page);
+      } catch (e) {
+        return text({ error: e instanceof Error ? e.message : String(e) });
+      }
       return text({
         ok: true,
-        slug,
+        slug: targetSlug,
         status: "draft",
-        editUrl: `/edit/${slug}`,
+        editUrl: `/edit/${targetSlug}`,
+        ...(targetSlug !== slug
+          ? {
+              note: `«${slug}» er publisert og ble ikke endret. Forslaget ligger som utkast «${targetSlug}»; redaktøren tar det inn ved godkjenning.`,
+            }
+          : {}),
         warnings: report.issues,
       });
     },
@@ -342,10 +372,15 @@ export function createMcpServer({ adapter, agent, tokensCss }: Deps): McpServer 
         });
       const now = new Date().toISOString();
       const existing = await adapter.getArticle(slug, { includeDrafts: true });
+      const targetSlug = proposalSlug(slug, existing?.status === "published");
+      const target =
+        targetSlug === slug
+          ? existing
+          : await adapter.getArticle(targetSlug, { includeDrafts: true });
       const article: Article = {
         _type: "article",
-        id: existing?.id ?? `a-${slug}`,
-        slug,
+        id: target?.id ?? `a-${targetSlug}`,
+        slug: targetSlug,
         title,
         summary,
         authorId: author.id,
@@ -357,14 +392,33 @@ export function createMcpServer({ adapter, agent, tokensCss }: Deps): McpServer 
           external: true,
           variant: "ghost" as const,
         })),
-        seo: { noindex: false, ...existing?.seo, ...seo },
+        seo: {
+          noindex: false,
+          ...existing?.seo,
+          ...seo,
+          ...(targetSlug !== slug ? { noindex: true } : {}),
+        },
         status: "draft",
-        createdAt: existing?.createdAt ?? now,
+        createdAt: target?.createdAt ?? now,
         updatedAt: now,
         agentMeta: meta(template, templateVersion, report.issues.length),
       };
-      await adapter.saveArticle(article);
-      return text({ ok: true, slug, status: "draft", warnings: report.issues });
+      try {
+        await adapter.saveArticle(article);
+      } catch (e) {
+        return text({ error: e instanceof Error ? e.message : String(e) });
+      }
+      return text({
+        ok: true,
+        slug: targetSlug,
+        status: "draft",
+        ...(targetSlug !== slug
+          ? {
+              note: `«${slug}» er publisert og ble ikke endret. Forslaget ligger som utkast «${targetSlug}».`,
+            }
+          : {}),
+        warnings: report.issues,
+      });
     },
   );
 
