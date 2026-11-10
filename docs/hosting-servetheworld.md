@@ -192,8 +192,9 @@ Daglig backup av Postgres og opplastede filer (legg i `crontab -e` som `deploy`)
 
 Kopier `~/backups` ut av serveren (ServeTheWorld backup-tjeneste, eller `rclone` til en bøtte).
 
-Når innholdet har reell verdi: generer Payload-migrasjoner og sett `PAYLOAD_DB_PUSH=false` i
-`.env.prod`, slik at skjemaendringer blir eksplisitte (se kommentar i `src/payload.config.ts`).
+Databaseskjemaet opprettes automatisk ved oppstart (`PAYLOAD_DB_PUSH=true` i compose, `src/payload/ensure-schema.ts`).
+Destruktive skjemaendringer (slette felt/tabeller) stoppes i stedet for å spørre; de gjøres som
+Payload-migrasjoner. Når innholdet har reell verdi: generer migrasjoner og sett `PAYLOAD_DB_PUSH=false`.
 
 ## Flere kunder på samme server
 

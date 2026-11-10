@@ -12,8 +12,8 @@ FROM base AS build
 ARG CMS_PROVIDER=payload
 ARG NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ENV CMS_PROVIDER=$CMS_PROVIDER NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL NEXT_TELEMETRY_DISABLED=1
-# Payload trenger en secret og en database for å laste config under bygg; prod-verdier settes ved kjøring.
-ENV PAYLOAD_SECRET=build-only-secret DATABASE_URL=file:./build.db
+# Payload trenger secret og database under bygg (prerender). PAYLOAD_DB_PUSH=true lager tabellene i build.db.
+ENV PAYLOAD_SECRET=build-only-secret DATABASE_URL=file:./build.db PAYLOAD_DB_PUSH=true
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN pnpm build
