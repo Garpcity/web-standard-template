@@ -56,3 +56,15 @@ export const savePage = async (page: import("./types").Page) => {
     throw new Error(`Adapter '${adapter.name}' støtter ikke lagring.`);
   return adapter.savePage(page);
 };
+export const saveArticle = async (a: import("./types").Article) => {
+  const adapter = await getAdapter();
+  if (!adapter.saveArticle)
+    throw new Error(`Adapter '${adapter.name}' støtter ikke lagring av artikler.`);
+  return adapter.saveArticle(a);
+};
+export const saveSocialPost = async (p: import("./types").SocialPost) => {
+  const adapter = await getAdapter();
+  if (!adapter.saveSocialPost)
+    throw new Error(`Adapter '${adapter.name}' støtter ikke sosiale poster.`);
+  return adapter.saveSocialPost(p);
+};

@@ -13,6 +13,16 @@ import { blocksJsonField, linkFields, seoGroup, slugField, statusField } from ".
 
 const statusWithHook = { ...statusField, hooks: { beforeChange: [enforcePublishRight] } };
 
+const agentMetaField = {
+  name: "agentMeta",
+  type: "json" as const,
+  label: "Agent-spor",
+  admin: {
+    readOnly: true,
+    description: "Satt automatisk når innholdet er laget via MCP.",
+  },
+};
+
 export const Users: CollectionConfig = {
   slug: "users",
   auth: true,
@@ -169,6 +179,7 @@ export const Pages: CollectionConfig = {
       label: "Innholdsansvarlig",
       admin: { position: "sidebar" },
     },
+    agentMetaField,
     statusWithHook,
   ],
 };
@@ -233,6 +244,44 @@ export const Articles: CollectionConfig = {
     },
     { name: "sources", type: "array", label: "Kilder", fields: linkFields },
     seoGroup,
+    agentMetaField,
+    statusWithHook,
+  ],
+};
+
+export const SocialPosts: CollectionConfig = {
+  slug: "social-posts",
+  labels: { singular: "Sosial post", plural: "Sosiale poster" },
+  admin: {
+    useAsTitle: "text",
+    group: "Innhold",
+    defaultColumns: ["channel", "status", "scheduledFor", "updatedAt"],
+  },
+  access: {
+    read: canEditContent,
+    create: canEditContent,
+    update: canEditContent,
+    delete: isOwnerOrAdmin,
+  },
+  fields: [
+    slugField,
+    { name: "channel", type: "text", required: true, label: "Kanal" },
+    { name: "text", type: "textarea", required: true, maxLength: 5000, label: "Tekst" },
+    {
+      name: "hashtags",
+      type: "array",
+      label: "Hashtags",
+      fields: [{ name: "value", type: "text", required: true }],
+    },
+    { name: "image", type: "upload", relationTo: "media", label: "Bilde" },
+    { name: "sourceSlug", type: "text", label: "Bygger på (slug)" },
+    {
+      name: "scheduledFor",
+      type: "date",
+      label: "Planlagt",
+      admin: { position: "sidebar" },
+    },
+    agentMetaField,
     statusWithHook,
   ],
 };

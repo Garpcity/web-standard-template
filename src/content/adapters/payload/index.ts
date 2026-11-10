@@ -3,8 +3,16 @@
  * Payload kjører i samme Next.js-app (src/app/(payload)); admin på /admin.
  */
 import type { Payload, Where } from "payload";
-import { category, type Category, type Page } from "../../schema";
+import {
+  category,
+  socialPost,
+  type Article,
+  type Category,
+  type Page,
+  type SocialPost,
+} from "../../schema";
 import type { ContentAdapter } from "../../types";
+import { richTextToLexical } from "@/payload/lexical";
 import {
   toArticle,
   toBrandGuide,
@@ -218,6 +226,97 @@ export function createPayloadAdapter(opts?: { payload?: Payload }): ContentAdapt
       } else {
         await p.create({ collection: "pages", data, overrideAccess: true });
       }
+    },
+
+    async saveArticle(a: Article) {
+      const p = await get();
+      const existing = await p.find({
+        collection: "articles",
+        where: { slug: { equals: a.slug } },
+        limit: 1,
+        overrideAccess: true,
+      });
+      const people = await p.find({
+        collection: "people",
+        where: { or: [{ id: { equals: a.authorId } }, { slug: { equals: a.authorId } }] },
+        limit: 1,
+        overrideAccess: true,
+      });
+      const data = {
+        title: a.title,
+        slug: a.slug,
+        summary: a.summary,
+        author: people.docs[0]?.id,
+        publishedAt: a.publishedAt,
+        body: richTextToLexical(a.body),
+        sources: a.sources,
+        seo: { ...a.seo, image: undefined },
+        status: a.status,
+        agentMeta: a.agentMeta,
+      } as never;
+      if (existing.docs[0])
+        await p.update({
+          collection: "articles",
+          id: existing.docs[0].id,
+          data,
+          overrideAccess: true,
+        });
+      else await p.create({ collection: "articles", data, overrideAccess: true });
+    },
+
+    async saveSocialPost(post: SocialPost) {
+      const p = await get();
+      const existing = await p.find({
+        collection: "social-posts",
+        where: { slug: { equals: post.slug } },
+        limit: 1,
+        overrideAccess: true,
+      });
+      const data = {
+        slug: post.slug,
+        channel: post.channel,
+        text: post.text,
+        hashtags: post.hashtags.map((value) => ({ value })),
+        sourceSlug: post.sourceSlug,
+        scheduledFor: post.scheduledFor,
+        status: post.status,
+        agentMeta: post.agentMeta,
+      } as never;
+      if (existing.docs[0])
+        await p.update({
+          collection: "social-posts",
+          id: existing.docs[0].id,
+          data,
+          overrideAccess: true,
+        });
+      else await p.create({ collection: "social-posts", data, overrideAccess: true });
+    },
+
+    async getSocialPosts() {
+      const p = await get();
+      const res = await p.find({
+        collection: "social-posts",
+        limit: 200,
+        depth: 0,
+        overrideAccess: true,
+        sort: "-updatedAt",
+      });
+      return (res.docs as unknown as Record<string, unknown>[]).map((d) =>
+        socialPost.parse({
+          _type: "socialPost",
+          id: String(d.id),
+          slug: d.slug,
+          channel: d.channel,
+          text: d.text,
+          hashtags: ((d.hashtags as { value: string }[]) ?? []).map((h) => h.value),
+          sourceSlug: d.sourceSlug ?? undefined,
+          scheduledFor: d.scheduledFor ?? undefined,
+          agentMeta: d.agentMeta ?? undefined,
+          status: d.status ?? "draft",
+          createdAt: d.createdAt,
+          updatedAt: d.updatedAt,
+        }),
+      );
     },
   };
 }

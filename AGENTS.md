@@ -61,6 +61,13 @@ Regler:
 - Innhold skal følge «siterbart innhold»-reglene: svar først, faktatetthet, kilder inline, datert.
 - `robots.txt` slipper AI-crawlere inn som standard. Endres kun i `site.config.ts` etter beslutning fra kunden.
 
+## MCP for kundens agenter
+
+- `src/mcp/server.ts` eksponerer verktøy (lese, utkast, `check_against_guide`) og oppgavemaler (`prompts.ts`) på `/api/mcp`. Nøkler i `AGENT_API_KEYS`.
+- Agenter publiserer aldri; alt lagres med `status: "draft"` og `agentMeta` (hvem, hvilken mal, versjon).
+- Ny oppgavemal: legg til i `prompts.ts` med versjon, test i `tests/unit/mcp-server.test.ts`. Endrer du en mal, øk versjonen.
+- `guard.ts` er regelbasert og deterministisk. Nye regler der, med test.
+
 ## Rettigheter
 
 - `src/content/permissions.ts` er kilden for roller og redigeringsnivåer. Puck og CMS leser derfra.

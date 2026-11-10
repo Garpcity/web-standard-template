@@ -7,6 +7,8 @@ Startpunkt for alle nettsider bygget etter **Standard for nettsideutvikling**. K
 - **Visuell redigering:** Puck på `/edit/[slug]` – bygg sider av godkjente blokker, låste utseende-felt
 - **Bevegelse:** navngitte oppskrifter (CSS + Motion), alltid synlig uten JS, respekterer reduced motion
 - **SEO/AEO/GEO:** metadata, JSON-LD-builders, sitemap, robots med AI-crawlere, `llms.txt`, profilmanual
+- **MCP for kundens agenter:** `/api/mcp` med verktøy, oppgavemaler og profilsjekk – se `docs/mcp-for-kunder.md`
+- **3D:** `model3d`-blokk med React Three Fiber, Cinema 4D-pipeline i `src/design/3D-PIPELINE.md`
 - **Kvalitet:** ESLint, Prettier, Vitest, Playwright, Lighthouse CI (100/100/100/100 på templaten)
 - **Lisens:** MIT. Alle avhengigheter i kjernen er MIT/Apache/GPL og kan selvhostes.
 

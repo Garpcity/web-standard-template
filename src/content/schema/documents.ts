@@ -65,6 +65,16 @@ export const menu = z.object({
 export type Menu = z.infer<typeof menu>;
 export type MenuItem = z.infer<typeof menuItem>;
 
+/** Spor på hva som er laget av en agent via MCP, og med hvilken mal. */
+export const agentMeta = z.object({
+  createdBy: z.string().optional(),
+  template: z.string().optional(),
+  templateVersion: z.string().optional(),
+  checkedAt: z.string().datetime().optional(),
+  issues: z.number().int().optional(),
+});
+export type AgentMeta = z.infer<typeof agentMeta>;
+
 export const page = documentBase.extend({
   _type: z.literal("page").default("page"),
   slug: slugSchema,
@@ -73,6 +83,7 @@ export const page = documentBase.extend({
   seo: seoFields.default({ noindex: false }),
   /** Eier av siden (for rettigheter og innholdsansvar). */
   ownerId: z.string().optional(),
+  agentMeta: agentMeta.optional(),
 });
 export type Page = z.infer<typeof page>;
 
@@ -114,8 +125,23 @@ export const article = documentBase.extend({
   /** Kilder påstandene bygger på. GEO. */
   sources: z.array(linkRef).default([]),
   seo: seoFields.default({ noindex: false }),
+  agentMeta: agentMeta.optional(),
 });
 export type Article = z.infer<typeof article>;
+
+/** Utkast til sosiale medier, laget av redaktør eller agent. Publiseres via n8n etter godkjenning. */
+export const socialPost = documentBase.extend({
+  _type: z.literal("socialPost").default("socialPost"),
+  channel: z.string().min(1),
+  text: z.string().min(1).max(5000),
+  hashtags: z.array(z.string()).default([]),
+  image: imageRef.optional(),
+  /** Slug til artikkelen/siden posten bygger på. */
+  sourceSlug: z.string().optional(),
+  scheduledFor: z.string().datetime().optional(),
+  agentMeta: agentMeta.optional(),
+});
+export type SocialPost = z.infer<typeof socialPost>;
 
 export const media = z.object({
   id: z.string(),

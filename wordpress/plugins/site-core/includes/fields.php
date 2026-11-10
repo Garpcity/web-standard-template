@@ -17,6 +17,7 @@ function site_core_field_definitions(): array
         'page' => [
             // Puck/kontrakt: Block[] som JSON. Redigeres i /edit/[slug] i frontend.
             'site_blocks'         => ['type' => 'string', 'json' => true, 'description' => 'Innholdsblokker (Block[] JSON)'],
+            'agent_meta'          => ['type' => 'string', 'json' => true, 'description' => 'Agent-spor (MCP) JSON'],
             'seo_title'           => ['type' => 'string', 'description' => 'SEO-tittel'],
             'seo_description'     => ['type' => 'string', 'description' => 'SEO-beskrivelse'],
             'seo_noindex'         => ['type' => 'boolean', 'description' => 'noindex'],
@@ -26,6 +27,7 @@ function site_core_field_definitions(): array
         'post' => [
             'summary'             => ['type' => 'string', 'description' => 'Kort svar øverst (40–60 ord)'],
             'author_person_id'    => ['type' => 'string', 'description' => 'Forfatter (person-post-ID). Overstyrer WP-bruker.'],
+            'agent_meta'          => ['type' => 'string', 'json' => true, 'description' => 'Agent-spor (MCP) JSON'],
             'sources'             => ['type' => 'string', 'json' => true, 'description' => 'Kilder (LinkRef[] JSON)'],
             'seo_title'           => ['type' => 'string', 'description' => 'SEO-tittel'],
             'seo_description'     => ['type' => 'string', 'description' => 'SEO-beskrivelse'],

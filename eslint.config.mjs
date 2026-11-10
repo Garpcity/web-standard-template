@@ -12,6 +12,7 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     "playwright-report/**",
     "test-results/**",
+    "n8n/**",
   ]),
   {
     // Standardregel: frontend importerer aldri direkte fra en CMS-adapter.

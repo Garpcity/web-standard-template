@@ -22,6 +22,8 @@ export type {
   FormSubmission,
   Redirect,
   BrandGuide,
+  SocialPost,
+  AgentMeta,
 } from "./schema";
 
 export type PreviewContext = {
@@ -59,4 +61,8 @@ export interface ContentAdapter {
   getPreviewContext(path: string): Promise<PreviewContext>;
   /** Puck-editor lagrer sider her. Adaptere som ikke støtter det kaster. */
   savePage?(page: import("./schema").Page): Promise<void>;
+  /** Agenter (MCP) lager utkast her. Status settes alltid til draft av kalleren. */
+  saveArticle?(article: import("./schema").Article): Promise<void>;
+  saveSocialPost?(post: import("./schema").SocialPost): Promise<void>;
+  getSocialPosts?(): Promise<import("./schema").SocialPost[]>;
 }

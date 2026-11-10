@@ -30,6 +30,7 @@ export const contentTypeLevels: Record<string, EditLevel> = {
   person: "structured",
   category: "structured",
   redirect: "locked",
+  socialPost: "approval",
 };
 
 /**

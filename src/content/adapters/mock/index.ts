@@ -15,6 +15,7 @@ import {
   person,
   redirect,
   siteSettings,
+  socialPost,
 } from "../../schema";
 import type { ContentAdapter } from "../../types";
 
@@ -31,6 +32,19 @@ const peopleFile = z.array(person);
 const categoriesFile = z.array(category);
 const menusFile = z.array(menu);
 const redirectsFile = z.array(redirect);
+const socialFile = z.array(socialPost);
+
+async function readOptional<T>(
+  file: string,
+  schema: z.ZodType<T>,
+  fallback: T,
+): Promise<T> {
+  try {
+    return await readJson(file, schema);
+  } catch {
+    return fallback;
+  }
+}
 
 export function createMockAdapter(): ContentAdapter {
   return {
@@ -116,5 +130,34 @@ export function createMockAdapter(): ContentAdapter {
         JSON.stringify(pages, null, 2) + "\n",
       );
     },
+
+    async saveArticle(next) {
+      const all = await readJson("articles.json", articlesFile);
+      const idx = all.findIndex((a) => a.slug === next.slug);
+      const validated = article.parse({ ...next, updatedAt: new Date().toISOString() });
+      if (idx === -1) all.push(validated);
+      else all[idx] = validated;
+      await fs.writeFile(
+        path.join(dataDir, "articles.json"),
+        JSON.stringify(all, null, 2) + "\n",
+      );
+    },
+
+    async saveSocialPost(next) {
+      const all = await readOptional("social-posts.json", socialFile, []);
+      const idx = all.findIndex((p) => p.id === next.id);
+      const validated = socialPost.parse({
+        ...next,
+        updatedAt: new Date().toISOString(),
+      });
+      if (idx === -1) all.push(validated);
+      else all[idx] = validated;
+      await fs.writeFile(
+        path.join(dataDir, "social-posts.json"),
+        JSON.stringify(all, null, 2) + "\n",
+      );
+    },
+
+    getSocialPosts: () => readOptional("social-posts.json", socialFile, []),
   };
 }
