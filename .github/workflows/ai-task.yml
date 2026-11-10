@@ -27,16 +27,21 @@ jobs:
       AI_RUNNER: ${{ vars.AI_RUNNER || 'none' }}
     steps:
       - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
+        with:
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
-        with: { version: 10 }
+        with:
+          version: 10
       - uses: actions/setup-node@v4
-        with: { node-version: 22, cache: pnpm }
+        with:
+          node-version: 22
+          cache: pnpm
       - run: pnpm install --frozen-lockfile
 
       - name: Hent oppgaven
         id: issue
-        env: { GH_TOKEN: ${{ github.token }} }
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           gh issue view "$ISSUE" --json title,body > /tmp/issue.json
           echo "title=$(jq -r .title /tmp/issue.json)" >> "$GITHUB_OUTPUT"
@@ -47,7 +52,8 @@ jobs:
 
       - name: Kjør agent (claude-code)
         if: env.AI_RUNNER == 'claude-code'
-        env: { ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }} }
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           test -n "$ANTHROPIC_API_KEY" || { echo "ANTHROPIC_API_KEY mangler"; exit 1; }
           npm i -g @anthropic-ai/claude-code
@@ -55,7 +61,8 @@ jobs:
 
       - name: Kjør agent (codex)
         if: env.AI_RUNNER == 'codex'
-        env: { OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }} }
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           test -n "$OPENAI_API_KEY" || { echo "OPENAI_API_KEY mangler"; exit 1; }
           npm i -g @openai/codex
@@ -72,7 +79,8 @@ jobs:
 
       - name: Ingen runner konfigurert
         if: env.AI_RUNNER == 'none'
-        env: { GH_TOKEN: ${{ github.token }} }
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           gh issue comment "$ISSUE" --body "Ingen AI-runner er satt opp i dette repoet (repo-variabel \`AI_RUNNER\`). Oppgaven må løses manuelt eller med lokal agent: \`git checkout -b ai-task/$ISSUE\`."
           exit 0
@@ -85,7 +93,8 @@ jobs:
 
       - name: Opprett PR
         if: env.AI_RUNNER != 'none'
-        env: { GH_TOKEN: ${{ github.token }} }
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           if git diff --quiet && git diff --cached --quiet && [ -z "$(git status --porcelain)" ]; then
             gh issue comment "$ISSUE" --body "Agenten ($AI_RUNNER) gjorde ingen endringer."; exit 0; fi
