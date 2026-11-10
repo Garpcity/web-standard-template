@@ -502,6 +502,18 @@ const pages = [
         ],
       },
       {
+        _type: "model3d",
+        id: "t2b",
+        tone: "muted",
+        heading: "3D rett fra Cinema 4D",
+        lead: "Modeller eksporteres som glTF og lastes lazy med fallback. Her: demo-geometri i merkevarefargene.",
+        alt: "Roterende abstrakt 3D-form i merkevarefarger",
+        autoRotate: true,
+        interactive: true,
+        height: "medium",
+        layout: "section",
+      },
+      {
         _type: "cta",
         id: "t3",
         tone: "brand",

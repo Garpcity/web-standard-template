@@ -1639,6 +1639,130 @@
               "_type",
               "items"
             ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "anchor": {
+                "type": "string"
+              },
+              "tone": {
+                "default": "default",
+                "type": "string",
+                "enum": [
+                  "default",
+                  "muted",
+                  "brand",
+                  "dark"
+                ]
+              },
+              "_type": {
+                "type": "string",
+                "const": "model3d"
+              },
+              "heading": {
+                "type": "string",
+                "maxLength": 120
+              },
+              "lead": {
+                "type": "string",
+                "maxLength": 300
+              },
+              "src": {
+                "type": "string"
+              },
+              "alt": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "poster": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "alt": {
+                    "default": "",
+                    "type": "string"
+                  },
+                  "width": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "height": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "caption": {
+                    "type": "string"
+                  },
+                  "blurDataURL": {
+                    "type": "string"
+                  },
+                  "focal": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "y": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                },
+                "required": [
+                  "url",
+                  "width",
+                  "height"
+                ]
+              },
+              "autoRotate": {
+                "default": true,
+                "type": "boolean"
+              },
+              "interactive": {
+                "default": true,
+                "type": "boolean"
+              },
+              "height": {
+                "default": "medium",
+                "type": "string",
+                "enum": [
+                  "medium",
+                  "tall"
+                ]
+              },
+              "layout": {
+                "default": "section",
+                "type": "string",
+                "enum": [
+                  "section",
+                  "hero"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "_type",
+              "alt"
+            ]
           }
         ]
       }

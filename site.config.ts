@@ -34,6 +34,7 @@ export const siteConfig = {
     "embed",
     "cta",
     "stats",
+    "model3d",
   ] as const,
 
   /**

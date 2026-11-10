@@ -13,6 +13,7 @@ import { ContactForm } from "./ContactForm";
 import { Embed } from "./Embed";
 import { Cta } from "./Cta";
 import { Stats } from "./Stats";
+import { Model3d } from "./Model3d";
 
 /**
  * Server Component som rendrer en liste blokker. Blokker som trenger data
@@ -56,6 +57,8 @@ export async function BlockRenderer({ blocks }: { blocks: Block[] }) {
             return <Cta key={block.id} block={block} />;
           case "stats":
             return <Stats key={block.id} block={block} />;
+          case "model3d":
+            return <Model3d key={block.id} block={block} />;
           default: {
             const never: never = block;
             return never;

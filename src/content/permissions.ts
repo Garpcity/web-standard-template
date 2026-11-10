@@ -50,6 +50,7 @@ export const lockedBlockFields: Record<string, string[]> = {
   embed: ["tone", "aspect"],
   cta: ["tone"],
   stats: ["tone"],
+  model3d: ["tone", "layout", "height", "interactive"],
 };
 
 export const roleCan: Record<

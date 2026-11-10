@@ -24,6 +24,7 @@ const typeToComponent: Record<Block["_type"], string> = {
   embed: "Embed",
   cta: "Cta",
   stats: "Stats",
+  model3d: "Model3d",
 };
 const componentToType = Object.fromEntries(
   Object.entries(typeToComponent).map(([k, v]) => [v, k]),

@@ -19,6 +19,7 @@ import { ContactForm } from "@/components/blocks/ContactForm";
 import { Embed } from "@/components/blocks/Embed";
 import { Cta } from "@/components/blocks/Cta";
 import { Stats } from "@/components/blocks/Stats";
+import { Model3d } from "@/components/blocks/Model3d";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { plainToRichText, richTextToPlain } from "./convert";
 import { RevealObserver } from "@/components/motion/RevealObserver";
@@ -514,6 +515,62 @@ export function buildPuckConfig(role: Role = "editor"): Config {
         } as Defaults<"stats">,
         render: (props) => (
           <Stats block={{ _type: "stats", ...(props as unknown as Props<"stats">) }} />
+        ),
+      },
+      Model3d: {
+        label: "3D-modell",
+        fields: {
+          heading: { type: "text", label: "Overskrift" },
+          lead: { type: "textarea", label: "Ingress" },
+          src: { type: "text", label: "Modell (.glb-URL). Tom = demo" },
+          alt: { type: "text", label: "Beskrivelse (tilgjengelighet)" },
+          poster: imageField,
+          autoRotate: {
+            type: "radio",
+            label: "Auto-rotasjon",
+            options: [
+              { label: "På", value: true },
+              { label: "Av", value: false },
+            ],
+          },
+          interactive: {
+            type: "radio",
+            label: "Kan dreies",
+            options: [
+              { label: "Ja", value: true },
+              { label: "Nei", value: false },
+            ],
+          },
+          height: {
+            type: "radio",
+            label: "Høyde",
+            options: [
+              { label: "Middels", value: "medium" },
+              { label: "Høy", value: "tall" },
+            ],
+          },
+          layout: {
+            type: "radio",
+            label: "Layout",
+            options: [
+              { label: "Seksjon", value: "section" },
+              { label: "Hero", value: "hero" },
+            ],
+          },
+          tone: toneField,
+        },
+        defaultProps: {
+          alt: "3D-modell",
+          autoRotate: true,
+          interactive: true,
+          height: "medium",
+          layout: "section",
+          tone: "default",
+        } as Defaults<"model3d">,
+        render: (props) => (
+          <Model3d
+            block={{ _type: "model3d", ...(props as unknown as Props<"model3d">) }}
+          />
         ),
       },
     },

@@ -152,6 +152,22 @@ export const statsBlock = blockBase.extend({
   items: z.array(statItem).min(2).max(6),
 });
 
+export const model3dBlock = blockBase.extend({
+  _type: z.literal("model3d"),
+  heading: z.string().max(120).optional(),
+  lead: z.string().max(300).optional(),
+  /** .glb/.gltf fra Cinema 4D-eksport (se src/design/3D-PIPELINE.md). Tom = demo-geometri. */
+  src: z.string().optional(),
+  alt: z.string().min(1).max(200),
+  /** Statisk bilde for reduced motion, svake enheter og manglende WebGL. */
+  poster: imageRef.optional(),
+  autoRotate: z.boolean().default(true),
+  interactive: z.boolean().default(true),
+  height: z.enum(["medium", "tall"]).default("medium"),
+  /** Uttrykksfull hero-variant med tekst over modellen. */
+  layout: z.enum(["section", "hero"]).default("section"),
+});
+
 export const block = z.discriminatedUnion("_type", [
   heroBlock,
   textBlock,
@@ -166,6 +182,7 @@ export const block = z.discriminatedUnion("_type", [
   embedBlock,
   ctaBlock,
   statsBlock,
+  model3dBlock,
 ]);
 
 export type Block = z.infer<typeof block>;
@@ -186,4 +203,5 @@ export const blockSchemas = {
   embed: embedBlock,
   cta: ctaBlock,
   stats: statsBlock,
+  model3d: model3dBlock,
 } as const;

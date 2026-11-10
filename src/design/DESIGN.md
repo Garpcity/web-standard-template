@@ -32,6 +32,10 @@ Alle farger, fonter, avstander og radier er CSS-variabler. Per kunde byttes kun 
 
 Ny oppskrift: legg den til i `motion.ts` med JSDoc, legg til en rad her, og bruk den i minst én blokk.
 
+## 3D
+
+Produseres i Cinema 4D, leveres som glTF/GLB, rendres med React Three Fiber via `<Model3dViewer>`. Regler og eksportrutine i `3D-PIPELINE.md`. Kort: under 2 MB per scene, bakt lys, alltid poster-fallback, aldri før første innholdsvisning.
+
 ## Logg over estetiske valg
 
 | Dato | Hva | Hvorfor |
@@ -39,3 +43,4 @@ Ny oppskrift: legg den til i `motion.ts` med JSDoc, legg til en rad her, og bruk
 | 2026-11-10 | Første versjon: rolig base, reveal + stagger som standard | Gir et profesjonelt uttrykk uten at kunden må ta stilling til animasjon |
 | 2026-11-10 | Reveal flyttet fra Motion til CSS + IntersectionObserver | Server-HTML var usynlig (opacity 0) til JS kjørte. Dårlig for LCP, crawlere og no-JS. Nå alltid synlig. |
 | 2026-11-10 | Aksentfarge mørknet fra #e36414 til #c2460a | Hvit tekst på knapper hadde kontrast 3,4:1; nå > 4,5:1 (WCAG AA). Lighthouse krevde det. |
+| 2026-11-10 | 3D-blokk `model3d` med demo-geometri, lazy loading og poster-fallback | Lar oss vise 3D uten å koste noe på sider som ikke bruker det |
