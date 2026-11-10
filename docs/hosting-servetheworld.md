@@ -17,6 +17,20 @@ to domener/subdomener du kontrollerer DNS for, og GitHub-tilgang til de to repoe
    - `studio.trygo.no` → IP
 4. Vent til `dig +short studio.trygo.no` viser IP-en før steg 5 (Caddy trenger det for sertifikat).
 
+## Snarvei: steg 2–5 i ett skript
+
+`deploy/bootstrap.sh` gjør alt i steg 2–5 (bruker, SSH-herding, brannmur, Docker, kloning, `.env.prod`
+med genererte hemmeligheter, backup-cron). Kjør som root på den nye serveren:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Garpcity/web-standard-template/main/deploy/bootstrap.sh -o bootstrap.sh
+SITE_DOMAIN=admoment.no STUDIO_DOMAIN=studio.trygo.no GITHUB_TOKEN=github_pat_... bash bootstrap.sh
+```
+
+Er repoene private, må `GITHUB_TOKEN` ha *Contents: read* på begge (og rettighetene i steg 5 hvis
+samme token skal brukes av Studio). Deretter fortsetter du på steg 6. Stegene under er det samme,
+manuelt.
+
 ## 2. Grunnsikring av serveren (10 min)
 
 ```bash
