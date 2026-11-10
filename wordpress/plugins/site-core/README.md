@@ -35,3 +35,14 @@ Verifisert 2026-11-10 mot WordPress 6.x / WPGraphQL 2.26 i Studio: alle adapter-
 ## Fremover
 - Gutenberg-blokker (`block.json`) som alternativ til Puck for redaktører som foretrekker WP-editoren
 - Generering av `fields.php` fra `generated/json-schema` (nå håndskrevet speil)
+
+## Revalidering av frontend
+
+Ved lagring av side/innlegg/person, meny, kategorier og JSON-options kaller pluginen `POST {frontend}/api/revalidate`. Sett i `wp-config.php`:
+
+```php
+define('SITE_CORE_FRONTEND_URL', 'https://kunde.no');
+define('SITE_CORE_REVALIDATE_SECRET', 'samme som REVALIDATE_SECRET i frontend');
+```
+
+Uten konfig gjør hooken ingenting; frontend faller tilbake på ISR (60 s for GraphQL-cache, 1 t for sider).

@@ -6,6 +6,8 @@ import { buildMetadata } from "@/seo/metadata";
 import { JsonLd } from "@/seo/JsonLd";
 import { breadcrumb, faqPage, webPage } from "@/seo/schema";
 
+export const revalidate = 3600; // sikkerhetsnett; on-demand via revalidateContent
+
 export async function generateStaticParams() {
   const pages = await getPages();
   return pages.filter((p) => p.slug !== "forside").map((p) => ({ slug: p.slug }));

@@ -26,10 +26,12 @@ require_once SITE_CORE_DIR . 'includes/graphql.php';
 require_once SITE_CORE_DIR . 'includes/rest.php';
 require_once SITE_CORE_DIR . 'includes/roles.php';
 require_once SITE_CORE_DIR . 'includes/hardening.php';
+require_once SITE_CORE_DIR . 'includes/revalidate.php';
 
 add_action('init', 'site_core_register_post_types');
 add_action('init', 'site_core_register_fields');
 add_action('init', 'site_core_register_options');
+add_action('init', 'site_core_register_revalidate');
 add_action('init', 'site_core_register_menus');
 add_action('graphql_register_types', 'site_core_register_graphql');
 add_action('rest_api_init', 'site_core_register_rest');

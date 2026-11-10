@@ -1,4 +1,14 @@
 import type { Field, GlobalConfig } from "payload";
+import { revalidateContent, type ContentKind } from "@/lib/revalidate";
+
+const revalidateGlobal = (kind: ContentKind) => ({
+  afterChange: [
+    ({ doc }: { doc: unknown }) => {
+      revalidateContent(kind);
+      return doc;
+    },
+  ],
+});
 import { isOwner, isOwnerOrAdmin } from "../access";
 import { linkFields, seoGroup } from "../fields";
 
@@ -12,6 +22,7 @@ const stringArray = (name: string, label: string) => ({
 /** Globale innstillinger: locked for alle unntatt owner (permissions.ts). */
 export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
+  hooks: revalidateGlobal("settings"),
   label: "Nettsted",
   admin: { group: "Innstillinger" },
   access: { read: () => true, update: isOwner },
@@ -82,6 +93,7 @@ const menuItems = (name: string, label: string) => ({
 
 export const Menus: GlobalConfig = {
   slug: "menus",
+  hooks: revalidateGlobal("menu"),
   label: "Menyer",
   admin: { group: "Innstillinger" },
   access: { read: () => true, update: isOwnerOrAdmin },
@@ -95,6 +107,7 @@ export const Menus: GlobalConfig = {
 /** Profilmanualen – kilden for kundens agenter. `approval`-nivå: admin redigerer, versjoneres. */
 export const BrandGuide: GlobalConfig = {
   slug: "brand-guide",
+  hooks: revalidateGlobal("brandGuide"),
   label: "Profilmanual",
   admin: { group: "Innstillinger" },
   access: { read: () => true, update: isOwnerOrAdmin },

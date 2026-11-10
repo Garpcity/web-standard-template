@@ -1,6 +1,7 @@
 import type { CollectionConfig } from "payload";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { applyLockedFields, roles, type Role } from "@/content/permissions";
+import { revalidateContent, type ContentKind } from "@/lib/revalidate";
 import { block as blockSchema } from "@/content/schema";
 import {
   canEditContent,
@@ -10,6 +11,32 @@ import {
   publishedOrLoggedIn,
 } from "../access";
 import { blocksJsonField, linkFields, seoGroup, slugField, statusField } from "../fields";
+
+/** Etter lagring/sletting: revalider frontend-ruter som viser dette innholdet. */
+function revalidateHooks(kind: ContentKind) {
+  return {
+    afterChange: [
+      ({
+        doc,
+        previousDoc,
+      }: {
+        doc: { slug?: string };
+        previousDoc?: { slug?: string };
+      }) => {
+        revalidateContent(kind, doc?.slug);
+        if (previousDoc?.slug && previousDoc.slug !== doc?.slug)
+          revalidateContent(kind, previousDoc.slug);
+        return doc;
+      },
+    ],
+    afterDelete: [
+      ({ doc }: { doc: { slug?: string } }) => {
+        revalidateContent(kind, doc?.slug);
+        return doc;
+      },
+    ],
+  };
+}
 
 const statusWithHook = { ...statusField, hooks: { beforeChange: [enforcePublishRight] } };
 
@@ -53,6 +80,7 @@ export const Users: CollectionConfig = {
 export const Media: CollectionConfig = {
   slug: "media",
   labels: { singular: "Media", plural: "Media" },
+  hooks: revalidateHooks("media"),
   admin: { group: "Innhold" },
   access: {
     read: () => true,
@@ -79,6 +107,7 @@ export const Media: CollectionConfig = {
 export const Categories: CollectionConfig = {
   slug: "categories",
   labels: { singular: "Kategori", plural: "Kategorier" },
+  hooks: revalidateHooks("category"),
   admin: { useAsTitle: "name", group: "Innhold" },
   access: {
     read: () => true,
@@ -96,6 +125,7 @@ export const Categories: CollectionConfig = {
 export const People: CollectionConfig = {
   slug: "people",
   labels: { singular: "Person", plural: "Personer" },
+  hooks: revalidateHooks("person"),
   admin: {
     useAsTitle: "name",
     group: "Innhold",
@@ -153,6 +183,7 @@ export const Pages: CollectionConfig = {
   },
   versions: { drafts: false, maxPerDoc: 20 },
   hooks: {
+    ...revalidateHooks("page"),
     beforeValidate: [
       ({ data, req, originalDoc }) => {
         // Låste felt håndheves også her (admin, REST), med samme funksjon som /api/puck og MCP.
@@ -193,6 +224,7 @@ export const Pages: CollectionConfig = {
 export const Articles: CollectionConfig = {
   slug: "articles",
   labels: { singular: "Artikkel", plural: "Artikler" },
+  hooks: revalidateHooks("article"),
   admin: {
     useAsTitle: "title",
     group: "Innhold",
@@ -314,6 +346,7 @@ export const FormSubmissions: CollectionConfig = {
 export const Redirects: CollectionConfig = {
   slug: "redirects",
   labels: { singular: "Redirect", plural: "Redirects" },
+  hooks: revalidateHooks("redirect"),
   admin: { useAsTitle: "from", group: "System" },
   access: {
     read: () => true,

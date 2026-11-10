@@ -1,7 +1,7 @@
 import { getArticles, getBrandGuide, getPages, getSiteSettings } from "@/content";
 import { siteUrl } from "@/lib/utils";
 
-export const dynamic = "force-static";
+export const revalidate = 3600; // sikkerhetsnett; on-demand via revalidateContent
 
 /**
  * llms.txt – kort, maskinlesbar oversikt for AI-crawlere og agenter.

@@ -17,6 +17,8 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
+export const revalidate = 3600; // sikkerhetsnett; on-demand via revalidateContent
+
 export default async function ArticlesPage() {
   const articles = await getArticles();
   return (

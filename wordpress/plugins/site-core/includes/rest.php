@@ -69,6 +69,7 @@ function site_core_rest_save_blocks(WP_REST_Request $req): WP_REST_Response|WP_E
     if ($title = $req->get_param('title')) {
         wp_update_post(['ID' => $page->ID, 'post_title' => sanitize_text_field((string) $title)]);
     }
+    site_core_revalidate('page', $page->post_name);
     return new WP_REST_Response(['ok' => true, 'id' => $page->ID]);
 }
 

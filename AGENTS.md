@@ -37,6 +37,7 @@ Regler:
 - Hver innholdsblokk har **ett** Zod-skjema i `schema/blocks.ts`, **én** komponent i `components/blocks/<Navn>.tsx` med samme navn, og **én** registrering i `puck/config.tsx`.
 - Rik tekst er alltid normalisert `RichTextNode[]`; render med `<RichText>`.
 - Bilder er alltid `ImageRef` (`url, alt, width, height`) og rendres med `next/image`.
+- Innhold revalideres on-demand: `revalidateContent(kind, slug)` i `src/lib/revalidate.ts` eier reglene. Payload kaller den fra hooks; WordPress-pluginen kaller `POST /api/revalidate` (REVALIDATE_SECRET). Sider har `revalidate = 3600` som sikkerhetsnett. Ny rute som viser innhold → legg den til i `revalidateContent`.
 
 ## Design
 

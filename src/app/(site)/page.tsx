@@ -13,6 +13,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({ settings, path: "/", title: page?.title, seo: page?.seo });
 }
 
+export const revalidate = 3600; // sikkerhetsnett; on-demand via revalidateContent
+
 export default async function HomePage() {
   const page = await getPage(HOME_SLUG);
   if (!page) notFound();

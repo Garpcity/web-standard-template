@@ -14,6 +14,8 @@ import {
 } from "@/seo/schema";
 import { formatDate } from "@/lib/utils";
 
+export const revalidate = 3600; // sikkerhetsnett; on-demand via revalidateContent
+
 export async function generateStaticParams() {
   const articles = await getArticles();
   return articles.map((a) => ({ slug: a.slug }));
