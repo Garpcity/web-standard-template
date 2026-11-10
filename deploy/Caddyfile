@@ -1,5 +1,6 @@
 # Caddy henter Let's Encrypt-sertifikat automatisk for begge domener.
-{$SITE_DOMAIN} {
+# Nettsiden svarer på både ekte domene og testdomene. Testdomenet får noindex fra appen (src/proxy.ts).
+{$SITE_DOMAIN}, {$PREVIEW_DOMAIN} {
 	encode zstd gzip
 	reverse_proxy site:3000
 }

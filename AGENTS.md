@@ -63,6 +63,7 @@ Regler:
 - Aldri håndskrevet JSON-LD i komponenter.
 - Innhold skal følge «siterbart innhold»-reglene: svar først, faktatetthet, kilder inline, datert.
 - `robots.txt` slipper AI-crawlere inn som standard. Endres kun i `site.config.ts` etter beslutning fra kunden.
+- Testdomener: `src/proxy.ts` setter noindex på alle host som ikke er `NEXT_PUBLIC_SITE_URL`. Canonical, sitemap og llms.txt bruker alltid `siteUrl()`; aldri `request.url`/host for absolutte lenker.
 
 ## MCP for kundens agenter
 

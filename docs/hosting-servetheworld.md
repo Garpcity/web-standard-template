@@ -13,8 +13,9 @@ to domener/subdomener du kontrollerer DNS for, og GitHub-tilgang til de to repoe
    ellers får du root-passord på e-post.
 2. Noter den offentlige IPv4-adressen.
 3. Opprett A-poster i DNS (ServeTheWorld DNS eller der domenet ligger):
-   - `admoment.no` → IP (og `www` som CNAME til `admoment.no`)
+   - `*.preikestol.no` → IP (wildcard: testdomene for alle nye sider, `<slug>.preikestol.no`)
    - `studio.trygo.no` → IP
+   - Kundens ekte domene (f.eks. `admoment.no` + `www`) først ved lansering, se «Testdomene og flytting»
 4. Vent til `dig +short studio.trygo.no` viser IP-en før steg 5 (Caddy trenger det for sertifikat).
 
 ## Snarvei: steg 2–5 i ett skript
@@ -24,7 +25,7 @@ med genererte hemmeligheter, backup-cron). Kjør som root på den nye serveren:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Garpcity/web-standard-template/main/deploy/bootstrap.sh -o bootstrap.sh
-SITE_DOMAIN=admoment.no STUDIO_DOMAIN=studio.trygo.no GITHUB_TOKEN=github_pat_... bash bootstrap.sh
+SITE_DOMAIN=admoment.preikestol.no SITE_SLUG=admoment STUDIO_DOMAIN=studio.trygo.no bash bootstrap.sh
 ```
 
 Er repoene private, må `GITHUB_TOKEN` ha *Contents: read* på begge (og rettighetene i steg 5 hvis
@@ -137,6 +138,35 @@ miljø (production) med samme URL – da måler helse-sjekken riktig adresse.
    med samme credential). Det er helse-sjekken.
 4. Skjema-flyten (01): sett `webhookSecret` i n8n lik `FORMS_WEBHOOK_SECRET`.
 5. Arkiver den gamle AI-synlighet-flyten.
+
+## Testdomene og flytting til ekte domene
+
+Nye sider bygges alltid på et testdomene, fordi kundens ekte domene sjelden er tilgjengelig før
+lansering. Mønsteret:
+
+- `*.preikestol.no` peker (wildcard A-post) til serveren. Hver side får `<slug>.preikestol.no`.
+- `SITE_DOMAIN` i `.env.prod` er det *kanoniske* domenet – det nettsiden selv mener den heter
+  (canonical-lenker, sitemap, `llms.txt`, JSON-LD). `PREVIEW_DOMAIN` svarer alltid i tillegg.
+- Alle forespørsler via et annet host enn `SITE_DOMAIN` får `X-Robots-Tag: noindex, nofollow`
+  (`src/proxy.ts`). Testdomenet blir derfor aldri indeksert – heller ikke etter flytting.
+
+**Ny side:** `SITE_DOMAIN=kunde.preikestol.no`, `PREVIEW_DOMAIN=kunde.preikestol.no`. Bygg, seed,
+jobb med kunden på testdomenet. Google-verifisering og Search Console venter til lansering.
+
+**Lansering (flytting til kunde.no):**
+
+1. Kunden peker DNS: `kunde.no` A → serverens IP, `www` CNAME → `kunde.no`. Vent til `dig` svarer.
+2. På serveren: `nano .env.prod` → `SITE_DOMAIN=kunde.no` (la `PREVIEW_DOMAIN` stå).
+3. `docker compose -f docker-compose.prod.yml --env-file .env.prod up -d --build site caddy`
+   (`NEXT_PUBLIC_SITE_URL` er byggargument, derfor rebuild – 3–5 min. Caddy henter nytt sertifikat selv.)
+4. Sjekk: `curl -sI https://kunde.no/ | grep -i x-robots` (tom), `curl -sI https://kunde.preikestol.no/ | grep -i x-robots` (noindex),
+   `curl -s https://kunde.no/sitemap.xml | head` (lenker til kunde.no).
+5. I Studio: sett produksjons-URL til `https://kunde.no` på nettsiden og legg til miljøet.
+   Payload: `serverURL` følger `NEXT_PUBLIC_SITE_URL`, så media-lenker oppdateres automatisk.
+6. Search Console: legg til `kunde.no`, send inn sitemap. Hvis kunden hadde en gammel side på
+   domenet: legg redirects for gamle URL-er i Payload (Redirects-samlingen) *før* steg 1.
+
+Testdomenet kan beholdes som preview-adresse for kunden, eller fjernes fra `PREVIEW_DOMAIN`.
 
 ## 9. Kundens agenter (MCP)
 

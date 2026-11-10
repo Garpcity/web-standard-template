@@ -4,7 +4,8 @@
 #
 # Kjør som root på serveren:
 #   curl -fsSL https://raw.githubusercontent.com/Garpcity/web-standard-template/main/deploy/bootstrap.sh -o bootstrap.sh
-#   SITE_DOMAIN=admoment.no STUDIO_DOMAIN=studio.trygo.no GITHUB_TOKEN=github_pat_... bash bootstrap.sh
+#   SITE_DOMAIN=admoment.preikestol.no SITE_SLUG=admoment STUDIO_DOMAIN=studio.trygo.no bash bootstrap.sh
+#   (SITE_DOMAIN = testdomenet først; PREVIEW_DOMAIN settes automatisk til <slug>.preikestol.no)
 #
 # Private repoer: GITHUB_TOKEN (fine-grained, Contents: read på begge repoene) trengs for kloning.
 # Skriptet kan kjøres på nytt; det hopper over det som alt er gjort.
@@ -13,6 +14,7 @@ set -euo pipefail
 : "${SITE_DOMAIN:?Sett SITE_DOMAIN (f.eks. admoment.no)}"
 : "${STUDIO_DOMAIN:?Sett STUDIO_DOMAIN (f.eks. studio.trygo.no)}"
 SITE_SLUG="${SITE_SLUG:-${SITE_DOMAIN%%.*}}"
+PREVIEW_DOMAIN="${PREVIEW_DOMAIN:-$SITE_SLUG.preikestol.no}"
 DEPLOY_USER="${DEPLOY_USER:-deploy}"
 GITHUB_ORG="${GITHUB_ORG:-Garpcity}"
 SITE_REPO="${SITE_REPO:-web-standard-template}"
@@ -99,7 +101,7 @@ log ".env.prod"
 ENV="$APPS/site-$SITE_SLUG/.env.prod"
 if [ ! -f "$ENV" ]; then
   cp "$APPS/site-$SITE_SLUG/.env.prod.example" "$ENV"
-  sed -i "s/^SITE_DOMAIN=.*/SITE_DOMAIN=$SITE_DOMAIN/; s/^STUDIO_DOMAIN=.*/STUDIO_DOMAIN=$STUDIO_DOMAIN/; s/^SITE_SLUG=.*/SITE_SLUG=$SITE_SLUG/" "$ENV"
+  sed -i "s/^SITE_DOMAIN=.*/SITE_DOMAIN=$SITE_DOMAIN/; s/^PREVIEW_DOMAIN=.*/PREVIEW_DOMAIN=$PREVIEW_DOMAIN/; s/^STUDIO_DOMAIN=.*/STUDIO_DOMAIN=$STUDIO_DOMAIN/; s/^SITE_SLUG=.*/SITE_SLUG=$SITE_SLUG/" "$ENV"
   for v in POSTGRES_PASSWORD SITE_PAYLOAD_SECRET STUDIO_PAYLOAD_SECRET REVALIDATE_SECRET STUDIO_API_KEY STUDIO_MCP_KEY SEED_ADMIN_PASSWORD FORMS_WEBHOOK_SECRET; do
     sed -i "s/^$v=.*/$v=$(openssl rand -hex 24)/" "$ENV"
   done

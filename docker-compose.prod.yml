@@ -12,6 +12,7 @@ services:
       - caddy-config:/config
     environment:
       SITE_DOMAIN: ${SITE_DOMAIN}
+      PREVIEW_DOMAIN: ${PREVIEW_DOMAIN}
       STUDIO_DOMAIN: ${STUDIO_DOMAIN}
     depends_on: [site, studio]
 
