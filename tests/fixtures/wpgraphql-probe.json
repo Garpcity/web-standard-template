@@ -1,0 +1,401 @@
+{
+  "settings": {
+    "data": {
+      "settings": "{\"name\":\"AD.Moment\",\"tagline\":\"Nettsider som blir funnet, lest og sitert\",\"description\":\"AD.Moment bygger raske, åpne nettsider for norske bedrifter – med innhold som AI-søk og mennesker stoler på.\",\"defaultSeo\":{\"image\":{\"url\":\"/images/og-default.svg\",\"alt\":\"AD.Moment\",\"width\":1200,\"height\":630},\"noindex\":false},\"contact\":{\"email\":\"post@admoment.example\",\"phone\":\"+47 400 00 000\",\"address\":\"Adresse fylles inn\",\"orgNumber\":\"838 722 822\"},\"social\":[{\"platform\":\"linkedin\",\"url\":\"https://www.linkedin.com/company/example\"},{\"platform\":\"instagram\",\"url\":\"https://www.instagram.com/example\"}],\"footerText\":\"© AD.Moment. Bygget på vår åpne standard for nettsideutvikling.\",\"sameAs\":[\"https://www.linkedin.com/company/example\",\"https://www.proff.no/\"]}",
+      "brandGuide": "{\"identity\":{\"name\":\"AD.Moment\",\"oneLiner\":\"Nettsider som blir funnet, lest og sitert.\",\"purpose\":\"Gi norske bedrifter nettsider de eier selv, som er raske for mennesker og troverdige for AI-søk.\",\"values\":[\"Åpenhet\",\"Presisjon\",\"Ro\"],\"audiences\":[\"Daglige ledere i SMB\",\"Markedsansvarlige\"]},\"voice\":{\"tone\":[\"Direkte\",\"Konkret\",\"Rolig\"],\"language\":\"nb\",\"addressForm\":\"du\",\"useWords\":[\"bygge\",\"eie\",\"måle\",\"standard\"],\"avoidWords\":[\"sømløs\",\"banebrytende\",\"løsning\"],\"goodExamples\":[\"Du eier kode, innhold og domene.\"],\"badExamples\":[\"Vår banebrytende løsning gir sømløs synergi.\"]},\"facts\":[{\"claim\":\"AD.Moment har organisasjonsnummer 838 722 822.\",\"source\":\"Brønnøysundregistrene\",\"approved\":true},{\"claim\":\"AD.Moment har tre ansatte.\",\"source\":\"Kunden, 2026-11-10\",\"approved\":true},{\"claim\":\"Alle kjernekomponenter er MIT- eller GPL-lisensiert.\",\"source\":\"Standard for nettsideutvikling\",\"approved\":true}],\"neverClaim\":[\"Garantert førsteplass i Google\",\"Kundetall vi ikke kan dokumentere\"],\"channels\":[{\"name\":\"LinkedIn\",\"format\":\"Tekst + ett bilde\",\"maxLength\":1300,\"frequency\":\"2 per uke\",\"hashtags\":[\"#nettside\",\"#aisøk\"]},{\"name\":\"Nyhetsbrev\",\"format\":\"Én sak, én lenke\",\"maxLength\":600,\"frequency\":\"Månedlig\",\"hashtags\":[]}],\"legal\":{\"requiresApproval\":[\"Priser\",\"Kundenavn\",\"Tall om resultater\"],\"forbiddenTopics\":[\"Politikk\",\"Konkurrenter ved navn\"],\"imageRights\":\"Kun egne bilder eller bilder med dokumentert lisens.\"},\"version\":\"1.0.0\",\"updatedAt\":\"2026-11-10T09:00:00.000Z\"}",
+      "redirects": "[{\"from\":\"/home\",\"to\":\"/\",\"permanent\":true}]",
+      "generalSettings": {
+        "title": "AD.Moment"
+      }
+    }
+  },
+  "menu": {
+    "data": {
+      "menuItems": {
+        "nodes": [
+          {
+            "databaseId": 16,
+            "label": "Tjenester",
+            "url": "http://localhost:3000/tjenester",
+            "target": null,
+            "parentDatabaseId": 0
+          },
+          {
+            "databaseId": 17,
+            "label": "Om oss",
+            "url": "http://localhost:3000/om-oss",
+            "target": null,
+            "parentDatabaseId": 0
+          },
+          {
+            "databaseId": 18,
+            "label": "Artikler",
+            "url": "http://localhost:3000/artikler",
+            "target": null,
+            "parentDatabaseId": 0
+          },
+          {
+            "databaseId": 19,
+            "label": "Kontakt",
+            "url": "http://localhost:3000/kontakt",
+            "target": null,
+            "parentDatabaseId": 0
+          }
+        ]
+      }
+    }
+  },
+  "frontPage": {
+    "data": {
+      "nodeByUri": {
+        "databaseId": 8,
+        "slug": "forside",
+        "title": "AD.Moment – nettsider som blir funnet, lest og sitert",
+        "status": "publish",
+        "date": "2026-11-10T12:10:06",
+        "modified": "2026-11-10T12:10:06",
+        "isFrontPage": true,
+        "siteBlocks": "[{\"id\":\"b1\",\"tone\":\"default\",\"_type\":\"hero\",\"eyebrow\":\"Nettsider for norske bedrifter\",\"heading\":\"Bli funnet. Bli lest. Bli sitert.\",\"lead\":\"Vi bygger nettsider på en åpen standard som gjør dem raske for mennesker og troverdige for AI-søk. Fra idé til lansert side på dager, ikke måneder.\",\"image\":{\"url\":\"/images/hero.svg\",\"alt\":\"Abstrakt illustrasjon i merkevarefarger\",\"width\":1600,\"height\":1200},\"links\":[{\"label\":\"Se hva vi gjør\",\"href\":\"/tjenester\",\"external\":false,\"variant\":\"primary\"},{\"label\":\"Ta kontakt\",\"href\":\"/kontakt\",\"external\":false,\"variant\":\"secondary\"}],\"layout\":\"split\"},{\"id\":\"b2\",\"tone\":\"muted\",\"_type\":\"stats\",\"heading\":\"Standarden i tall\",\"items\":[{\"id\":\"s1\",\"value\":100,\"suffix\":\"%\",\"label\":\"åpen kildekode i kjernen\"},{\"id\":\"s2\",\"value\":100,\"label\":\"Lighthouse-score på templaten\"},{\"id\":\"s3\",\"value\":13,\"label\":\"ferdige innholdsblokker\"},{\"id\":\"s4\",\"value\":3,\"label\":\"ansatte\"}]},{\"id\":\"b3\",\"tone\":\"default\",\"_type\":\"cardGrid\",\"heading\":\"Det vi leverer\",\"lead\":\"Tre ting, gjort ordentlig.\",\"columns\":3,\"items\":[{\"id\":\"c1\",\"title\":\"Nettside på standarden\",\"text\":\"Next.js-frontend, åpent CMS, visuell redigering. Du eier alt.\",\"icon\":\"layout\",\"link\":{\"label\":\"Les mer\",\"href\":\"/tjenester\",\"external\":false,\"variant\":\"ghost\"}},{\"id\":\"c2\",\"title\":\"Synlighet i AI-søk\",\"text\":\"E-E-A-T-strukturert innhold, strukturerte data og månedlig måling av siteringer.\",\"icon\":\"search\",\"link\":{\"label\":\"Les mer\",\"href\":\"/tjenester\",\"external\":false,\"variant\":\"ghost\"}},{\"id\":\"c3\",\"title\":\"Dine egne agenter\",\"text\":\"Koble din AI til nettsiden via MCP og produser innhold som følger profilen din.\",\"icon\":\"bot\",\"link\":{\"label\":\"Les mer\",\"href\":\"/tjenester\",\"external\":false,\"variant\":\"ghost\"}}]},{\"id\":\"b4\",\"tone\":\"default\",\"_type\":\"textImage\",\"heading\":\"Åpen standard, ingen låsing\",\"body\":[{\"_type\":\"block\",\"style\":\"normal\",\"children\":[{\"_type\":\"span\",\"text\":\"Alle kjernekomponenter er åpen kildekode og kan selvhostes. Kunden eier repo, database og domene.\",\"marks\":[]}]},{\"_type\":\"block\",\"style\":\"normal\",\"children\":[{\"_type\":\"span\",\"text\":\"Det gjør at løsningen kan flyttes, forkes og videreføres – uansett hva som skjer med leverandøren.\",\"marks\":[]}]}],\"image\":{\"url\":\"/images/office.svg\",\"alt\":\"Kontoret vårt\",\"width\":1600,\"height\":1067},\"imagePosition\":\"left\",\"link\":{\"label\":\"Hvorfor åpen kildekode\",\"href\":\"/artikler/hvorfor-vi-bygger-pa-apen-kildekode\",\"external\":false,\"variant\":\"secondary\"}},{\"id\":\"b5\",\"tone\":\"muted\",\"_type\":\"latestArticles\",\"heading\":\"Siste artikler\",\"limit\":3,\"link\":{\"label\":\"Alle artikler\",\"href\":\"/artikler\",\"external\":false,\"variant\":\"ghost\"}},{\"id\":\"b6\",\"tone\":\"brand\",\"_type\":\"quote\",\"quote\":\"Sitat fra en kunde kommer her når det er godkjent.\",\"author\":\"Kundenavn\",\"role\":\"Rolle, bedrift\"},{\"id\":\"b7\",\"tone\":\"default\",\"_type\":\"faq\",\"heading\":\"Ofte stilte spørsmål\",\"items\":[{\"id\":\"q1\",\"question\":\"Hvor lang tid tar det å lage en nettside?\",\"answer\":[{\"_type\":\"block\",\"style\":\"normal\",\"children\":[{\"_type\":\"span\",\"text\":\"En standard bedriftsside med 8–12 sider tar typisk 10–15 arbeidsdager fra oppstart til lansering. Tiden går mest til innhold, ikke teknikk.\",\"marks\":[]}]}]},{\"id\":\"q2\",\"question\":\"Eier jeg nettsiden selv?\",\"answer\":[{\"_type\":\"block\",\"style\":\"normal\",\"children\":[{\"_type\":\"span\",\"text\":\"Ja. Du eier kode, innhold, database og domene. Vi har tilgang, ikke eierskap, og dokumenterer hvordan andre kan ta over.\",\"marks\":[]}]}]},{\"id\":\"q3\",\"question\":\"Kan jeg redigere selv?\",\"answer\":[{\"_type\":\"block\",\"style\":\"normal\",\"children\":[{\"_type\":\"span\",\"text\":\"Ja, i en visuell editor der du bygger sider av godkjente blokker. Utseendet er låst slik at profilen holder; innholdet er ditt.\",\"marks\":[]}]}]}]},{\"id\":\"b8\",\"tone\":\"dark\",\"_type\":\"cta\",\"heading\":\"Klar for en nettside som jobber for deg?\",\"text\":\"Fortell oss om bedriften din, så viser vi hvordan standarden passer.\",\"links\":[{\"label\":\"Ta kontakt\",\"href\":\"/kontakt\",\"external\":false,\"variant\":\"primary\"}]}]",
+        "seoTitle": "AD.Moment – nettsider for norske bedrifter",
+        "seoDescription": "Raske, åpne nettsider med innhold AI-søk og mennesker stoler på. Bygget på vår standard, levert på dager.",
+        "seoNoindex": false,
+        "seoCanonical": null,
+        "seoImage": null
+      }
+    }
+  },
+  "pageBySlug": {
+    "data": {
+      "page": {
+        "databaseId": 9,
+        "slug": "tjenester",
+        "title": "Tjenester",
+        "status": "publish",
+        "date": "2026-11-10T12:10:06",
+        "modified": "2026-11-10T12:10:06",
+        "isFrontPage": false,
+        "siteBlocks": "[{\"id\":\"t1\",\"tone\":\"default\",\"_type\":\"hero\",\"heading\":\"Tjenester\",\"lead\":\"Vi gjør tre ting, og vi gjør dem på samme måte hver gang. Det er derfor det går fort.\",\"links\":[],\"layout\":\"centered\"},{\"id\":\"t2\",\"tone\":\"default\",\"_type\":\"cardGrid\",\"columns\":3,\"items\":[{\"id\":\"t2a\",\"title\":\"Nettside på standarden\",\"text\":\"Frontend i Next.js, åpent CMS (WordPress eller Payload), visuell editor, SEO og analytics ferdig satt opp.\",\"image\":{\"url\":\"/images/case-1.svg\",\"alt\":\"Case 1\",\"width\":1200,\"height\":800}},{\"id\":\"t2b\",\"title\":\"Synlighet i AI-søk\",\"text\":\"Forfattersider, strukturerte data, siterbart innhold og månedlig måling mot ChatGPT, Perplexity og Gemini.\",\"image\":{\"url\":\"/images/case-2.svg\",\"alt\":\"Case 2\",\"width\":1200,\"height\":800}},{\"id\":\"t2c\",\"title\":\"MCP for dine agenter\",\"text\":\"Koble din egen AI til nettsiden og produser sider, poster og materiell som følger profilmanualen.\",\"image\":{\"url\":\"/images/case-3.svg\",\"alt\":\"Case 3\",\"width\":1200,\"height\":800}}]},{\"id\":\"t3\",\"tone\":\"brand\",\"_type\":\"cta\",\"heading\":\"Vil du se standarden?\",\"text\":\"Vi viser gjerne template-repoet og hvordan et prosjekt bygges.\",\"links\":[{\"label\":\"Book en gjennomgang\",\"href\":\"/kontakt\",\"external\":false,\"variant\":\"primary\"}]}]",
+        "seoTitle": null,
+        "seoDescription": "Nettside på åpen standard, synlighet i AI-søk, og MCP-tilgang for dine egne agenter.",
+        "seoNoindex": false,
+        "seoCanonical": null,
+        "seoImage": null
+      }
+    }
+  },
+  "pages": {
+    "data": {
+      "pages": {
+        "nodes": [
+          {
+            "databaseId": 12,
+            "slug": "personvern",
+            "title": "Personvern",
+            "status": "publish",
+            "date": "2026-11-10T12:10:06",
+            "modified": "2026-11-10T12:10:06",
+            "isFrontPage": false,
+            "siteBlocks": "[{\"id\":\"pv1\",\"tone\":\"default\",\"_type\":\"text\",\"heading\":\"Personvernerklæring\",\"body\":[{\"_type\":\"block\",\"style\":\"normal\",\"children\":[{\"_type\":\"span\",\"text\":\"Denne siden beskriver hvordan vi behandler personopplysninger. Teksten tilpasses per kunde ved oppsett.\",\"marks\":[]}]},{\"_type\":\"block\",\"style\":\"normal\",\"children\":[{\"_type\":\"span\",\"text\":\"Vi bruker personvernvennlig analyse uten cookies. Skjemainnsendinger lagres i vårt CMS og behandles i henhold til GDPR.\",\"marks\":[]}]}],\"width\":\"narrow\"}]",
+            "seoTitle": null,
+            "seoDescription": null,
+            "seoNoindex": false,
+            "seoCanonical": null,
+            "seoImage": null
+          },
+          {
+            "databaseId": 11,
+            "slug": "kontakt",
+            "title": "Kontakt",
+            "status": "publish",
+            "date": "2026-11-10T12:10:06",
+            "modified": "2026-11-10T12:10:06",
+            "isFrontPage": false,
+            "siteBlocks": "[{\"id\":\"k1\",\"tone\":\"default\",\"_type\":\"hero\",\"heading\":\"Kontakt\",\"lead\":\"Fortell oss kort om bedriften og hva du trenger. Vi svarer innen én arbeidsdag.\",\"links\":[],\"layout\":\"centered\"},{\"id\":\"k2\",\"tone\":\"default\",\"_type\":\"contactForm\",\"heading\":\"Send en melding\",\"formId\":\"contact\",\"fields\":[{\"name\":\"name\",\"label\":\"Navn\",\"type\":\"text\",\"required\":true},{\"name\":\"email\",\"label\":\"E-post\",\"type\":\"email\",\"required\":true},{\"name\":\"company\",\"label\":\"Bedrift\",\"type\":\"text\",\"required\":false},{\"name\":\"message\",\"label\":\"Hva kan vi hjelpe med?\",\"type\":\"textarea\",\"required\":true}],\"submitLabel\":\"Send melding\",\"successMessage\":\"Takk! Vi tar kontakt innen én arbeidsdag.\"}]",
+            "seoTitle": null,
+            "seoDescription": "Ta kontakt med AD.Moment.",
+            "seoNoindex": false,
+            "seoCanonical": null,
+            "seoImage": null
+          },
+          {
+            "databaseId": 10,
+            "slug": "om-oss",
+            "title": "Om oss",
+            "status": "publish",
+            "date": "2026-11-10T12:10:06",
+            "modified": "2026-11-10T12:10:06",
+            "isFrontPage": false,
+            "siteBlocks": "[{\"id\":\"o1\",\"tone\":\"default\",\"_type\":\"hero\",\"heading\":\"Om oss\",\"lead\":\"Et lite team som har bestemt seg for å bygge nettsider på én måte – og gjøre den måten bedre hvert kvartal.\",\"links\":[],\"layout\":\"centered\"},{\"id\":\"o2\",\"tone\":\"default\",\"_type\":\"people\",\"heading\":\"Folkene\",\"personIds\":[]},{\"id\":\"o3\",\"tone\":\"muted\",\"_type\":\"text\",\"heading\":\"Hvordan vi jobber\",\"body\":[{\"_type\":\"block\",\"style\":\"normal\",\"children\":[{\"_type\":\"span\",\"text\":\"Alt vi bygger starter fra samme template-repo. Hver forbedring i et kundeprosjekt føres tilbake, slik at neste prosjekt starter fra et bedre sted.\",\"marks\":[]}]},{\"_type\":\"block\",\"style\":\"normal\",\"children\":[{\"_type\":\"span\",\"text\":\"Hvert kvartal evaluerer vi standarden mot bransjen, med en ekstern stemme som har i oppdrag å finne det svakeste leddet.\",\"marks\":[]}]}],\"width\":\"narrow\"}]",
+            "seoTitle": null,
+            "seoDescription": "Teamet bak AD.Moment og standarden vi bygger på.",
+            "seoNoindex": false,
+            "seoCanonical": null,
+            "seoImage": null
+          },
+          {
+            "databaseId": 9,
+            "slug": "tjenester",
+            "title": "Tjenester",
+            "status": "publish",
+            "date": "2026-11-10T12:10:06",
+            "modified": "2026-11-10T12:10:06",
+            "isFrontPage": false,
+            "siteBlocks": "[{\"id\":\"t1\",\"tone\":\"default\",\"_type\":\"hero\",\"heading\":\"Tjenester\",\"lead\":\"Vi gjør tre ting, og vi gjør dem på samme måte hver gang. Det er derfor det går fort.\",\"links\":[],\"layout\":\"centered\"},{\"id\":\"t2\",\"tone\":\"default\",\"_type\":\"cardGrid\",\"columns\":3,\"items\":[{\"id\":\"t2a\",\"title\":\"Nettside på standarden\",\"text\":\"Frontend i Next.js, åpent CMS (WordPress eller Payload), visuell editor, SEO og analytics ferdig satt opp.\",\"image\":{\"url\":\"/images/case-1.svg\",\"alt\":\"Case 1\",\"width\":1200,\"height\":800}},{\"id\":\"t2b\",\"title\":\"Synlighet i AI-søk\",\"text\":\"Forfattersider, strukturerte data, siterbart innhold og månedlig måling mot ChatGPT, Perplexity og Gemini.\",\"image\":{\"url\":\"/images/case-2.svg\",\"alt\":\"Case 2\",\"width\":1200,\"height\":800}},{\"id\":\"t2c\",\"title\":\"MCP for dine agenter\",\"text\":\"Koble din egen AI til nettsiden og produser sider, poster og materiell som følger profilmanualen.\",\"image\":{\"url\":\"/images/case-3.svg\",\"alt\":\"Case 3\",\"width\":1200,\"height\":800}}]},{\"id\":\"t3\",\"tone\":\"brand\",\"_type\":\"cta\",\"heading\":\"Vil du se standarden?\",\"text\":\"Vi viser gjerne template-repoet og hvordan et prosjekt bygges.\",\"links\":[{\"label\":\"Book en gjennomgang\",\"href\":\"/kontakt\",\"external\":false,\"variant\":\"primary\"}]}]",
+            "seoTitle": null,
+            "seoDescription": "Nettside på åpen standard, synlighet i AI-søk, og MCP-tilgang for dine egne agenter.",
+            "seoNoindex": false,
+            "seoCanonical": null,
+            "seoImage": null
+          },
+          {
+            "databaseId": 8,
+            "slug": "forside",
+            "title": "AD.Moment – nettsider som blir funnet, lest og sitert",
+            "status": "publish",
+            "date": "2026-11-10T12:10:06",
+            "modified": "2026-11-10T12:10:06",
+            "isFrontPage": true,
+            "siteBlocks": "[{\"id\":\"b1\",\"tone\":\"default\",\"_type\":\"hero\",\"eyebrow\":\"Nettsider for norske bedrifter\",\"heading\":\"Bli funnet. Bli lest. Bli sitert.\",\"lead\":\"Vi bygger nettsider på en åpen standard som gjør dem raske for mennesker og troverdige for AI-søk. Fra idé til lansert side på dager, ikke måneder.\",\"image\":{\"url\":\"/images/hero.svg\",\"alt\":\"Abstrakt illustrasjon i merkevarefarger\",\"width\":1600,\"height\":1200},\"links\":[{\"label\":\"Se hva vi gjør\",\"href\":\"/tjenester\",\"external\":false,\"variant\":\"primary\"},{\"label\":\"Ta kontakt\",\"href\":\"/kontakt\",\"external\":false,\"variant\":\"secondary\"}],\"layout\":\"split\"},{\"id\":\"b2\",\"tone\":\"muted\",\"_type\":\"stats\",\"heading\":\"Standarden i tall\",\"items\":[{\"id\":\"s1\",\"value\":100,\"suffix\":\"%\",\"label\":\"åpen kildekode i kjernen\"},{\"id\":\"s2\",\"value\":100,\"label\":\"Lighthouse-score på templaten\"},{\"id\":\"s3\",\"value\":13,\"label\":\"ferdige innholdsblokker\"},{\"id\":\"s4\",\"value\":3,\"label\":\"ansatte\"}]},{\"id\":\"b3\",\"tone\":\"default\",\"_type\":\"cardGrid\",\"heading\":\"Det vi leverer\",\"lead\":\"Tre ting, gjort ordentlig.\",\"columns\":3,\"items\":[{\"id\":\"c1\",\"title\":\"Nettside på standarden\",\"text\":\"Next.js-frontend, åpent CMS, visuell redigering. Du eier alt.\",\"icon\":\"layout\",\"link\":{\"label\":\"Les mer\",\"href\":\"/tjenester\",\"external\":false,\"variant\":\"ghost\"}},{\"id\":\"c2\",\"title\":\"Synlighet i AI-søk\",\"text\":\"E-E-A-T-strukturert innhold, strukturerte data og månedlig måling av siteringer.\",\"icon\":\"search\",\"link\":{\"label\":\"Les mer\",\"href\":\"/tjenester\",\"external\":false,\"variant\":\"ghost\"}},{\"id\":\"c3\",\"title\":\"Dine egne agenter\",\"text\":\"Koble din AI til nettsiden via MCP og produser innhold som følger profilen din.\",\"icon\":\"bot\",\"link\":{\"label\":\"Les mer\",\"href\":\"/tjenester\",\"external\":false,\"variant\":\"ghost\"}}]},{\"id\":\"b4\",\"tone\":\"default\",\"_type\":\"textImage\",\"heading\":\"Åpen standard, ingen låsing\",\"body\":[{\"_type\":\"block\",\"style\":\"normal\",\"children\":[{\"_type\":\"span\",\"text\":\"Alle kjernekomponenter er åpen kildekode og kan selvhostes. Kunden eier repo, database og domene.\",\"marks\":[]}]},{\"_type\":\"block\",\"style\":\"normal\",\"children\":[{\"_type\":\"span\",\"text\":\"Det gjør at løsningen kan flyttes, forkes og videreføres – uansett hva som skjer med leverandøren.\",\"marks\":[]}]}],\"image\":{\"url\":\"/images/office.svg\",\"alt\":\"Kontoret vårt\",\"width\":1600,\"height\":1067},\"imagePosition\":\"left\",\"link\":{\"label\":\"Hvorfor åpen kildekode\",\"href\":\"/artikler/hvorfor-vi-bygger-pa-apen-kildekode\",\"external\":false,\"variant\":\"secondary\"}},{\"id\":\"b5\",\"tone\":\"muted\",\"_type\":\"latestArticles\",\"heading\":\"Siste artikler\",\"limit\":3,\"link\":{\"label\":\"Alle artikler\",\"href\":\"/artikler\",\"external\":false,\"variant\":\"ghost\"}},{\"id\":\"b6\",\"tone\":\"brand\",\"_type\":\"quote\",\"quote\":\"Sitat fra en kunde kommer her når det er godkjent.\",\"author\":\"Kundenavn\",\"role\":\"Rolle, bedrift\"},{\"id\":\"b7\",\"tone\":\"default\",\"_type\":\"faq\",\"heading\":\"Ofte stilte spørsmål\",\"items\":[{\"id\":\"q1\",\"question\":\"Hvor lang tid tar det å lage en nettside?\",\"answer\":[{\"_type\":\"block\",\"style\":\"normal\",\"children\":[{\"_type\":\"span\",\"text\":\"En standard bedriftsside med 8–12 sider tar typisk 10–15 arbeidsdager fra oppstart til lansering. Tiden går mest til innhold, ikke teknikk.\",\"marks\":[]}]}]},{\"id\":\"q2\",\"question\":\"Eier jeg nettsiden selv?\",\"answer\":[{\"_type\":\"block\",\"style\":\"normal\",\"children\":[{\"_type\":\"span\",\"text\":\"Ja. Du eier kode, innhold, database og domene. Vi har tilgang, ikke eierskap, og dokumenterer hvordan andre kan ta over.\",\"marks\":[]}]}]},{\"id\":\"q3\",\"question\":\"Kan jeg redigere selv?\",\"answer\":[{\"_type\":\"block\",\"style\":\"normal\",\"children\":[{\"_type\":\"span\",\"text\":\"Ja, i en visuell editor der du bygger sider av godkjente blokker. Utseendet er låst slik at profilen holder; innholdet er ditt.\",\"marks\":[]}]}]}]},{\"id\":\"b8\",\"tone\":\"dark\",\"_type\":\"cta\",\"heading\":\"Klar for en nettside som jobber for deg?\",\"text\":\"Fortell oss om bedriften din, så viser vi hvordan standarden passer.\",\"links\":[{\"label\":\"Ta kontakt\",\"href\":\"/kontakt\",\"external\":false,\"variant\":\"primary\"}]}]",
+            "seoTitle": "AD.Moment – nettsider for norske bedrifter",
+            "seoDescription": "Raske, åpne nettsider med innhold AI-søk og mennesker stoler på. Bygget på vår standard, levert på dager.",
+            "seoNoindex": false,
+            "seoCanonical": null,
+            "seoImage": null
+          }
+        ]
+      }
+    }
+  },
+  "posts": {
+    "data": {
+      "posts": {
+        "pageInfo": {
+          "hasNextPage": false,
+          "endCursor": "YXJyYXljb25uZWN0aW9uOjE1"
+        },
+        "nodes": [
+          {
+            "databaseId": 13,
+            "slug": "slik-blir-bedriften-din-sitert-av-ai",
+            "title": "Slik blir bedriften din sitert av AI-søk",
+            "status": "publish",
+            "date": "2026-11-03T08:00:00",
+            "modified": "2026-11-03T08:00:00",
+            "content": "<h2>Tre ting avgjør</h2>\n<p>Det er ikke domeneautoritet som avgjør om AI siterer deg. Korrelasjonen mellom domeneautoritet og sitering er svak (r=0,18), mens E-E-A-T-signaler korrelerer sterkt (r=0,81).</p>\n<ul>\n<li>Navngitte fagpersoner med reell bakgrunn, ikke «Redaksjonen».</li>\n</ul>\n<ul>\n<li>Minst én side med originale data – egne tall, målinger eller priser.</li>\n</ul>\n<ul>\n<li>Omtale utenfor eget domene: bransjeregistre, fagmedier, partnere.</li>\n</ul>\n<h2>Hva du gjør i dag</h2>\n<p>Start med forfattersidene. Legg inn hva hver person kan og hvor det er dokumentert. Deretter: finn ett spørsmål kundene dine stiller som ingen har svart godt på, og svar på det med tall.</p>\n",
+            "summary": "AI-motorer som ChatGPT, Perplexity og Google AI Overviews siterer kilder med dokumentert erfaring, navngitte fagpersoner og originale data. En analyse av 15 847 AI Overview-svar fant at 96 % av siteringene kom fra kilder med sterke E-E-A-T-signaler.",
+            "sources": "[{\"label\":\"LaunchCodex: E-E-A-T og AI Overviews\",\"href\":\"https://launchcodex.com/?p=3403\",\"external\":true,\"variant\":\"ghost\"}]",
+            "seoTitle": null,
+            "seoDescription": null,
+            "seoNoindex": false,
+            "seoCanonical": null,
+            "seoImage": null,
+            "featuredImage": null,
+            "author": null,
+            "categories": {
+              "nodes": [
+                {
+                  "databaseId": 2,
+                  "slug": "synlighet",
+                  "name": "Synlighet"
+                }
+              ]
+            }
+          },
+          {
+            "databaseId": 14,
+            "slug": "hvorfor-vi-bygger-pa-apen-kildekode",
+            "title": "Hvorfor vi bygger på åpen kildekode",
+            "status": "publish",
+            "date": "2026-10-20T08:00:00",
+            "modified": "2026-10-20T08:00:00",
+            "content": "<h2>Eieren kan endre seg. Lisensen består.</h2>\n<p>I 2026 ble Payload CMS kjøpt av Figma, og WordPress-prosjektet har hatt en langvarig styringskrise. Ingen av delene har stoppet prosjektene, fordi koden er åpen og kan forkes.</p>\n<h2>Det vi gjør</h2>\n<ul>\n<li>Next.js, Payload, Puck, Motion og Tailwind: alle MIT.</li>\n</ul>\n<ul>\n<li>Kunden eier repo, database og domene. Vi har tilgang, ikke eierskap.</li>\n</ul>\n<ul>\n<li>README beskriver hvordan en annen leverandør kan ta over.</li>\n</ul>\n",
+            "summary": "Alle kjernekomponenter i nettsidene våre har MIT- eller GPL-lisens og kan selvhostes. Da kan kunden flytte, forke og videreføre løsningen uansett hva som skjer med leverandøren – eller med oss.",
+            "sources": "[]",
+            "seoTitle": null,
+            "seoDescription": null,
+            "seoNoindex": false,
+            "seoCanonical": null,
+            "seoImage": null,
+            "featuredImage": null,
+            "author": null,
+            "categories": {
+              "nodes": [
+                {
+                  "databaseId": 3,
+                  "slug": "teknologi",
+                  "name": "Teknologi"
+                }
+              ]
+            }
+          },
+          {
+            "databaseId": 15,
+            "slug": "bevegelse-som-forklarer",
+            "title": "Bevegelse som forklarer, ikke pynter",
+            "status": "publish",
+            "date": "2026-10-06T08:00:00",
+            "modified": "2026-10-06T08:00:00",
+            "content": "<h2>Regelen</h2>\n<p>Hvis du ikke kan si hva en animasjon forklarer, fjern den. Det er den eneste regelen vi trenger.</p>\n<h2>Oppskriftene</h2>\n<p>Alle animasjoner i prosjektene våre kommer fra én fil, motion.ts. Det gjør at AI kan bruke dem riktig, og at hele siden beveger seg med samme rytme.</p>\n",
+            "summary": "Animasjon på nettsider skal vise rekkefølge, retning eller respons. Vi bruker sju navngitte oppskrifter – fra reveal til countUp – og alle har en fallback for brukere som har skrudd av bevegelse.",
+            "sources": "[]",
+            "seoTitle": null,
+            "seoDescription": null,
+            "seoNoindex": false,
+            "seoCanonical": null,
+            "seoImage": null,
+            "featuredImage": null,
+            "author": null,
+            "categories": {
+              "nodes": [
+                {
+                  "databaseId": 4,
+                  "slug": "design",
+                  "name": "Design"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "postBySlug": {
+    "data": {
+      "post": {
+        "databaseId": 13,
+        "slug": "slik-blir-bedriften-din-sitert-av-ai",
+        "title": "Slik blir bedriften din sitert av AI-søk",
+        "status": "publish",
+        "date": "2026-11-03T08:00:00",
+        "modified": "2026-11-03T08:00:00",
+        "content": "<h2>Tre ting avgjør</h2>\n<p>Det er ikke domeneautoritet som avgjør om AI siterer deg. Korrelasjonen mellom domeneautoritet og sitering er svak (r=0,18), mens E-E-A-T-signaler korrelerer sterkt (r=0,81).</p>\n<ul>\n<li>Navngitte fagpersoner med reell bakgrunn, ikke «Redaksjonen».</li>\n</ul>\n<ul>\n<li>Minst én side med originale data – egne tall, målinger eller priser.</li>\n</ul>\n<ul>\n<li>Omtale utenfor eget domene: bransjeregistre, fagmedier, partnere.</li>\n</ul>\n<h2>Hva du gjør i dag</h2>\n<p>Start med forfattersidene. Legg inn hva hver person kan og hvor det er dokumentert. Deretter: finn ett spørsmål kundene dine stiller som ingen har svart godt på, og svar på det med tall.</p>\n",
+        "summary": "AI-motorer som ChatGPT, Perplexity og Google AI Overviews siterer kilder med dokumentert erfaring, navngitte fagpersoner og originale data. En analyse av 15 847 AI Overview-svar fant at 96 % av siteringene kom fra kilder med sterke E-E-A-T-signaler.",
+        "sources": "[{\"label\":\"LaunchCodex: E-E-A-T og AI Overviews\",\"href\":\"https://launchcodex.com/?p=3403\",\"external\":true,\"variant\":\"ghost\"}]",
+        "seoTitle": null,
+        "seoDescription": null,
+        "seoNoindex": false,
+        "seoCanonical": null,
+        "seoImage": null,
+        "featuredImage": null,
+        "author": null,
+        "categories": {
+          "nodes": [
+            {
+              "databaseId": 2,
+              "slug": "synlighet",
+              "name": "Synlighet"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "people": {
+    "data": {
+      "people": {
+        "nodes": [
+          {
+            "databaseId": 7,
+            "slug": "ansatt-3",
+            "title": "Ansatt 3 (navn kommer)",
+            "status": "publish",
+            "date": "2026-11-10T12:10:06",
+            "modified": "2026-11-10T12:10:06",
+            "content": "<p>Ansvar for estetikklaget, bevegelse og 3D-produksjon i Cinema 4D. Bio fylles inn av kunden.</p>\n",
+            "role": "Designer og 3D",
+            "email": null,
+            "phone": null,
+            "knowsAbout": "[\"Visuell design\",\"Motion design\",\"Cinema 4D\",\"Tilgjengelighet\"]",
+            "credentials": "[]",
+            "sameAs": "[]",
+            "featuredImage": null
+          },
+          {
+            "databaseId": 6,
+            "slug": "ansatt-2",
+            "title": "Ansatt 2 (navn kommer)",
+            "status": "publish",
+            "date": "2026-11-10T12:10:06",
+            "modified": "2026-11-10T12:10:06",
+            "content": "<p>Bygger frontend og integrasjoner. Bio fylles inn av kunden.</p>\n",
+            "role": "Utvikler",
+            "email": null,
+            "phone": null,
+            "knowsAbout": "[\"Next.js\",\"TypeScript\",\"n8n\",\"Payload CMS\"]",
+            "credentials": "[]",
+            "sameAs": "[]",
+            "featuredImage": null
+          },
+          {
+            "databaseId": 5,
+            "slug": "ansatt-1",
+            "title": "Ansatt 1 (navn kommer)",
+            "status": "publish",
+            "date": "2026-11-10T12:10:06",
+            "modified": "2026-11-10T12:10:06",
+            "content": "<p>Leder AD.Moment og standardarbeidet. Bio fylles inn av kunden.</p>\n",
+            "role": "Daglig leder",
+            "email": null,
+            "phone": null,
+            "knowsAbout": "[\"Headless CMS\",\"WordPress\",\"Søkemotoroptimalisering\",\"AI-synlighet\"]",
+            "credentials": "[]",
+            "sameAs": "[]",
+            "featuredImage": null
+          }
+        ]
+      }
+    }
+  },
+  "personById": {
+    "data": {
+      "person": {
+        "databaseId": 5,
+        "slug": "ansatt-1",
+        "title": "Ansatt 1 (navn kommer)",
+        "status": "publish",
+        "date": "2026-11-10T12:10:06",
+        "modified": "2026-11-10T12:10:06",
+        "content": "<p>Leder AD.Moment og standardarbeidet. Bio fylles inn av kunden.</p>\n",
+        "role": "Daglig leder",
+        "email": null,
+        "phone": null,
+        "knowsAbout": "[\"Headless CMS\",\"WordPress\",\"Søkemotoroptimalisering\",\"AI-synlighet\"]",
+        "credentials": "[]",
+        "sameAs": "[]",
+        "featuredImage": null
+      }
+    }
+  },
+  "categories": {
+    "data": {
+      "categories": {
+        "nodes": [
+          {
+            "databaseId": 4,
+            "slug": "design",
+            "name": "Design",
+            "description": null
+          },
+          {
+            "databaseId": 2,
+            "slug": "synlighet",
+            "name": "Synlighet",
+            "description": "SEO, AEO og GEO"
+          },
+          {
+            "databaseId": 3,
+            "slug": "teknologi",
+            "name": "Teknologi",
+            "description": null
+          },
+          {
+            "databaseId": 1,
+            "slug": "uncategorized",
+            "name": "Uncategorized",
+            "description": null
+          }
+        ]
+      }
+    }
+  }
+}

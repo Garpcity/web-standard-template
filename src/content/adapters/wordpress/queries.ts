@@ -4,7 +4,7 @@ const MEDIA = `{ sourceUrl altText caption mediaDetails { width height } }`;
 const SEO = `seoTitle seoDescription seoNoindex seoCanonical seoImage ${MEDIA}`;
 
 export const PAGE_FIELDS = `databaseId slug title status date modified isFrontPage siteBlocks ${SEO}`;
-export const POST_FIELDS = `databaseId slug title status date modified content summary sources ${SEO}
+export const POST_FIELDS = `databaseId slug title status date modified content summary sources authorPersonId ${SEO}
   featuredImage { node ${MEDIA} }
   author { node { databaseId slug } }
   categories { nodes { databaseId slug name } }`;

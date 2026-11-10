@@ -27,7 +27,10 @@ WordPress-plugin for nettsider bygget på Standard for nettsideutvikling. WordPr
 5. Lag et Application Password for brukeren frontend bruker til lagring fra Puck.
 
 ## Lokalt
-`docker compose --profile wordpress up` monterer denne mappen som plugin. Eller WordPress Studio på egen maskin (anbefalt).
+WordPress Studio (anbefalt): opprett side → `wp plugin install wp-graphql --activate` → kopier denne mappen til `wp-content/plugins/site-core` → `wp plugin activate site-core` → `wp eval-file scripts/wp-seed.php <sti-til-data> <frontend-url>`.
+Docker: `docker compose --profile wordpress up` monterer mappen som plugin; seed med `scripts/wp-seed.sh`.
+
+Verifisert 2026-11-10 mot WordPress 6.x / WPGraphQL 2.26 i Studio: alle adapter-spørringer kjører feilfritt (`tests/fixtures/wpgraphql-probe.json`).
 
 ## Fremover
 - Gutenberg-blokker (`block.json`) som alternativ til Puck for redaktører som foretrekker WP-editoren

@@ -25,6 +25,7 @@ function site_core_field_definitions(): array
         ],
         'post' => [
             'summary'             => ['type' => 'string', 'description' => 'Kort svar øverst (40–60 ord)'],
+            'author_person_id'    => ['type' => 'string', 'description' => 'Forfatter (person-post-ID). Overstyrer WP-bruker.'],
             'sources'             => ['type' => 'string', 'json' => true, 'description' => 'Kilder (LinkRef[] JSON)'],
             'seo_title'           => ['type' => 'string', 'description' => 'SEO-tittel'],
             'seo_description'     => ['type' => 'string', 'description' => 'SEO-beskrivelse'],

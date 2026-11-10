@@ -63,6 +63,7 @@ export type WpPost = WpSeo & {
   content?: string | null;
   summary?: string | null;
   sources?: string | null;
+  authorPersonId?: string | null;
   featuredImage?: { node: WpMedia } | null;
   author?: { node: { databaseId: number; slug: string } } | null;
   categories?: { nodes: { databaseId: number; slug: string; name: string }[] } | null;
@@ -337,7 +338,7 @@ export function toArticle(n: WpPost): Article {
     publishedAt: toIso(n.date),
     summary: n.summary?.trim() || stripTags(n.content ?? "").slice(0, 300) || n.title,
     image: toImageRef(n.featuredImage?.node ?? null),
-    authorId: String(n.author?.node.databaseId ?? ""),
+    authorId: n.authorPersonId || String(n.author?.node.databaseId ?? ""),
     categoryIds: (n.categories?.nodes ?? []).map((c) => String(c.databaseId)),
     body: htmlToRichText(n.content),
     sources: sources.map((s) => ({

@@ -170,3 +170,70 @@ describe("WordPress: adapter med fixture-fetcher", () => {
     expect(home?.blocks[0]._type).toBe("hero");
   });
 });
+
+describe("WordPress: ekte WPGraphQL-svar fra Studio (fixture)", async () => {
+  const probe = (await import("../fixtures/wpgraphql-probe.json")).default as Record<
+    string,
+    { data: unknown }
+  >;
+  const byName: Record<string, string> = {
+    "query Settings": "settings",
+    "query Menu": "menu",
+    "query FrontPage": "frontPage",
+    "query Page(": "pageBySlug",
+    "query Pages": "pages",
+    "query Posts": "posts",
+    "query Post(": "postBySlug",
+    "query People": "people",
+    "query Person(": "personById",
+    "query Categories": "categories",
+  };
+  const fetcher = async <T>(query: string): Promise<T> => {
+    const key = Object.keys(byName).find((k) => query.includes(k));
+    if (!key) throw new Error("Ukjent spørring");
+    return probe[byName[key]].data as T;
+  };
+  const adapter = createWordPressAdapter({
+    graphqlUrl: "http://localhost:8884/graphql",
+    fetcher,
+  });
+
+  it("forsiden rendres med alle blokker og riktige typer", async () => {
+    const home = await adapter.getPage("forside");
+    expect(home?.blocks.map((b) => b._type)).toEqual(pages[0].blocks.map((b) => b._type));
+  });
+
+  it("innstillinger, meny, personer og kategorier normaliseres", async () => {
+    const s = await adapter.getSiteSettings();
+    expect(s.name).toBe("AD.Moment");
+    expect(s.contact.orgNumber).toBe("838 722 822");
+    const m = await adapter.getMenu("main");
+    expect(m.items.map((i) => i.href)).toEqual([
+      "/tjenester",
+      "/om-oss",
+      "/artikler",
+      "/kontakt",
+    ]);
+    const people = await adapter.getPeople();
+    expect(people).toHaveLength(3);
+    expect(people[0].knowsAbout.length).toBeGreaterThan(0);
+    const cats = await adapter.getCategories();
+    expect(cats.map((c) => c.slug)).toContain("synlighet");
+  });
+
+  it("artikkel fra Gutenberg-HTML får RichText, kort svar og kilder", async () => {
+    const a = await adapter.getArticle("slik-blir-bedriften-din-sitert-av-ai");
+    expect(a?.summary.startsWith("AI-motorer")).toBe(true);
+    expect(a?.body.some((n) => n._type === "block" && n.style === "h2")).toBe(true);
+    expect(a?.body.some((n) => n._type === "block" && n.listItem === "bullet")).toBe(
+      true,
+    );
+    expect(a?.sources[0]?.href).toContain("launchcodex");
+  });
+
+  it("profilmanualen kommer gjennom", async () => {
+    const g = await adapter.getBrandGuide();
+    expect(g?.identity.name).toBe("AD.Moment");
+    expect(g?.facts.some((f) => f.claim.includes("838 722 822"))).toBe(true);
+  });
+});
