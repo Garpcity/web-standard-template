@@ -205,6 +205,14 @@ export const Pages: CollectionConfig = {
     ],
   },
   fields: [
+    {
+      name: "editVisually",
+      type: "ui",
+      admin: {
+        position: "sidebar",
+        components: { Field: "@/payload/components/EditVisuallyLink#EditVisuallyLink" },
+      },
+    },
     { name: "title", type: "text", required: true, label: "Tittel" },
     slugField,
     blocksJsonField,

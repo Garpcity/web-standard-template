@@ -34,6 +34,7 @@
     "@payloadcms/drizzle": "3.93.0",
     "@payloadcms/next": "3.93.0",
     "@payloadcms/richtext-lexical": "3.93.0",
+    "@payloadcms/ui": "3.93.0",
     "@puckeditor/core": "0.24.0",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
