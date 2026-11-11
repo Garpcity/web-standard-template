@@ -58,6 +58,23 @@ Regler:
 - Tester: enhetstest for skjema og rene funksjoner; e2e for sidetyper. Ny blokk = minst én rendertest.
 - Første bilde over folden får `priority` og `eager`-reveal (se DESIGN.md, LCP-regel). Ikoner velges fra `src/design/icons.ts`, aldri `import * as` fra lucide.
 
+## Ny blokk – oppskriften
+
+En blokk rører nøyaktig disse stedene; paritetstesten feiler hvis ett mangler:
+
+1. `src/content/schema/blocks.ts`: `export const <navn>Block = blockBase.extend({ _type: z.literal("<navn>"), … })`, legg den i `block`-unionen og i `blockSchemas`.
+2. `src/components/blocks/<Navn>.tsx`: server-komponent, named export, `block: BlockOf<"<navn>">` som prop, `<Section tone={block.tone} id={block.anchor}>` ytterst, bruk `SectionHeading` og tokens (ingen hardkodede farger). `data-reveal`/`Stagger` for bevegelse.
+3. `src/components/blocks/BlockRenderer.tsx`: `case "<navn>"`.
+4. `src/puck/config.tsx`: import, `components.<Navn>` med `fields` (norske `label`), `defaultProps`, `render`; legg navnet i riktig `categories`-gruppe.
+5. `src/content/permissions.ts`: `lockedBlockFields.<navn>` (minst `["tone"]`).
+6. `site.config.ts`: navnet i `enabledBlocks`.
+7. `src/content/adapters/mock/data/pages.json`: bruk blokken på minst én side (slik at e2e ser den).
+8. `tests/unit/schema.test.ts`: legg navnet i blokklisten; legg til en test som parser et gyldig og et ugyldig eksempel.
+9. `pnpm generate:schema` (oppdaterer `generated/json-schema/`), så `pnpm check`.
+10. Én rad i `src/design/DESIGN.md` hvis blokken innfører et nytt visuelt mønster.
+
+Blokken skal fungere i Puck uten JS-feil og rendre riktig med `tone: "dark"`.
+
 ## SEO, AEO, GEO
 
 - Hver side har `generateMetadata` fra `src/seo/metadata.ts` og JSON-LD via `<JsonLd>` med builders fra `src/seo/schema/`.
