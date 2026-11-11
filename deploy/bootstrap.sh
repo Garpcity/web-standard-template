@@ -70,6 +70,12 @@ APT::Periodic::Update-Package-Lists "1";
 APT::Periodic::Unattended-Upgrade "1";
 EOF
 
+log "Swap (4 GB) – Next-bygg på 4 GB RAM trenger det"
+if ! swapon --show | grep -q /swapfile; then
+  fallocate -l 4G /swapfile && chmod 600 /swapfile && mkswap /swapfile >/dev/null && swapon /swapfile
+  grep -q '^/swapfile' /etc/fstab || echo '/swapfile none swap sw 0 0' >> /etc/fstab
+fi
+
 log "Docker"
 if ! command -v docker >/dev/null; then
   install -m 0755 -d /etc/apt/keyrings

@@ -101,7 +101,7 @@ docker compose -f docker-compose.prod.yml --env-file .env.prod up -d --build
 docker compose -f docker-compose.prod.yml --env-file .env.prod logs -f --tail=50
 ```
 
-Første bygg tar 5–10 minutter. Når loggene viser `Ready` for `site` og `studio`, sjekk:
+Første bygg tar 5–10 minutter. Bygg én tjeneste om gangen på små servere (`build studio`, så `build site`); bootstrap setter opp 4 GB swap, uten den kan et parallelt bygg på 4 GB RAM stå i timevis. Når loggene viser `Ready` for `site` og `studio`, sjekk:
 
 ```bash
 curl -I https://admoment.no/robots.txt          # 200, gyldig sertifikat
