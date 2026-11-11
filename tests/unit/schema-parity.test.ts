@@ -14,7 +14,10 @@ import { globals } from "@/payload/globals";
 
 const keysOf = (s: z.ZodObject<z.ZodRawShape>) => Object.keys(s.shape);
 const fieldNames = (fields: { name?: string; type: string }[]) =>
-  fields.filter((f) => "name" in f && f.name).map((f) => f.name as string);
+  // UI-felt (knapper, lenker) er ikke innhold og holdes utenfor pariteten.
+  fields
+    .filter((f) => "name" in f && f.name && f.type !== "ui")
+    .map((f) => f.name as string);
 
 /** Zod-nøkler som bevisst ikke er egne CMS-felt. */
 const systemKeys = new Set(["id", "_type", "createdAt", "updatedAt"]);
