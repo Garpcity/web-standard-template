@@ -168,6 +168,40 @@ export const model3dBlock = blockBase.extend({
   layout: z.enum(["section", "hero"]).default("section"),
 });
 
+/**
+ * Tabell med kilde – for sammenligninger, priser og nøkkeltall (siterbart innhold).
+ * Hver rad må ha like mange celler som `columns`.
+ */
+export const dataTableBlock = blockBase
+  .extend({
+    _type: z.literal("dataTable"),
+    heading: z.string().max(120).optional(),
+    lead: z.string().max(300).optional(),
+    /** Vises under tabellen, f.eks. «Priser eks. mva, oppdatert 2026-11». */
+    caption: z.string().max(200).optional(),
+    columns: z.array(z.string().max(60)).min(2).max(6),
+    rows: z
+      .array(z.array(z.string().max(200)))
+      .min(1)
+      .max(50),
+    /** Første celle i hver rad rendres som <th scope="row">. */
+    firstColumnIsHeader: z.boolean().default(true),
+    /** Kildelenke, rendres som «Kilde: …». */
+    source: linkRef.optional(),
+    width: z.enum(["narrow", "wide"]).default("narrow"),
+  })
+  .superRefine((value, ctx) => {
+    value.rows.forEach((row, i) => {
+      if (row.length !== value.columns.length) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["rows", i],
+          message: `Rad ${i + 1} har ${row.length} celler, men tabellen har ${value.columns.length} kolonner`,
+        });
+      }
+    });
+  });
+
 export const block = z.discriminatedUnion("_type", [
   heroBlock,
   textBlock,
@@ -183,6 +217,7 @@ export const block = z.discriminatedUnion("_type", [
   ctaBlock,
   statsBlock,
   model3dBlock,
+  dataTableBlock,
 ]);
 
 export type Block = z.infer<typeof block>;
@@ -204,4 +239,5 @@ export const blockSchemas = {
   cta: ctaBlock,
   stats: statsBlock,
   model3d: model3dBlock,
+  dataTable: dataTableBlock,
 } as const;

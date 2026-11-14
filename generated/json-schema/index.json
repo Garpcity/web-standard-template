@@ -26,6 +26,7 @@
     "embed",
     "cta",
     "stats",
-    "model3d"
+    "model3d",
+    "dataTable"
   ]
 }

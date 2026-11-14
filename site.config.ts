@@ -35,6 +35,7 @@ export const siteConfig = {
     "cta",
     "stats",
     "model3d",
+    "dataTable",
   ] as const,
 
   /**
