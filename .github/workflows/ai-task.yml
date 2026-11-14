@@ -69,7 +69,7 @@ jobs:
           test -n "$ANTHROPIC_API_KEY" || { echo "ANTHROPIC_API_KEY mangler"; exit 1; }
           npm i -g @anthropic-ai/claude-code
           claude -p "$(cat /tmp/task.md)" \
-            --allowedTools "Edit,Write,Read,Glob,Grep,Bash(pnpm check),Bash(pnpm test),Bash(pnpm lint),Bash(pnpm typecheck),Bash(pnpm format)" \
+            --allowedTools "Edit,Write,Read,Glob,Grep,Bash(pnpm check),Bash(pnpm generate:schema),Bash(pnpm test),Bash(pnpm lint),Bash(pnpm typecheck),Bash(pnpm format)" \
             --max-turns 60
 
       - name: Kjør agent (codex)
@@ -164,7 +164,10 @@ jobs:
           git commit -m "AI-oppgave #$ISSUE: $TITLE" -m "Runner: $AI_RUNNER" -m "Closes #$ISSUE"
           git push -u origin "ai-task/$ISSUE"
           printf 'Løser #%s.\n\nRunner: %s\n✅ `pnpm check` grønn.\n\n**Antakelser og avvik:** se agentens logg i Actions.\nPreview-lenke legges til av CI.\n' "$ISSUE" "$AI_RUNNER" > /tmp/pr-body.md
-          gh pr create --repo "$GITHUB_REPOSITORY" --head "ai-task/$ISSUE" --title "AI: $TITLE" --body-file /tmp/pr-body.md --draft
+          # Krever repo-innstillingen «Allow GitHub Actions to create and approve pull requests».
+          # Uten den: grenen er pushet, og issuet får lenke til å åpne PR-en manuelt.
+          gh pr create --repo "$GITHUB_REPOSITORY" --head "ai-task/$ISSUE" --title "AI: $TITLE" --body-file /tmp/pr-body.md --draft \
+            || gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body "Agenten ($AI_RUNNER) er ferdig og \`pnpm check\` er grønn. Grenen \`ai-task/$ISSUE\` er pushet, men Actions har ikke lov til å opprette PR i dette repoet. Åpne den her: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/pull/new/ai-task/$ISSUE"
 
       - name: Port feilet
         if: failure() && steps.check.conclusion == 'failure'
