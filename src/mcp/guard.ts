@@ -137,10 +137,19 @@ export function checkAgainstGuide(
       excerpt: snippet(text, text.search(/[!?]{2,}/)),
     });
   }
-  const capsWords = text.match(/\b[A-ZÆØÅ]{4,}\b/g) ?? [];
+  // Store bokstaver gir bare advarsel. Ord fra godkjente fakta og useWords (f.eks. GDPR)
+  // telles ikke; ord på tre bokstaver eller færre (NAV, UDI, ISO) heller ikke.
+  const allowedCaps = new Set(
+    [...approved, ...guide.voice.useWords.map(norm)].flatMap(
+      (s) => s.match(/[\p{L}\p{N}]+/gu) ?? [],
+    ),
+  );
+  const capsWords = (
+    text.match(/(?<![\p{L}\p{N}])[A-ZÆØÅ]{4,}(?![\p{L}\p{N}])/gu) ?? []
+  ).filter((w) => !allowedCaps.has(norm(w)));
   if (capsWords.length >= 2) {
     issues.push({
-      severity: "error",
+      severity: "warning",
       rule: "shouting",
       message: `Ord i store bokstaver (${capsWords.slice(0, 3).join(", ")}). Bruk normal skrift.`,
     });
