@@ -47,3 +47,4 @@ Produseres i Cinema 4D, leveres som glTF/GLB, rendres med React Three Fiber via 
 | 2026-11-10 | Reveal flyttet fra Motion til CSS + IntersectionObserver | Server-HTML var usynlig (opacity 0) til JS kjørte. Dårlig for LCP, crawlere og no-JS. Nå alltid synlig. |
 | 2026-11-10 | Aksentfarge mørknet fra #e36414 til #c2460a | Hvit tekst på knapper hadde kontrast 3,4:1; nå > 4,5:1 (WCAG AA). Lighthouse krevde det. |
 | 2026-11-10 | 3D-blokk `model3d` med demo-geometri, lazy loading og poster-fallback | Lar oss vise 3D uten å koste noe på sider som ikke bruker det |
+| 2026-11-14 | Tabellblokk `dataTable`: tabell på eget `bg-surface`-kort, `bg-surface-muted` header, horisontal scroll på mobil, tall høyrejustert, tabelltekst og kilde i kortets bunn | Kortet gir riktig kontrast i alle toner (også `dark`). Scroll i stedet for stabling bevarer sammenligningen. Datert kilde gjør tallene siterbare. |

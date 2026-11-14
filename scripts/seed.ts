@@ -502,6 +502,29 @@ const pages = [
         ],
       },
       {
+        _type: "dataTable",
+        id: "t2t",
+        tone: "default",
+        heading: "Hva koster det?",
+        lead: "Fast pris per pakke. Alle pakker bygges på samme standard, med SEO, analytics og visuell editor inkludert.",
+        caption:
+          "Eksempelpriser i kroner eks. mva, oppdatert 2026-11. Plassholdere til endelige priser er bekreftet.",
+        columns: ["Pakke", "Inkluderer", "Pris fra (kr)"],
+        rows: [
+          ["Start", "Inntil 5 sider, kontaktskjema, Payload CMS", "25 000"],
+          ["Vekst", "Inntil 15 sider, artikler, forfattersider, AI-søk-måling", "60 000"],
+          ["Agent", "Vekst + MCP for egne agenter og profilmanual", "95 000"],
+        ],
+        firstColumnIsHeader: true,
+        source: {
+          label: "AD.Moment – be om tilbud",
+          href: "/kontakt",
+          external: false,
+          variant: "ghost",
+        },
+        width: "narrow",
+      },
+      {
         _type: "model3d",
         id: "t2b",
         tone: "muted",

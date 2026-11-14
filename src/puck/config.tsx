@@ -21,8 +21,16 @@ import { Embed } from "@/components/blocks/Embed";
 import { Cta } from "@/components/blocks/Cta";
 import { Stats } from "@/components/blocks/Stats";
 import { Model3d } from "@/components/blocks/Model3d";
+import { DataTable } from "@/components/blocks/DataTable";
 import { Section, SectionHeading } from "@/components/ui/Section";
-import { plainToRichText, richTextToPlain } from "./convert";
+import {
+  cellsToText,
+  plainToRichText,
+  richTextToPlain,
+  rowsToText,
+  textToCells,
+  textToRows,
+} from "./convert";
 import { RevealObserver } from "@/components/motion/RevealObserver";
 
 type Props<T extends Block["_type"]> = Omit<BlockOf<T>, "_type">;
@@ -118,6 +126,78 @@ const richTextField = {
   ),
 };
 
+/**
+ * Tabellfelt for dataTable. Valg: i stedet for `array` av tekstfelt (kolonner) og
+ * `array` av objekter med ett felt per celle (rader) – tungvint å redigere – bruker vi
+ * ett tekstfelt for kolonner og ett textarea for rader, med `|` som celleskille.
+ * Konverteringen skjer i feltet (samme mønster som richTextField), så Puck-data
+ * lagrer `columns: string[]` og `rows: string[][]` direkte. Da trengs ingen
+ * skyggeprop + resolveData, og blocksToPuck/puckToBlocks er tapsfri.
+ * Ulik radlengde avvises av Zod-skjemaet ved lagring.
+ */
+const pipeFieldStyle = {
+  width: "100%",
+  fontFamily: "inherit",
+  fontSize: 14,
+  padding: 8,
+  border: "1px solid #ddd",
+  borderRadius: 6,
+};
+
+const columnsField = {
+  type: "custom" as const,
+  label: "Kolonneoverskrifter (skilt med |)",
+  render: ({
+    value,
+    onChange,
+    field,
+  }: {
+    value: unknown;
+    onChange: (v: unknown) => void;
+    field: { label?: string };
+  }) => (
+    <label className="puck-field">
+      <span style={{ display: "block", fontSize: 12, fontWeight: 600, marginBottom: 4 }}>
+        {field.label}
+      </span>
+      <input
+        type="text"
+        style={pipeFieldStyle}
+        defaultValue={cellsToText(value)}
+        onBlur={(e) => onChange(textToCells(e.target.value))}
+        placeholder="Pakke | Inkluderer | Pris"
+      />
+    </label>
+  ),
+};
+
+const rowsField = {
+  type: "custom" as const,
+  label: "Rader (én rad per linje, celler skilt med |)",
+  render: ({
+    value,
+    onChange,
+    field,
+  }: {
+    value: unknown;
+    onChange: (v: unknown) => void;
+    field: { label?: string };
+  }) => (
+    <label className="puck-field">
+      <span style={{ display: "block", fontSize: 12, fontWeight: 600, marginBottom: 4 }}>
+        {field.label}
+      </span>
+      <textarea
+        rows={8}
+        style={pipeFieldStyle}
+        defaultValue={rowsToText(value)}
+        onBlur={(e) => onChange(textToRows(e.target.value))}
+        placeholder={"Basis | Én side | 15 000\nPluss | Fem sider | 45 000"}
+      />
+    </label>
+  ),
+};
+
 /* ---------- Komponenter ---------- */
 
 function Placeholder({ title, note }: { title: string; note: string }) {
@@ -144,7 +224,14 @@ export function buildPuckConfig(role: Role = "editor"): Config {
       },
       lister: {
         title: "Lister og kort",
-        components: ["CardGrid", "Stats", "Gallery", "People", "LatestArticles"],
+        components: [
+          "CardGrid",
+          "Stats",
+          "DataTable",
+          "Gallery",
+          "People",
+          "LatestArticles",
+        ],
       },
       funksjon: { title: "Funksjon", components: ["ContactForm", "Embed"] },
     },
@@ -523,6 +610,50 @@ export function buildPuckConfig(role: Role = "editor"): Config {
         } as Defaults<"stats">,
         render: (props) => (
           <Stats block={{ _type: "stats", ...(props as unknown as Props<"stats">) }} />
+        ),
+      },
+      DataTable: {
+        label: "Tabell",
+        fields: {
+          heading: { type: "text", label: "Overskrift" },
+          lead: { type: "textarea", label: "Ingress" },
+          columns: columnsField,
+          rows: rowsField,
+          firstColumnIsHeader: {
+            type: "radio",
+            label: "Første kolonne er radoverskrift",
+            options: [
+              { label: "Ja", value: true },
+              { label: "Nei", value: false },
+            ],
+          },
+          caption: { type: "text", label: "Tabelltekst (f.eks. «oppdatert 2026-11»)" },
+          source: { ...linkField, label: "Kilde" },
+          width: {
+            type: "radio",
+            label: "Bredde",
+            options: [
+              { label: "Smal", value: "narrow" },
+              { label: "Bred", value: "wide" },
+            ],
+          },
+          tone: toneField,
+        },
+        defaultProps: {
+          heading: "Sammenligning",
+          columns: ["Pakke", "Inkluderer", "Pris"],
+          rows: [
+            ["Basis", "Én side", "15 000"],
+            ["Pluss", "Fem sider", "45 000"],
+          ],
+          firstColumnIsHeader: true,
+          width: "narrow",
+          tone: "default",
+        } as Defaults<"dataTable">,
+        render: (props) => (
+          <DataTable
+            block={{ _type: "dataTable", ...(props as unknown as Props<"dataTable">) }}
+          />
         ),
       },
       Model3d: {

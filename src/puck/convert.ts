@@ -25,6 +25,7 @@ const typeToComponent: Record<Block["_type"], string> = {
   cta: "Cta",
   stats: "Stats",
   model3d: "Model3d",
+  dataTable: "DataTable",
 };
 const componentToType = Object.fromEntries(
   Object.entries(typeToComponent).map(([k, v]) => [v, k]),
@@ -98,6 +99,29 @@ export function plainToRichText(input: string): RichText {
         children: [{ _type: "span" as const, text: line, marks: [] }],
       };
     });
+}
+
+/**
+ * Tabellceller for dataTable-feltene i Puck: én rad per linje, celler skilt med `|`.
+ * Se kommentaren ved `rowsField` i config.tsx for hvorfor.
+ */
+export function textToCells(line: string): string[] {
+  return line.split("|").map((c) => c.trim());
+}
+
+export function cellsToText(cells: unknown): string {
+  return Array.isArray(cells) ? cells.join(" | ") : "";
+}
+
+export function textToRows(text: string): string[][] {
+  return text
+    .split("\n")
+    .filter((line) => line.trim())
+    .map(textToCells);
+}
+
+export function rowsToText(rows: unknown): string {
+  return Array.isArray(rows) ? rows.map(cellsToText).join("\n") : "";
 }
 
 export function richTextToPlain(value: RichText): string {

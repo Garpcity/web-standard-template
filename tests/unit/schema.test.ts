@@ -5,6 +5,10 @@ import {
   puckToBlocks,
   plainToRichText,
   richTextToPlain,
+  rowsToText,
+  textToRows,
+  cellsToText,
+  textToCells,
 } from "@/puck/convert";
 import { canEditField, lockedBlockFields, roleCan } from "@/content/permissions";
 import pages from "@/content/adapters/mock/data/pages.json";
@@ -31,6 +35,41 @@ describe("innholdsskjema", () => {
   it("krever minst ett spørsmål i FAQ", () => {
     expect(() => block.parse({ _type: "faq", id: "f", items: [] })).toThrow();
   });
+
+  it("parser gyldig dataTable med standardverdier", () => {
+    const b = block.parse({
+      _type: "dataTable",
+      id: "dt",
+      columns: ["Pakke", "Pris"],
+      rows: [
+        ["Start", "25 000"],
+        ["Vekst", "60 000"],
+      ],
+    });
+    expect(b._type === "dataTable" && b.firstColumnIsHeader).toBe(true);
+    expect(b._type === "dataTable" && b.width).toBe("narrow");
+    expect(b.tone).toBe("default");
+  });
+
+  it("avviser dataTable der en rad har ulik lengde fra columns", () => {
+    const result = block.safeParse({
+      _type: "dataTable",
+      id: "dt",
+      columns: ["Pakke", "Inkluderer", "Pris"],
+      rows: [
+        ["Start", "Fem sider", "25 000"],
+        ["Vekst", "60 000"],
+      ],
+    });
+    expect(result.success).toBe(false);
+    expect(result.error?.issues[0].path).toEqual(["rows", 1]);
+  });
+
+  it("avviser dataTable med færre enn to kolonner", () => {
+    expect(() =>
+      block.parse({ _type: "dataTable", id: "dt", columns: ["A"], rows: [["1"]] }),
+    ).toThrow();
+  });
 });
 
 describe("puck-konvertering", () => {
@@ -48,6 +87,23 @@ describe("puck-konvertering", () => {
     expect(rt[0]).toMatchObject({ style: "h2" });
     expect(rt[2]).toMatchObject({ listItem: "bullet" });
     expect(richTextToPlain(rt)).toBe(src);
+  });
+
+  it("oversetter tabellrader til tekst med | og tilbake", () => {
+    const rows = [
+      ["Start", "Fem sider", "25 000"],
+      ["Vekst", "", "60 000"],
+    ];
+    const text = rowsToText(rows);
+    expect(text).toBe("Start | Fem sider | 25 000\nVekst |  | 60 000");
+    expect(textToRows(text + "\n\n")).toEqual(rows);
+    expect(textToCells(cellsToText(["A", "B"]))).toEqual(["A", "B"]);
+  });
+
+  it("dataTable-sider er tapsfrie gjennom Puck", () => {
+    const services = page.parse(pages.find((p) => p.slug === "tjenester"));
+    expect(services.blocks.some((b) => b._type === "dataTable")).toBe(true);
+    expect(puckToBlocks(blocksToPuck(services)).blocks).toEqual(services.blocks);
   });
 });
 
@@ -79,6 +135,7 @@ describe("rettigheter", () => {
       "embed",
       "cta",
       "stats",
+      "dataTable",
     ];
     for (const t of types) expect(lockedBlockFields[t]).toBeDefined();
   });

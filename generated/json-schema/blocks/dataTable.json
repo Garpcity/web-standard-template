@@ -1,0 +1,109 @@
+{
+  "$comment": "Generert fra src/content/schema/blocks.ts – ikke rediger manuelt",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "anchor": {
+      "type": "string"
+    },
+    "tone": {
+      "default": "default",
+      "type": "string",
+      "enum": [
+        "default",
+        "muted",
+        "brand",
+        "dark"
+      ]
+    },
+    "_type": {
+      "type": "string",
+      "const": "dataTable"
+    },
+    "heading": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "lead": {
+      "type": "string",
+      "maxLength": 300
+    },
+    "caption": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "columns": {
+      "minItems": 2,
+      "maxItems": 6,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 60
+      }
+    },
+    "rows": {
+      "minItems": 1,
+      "maxItems": 50,
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "maxLength": 200
+        }
+      }
+    },
+    "firstColumnIsHeader": {
+      "default": true,
+      "type": "boolean"
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "href": {
+          "type": "string",
+          "minLength": 1
+        },
+        "external": {
+          "default": false,
+          "type": "boolean"
+        },
+        "variant": {
+          "default": "primary",
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary",
+            "ghost"
+          ]
+        }
+      },
+      "required": [
+        "label",
+        "href"
+      ]
+    },
+    "width": {
+      "default": "narrow",
+      "type": "string",
+      "enum": [
+        "narrow",
+        "wide"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "_type",
+    "columns",
+    "rows"
+  ]
+}
