@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { buildConfig } from "payload";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { sqliteAdapter } from "@payloadcms/db-sqlite";
+import { emailFromEnv } from "./payload/email";
 import { ensureSchema } from "./payload/ensure-schema";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import sharp from "sharp";
@@ -27,6 +28,7 @@ const db = databaseUrl.startsWith("postgres")
 
 export default buildConfig({
   onInit: ensureSchema,
+  email: emailFromEnv("Nettsiden"),
   secret:
     process.env.PAYLOAD_SECRET ??
     (() => {

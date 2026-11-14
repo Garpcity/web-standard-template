@@ -139,6 +139,23 @@ miljø (production) med samme URL – da måler helse-sjekken riktig adresse.
 4. Skjema-flyten (01): sett `webhookSecret` i n8n lik `FORMS_WEBHOOK_SECRET`.
 5. Arkiver den gamle AI-synlighet-flyten.
 
+## E-post og webhook (etter første oppstart)
+
+**E-post** – uten dette virker ikke «glemt passord» i verken nettsiden eller Studio. Legg SMTP-opplysninger i `.env.prod`
+(`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`) og kjør `up -d`. Test med «Forgot password» på `/admin`.
+Nødløsning uten e-post: lås opp og hent lenken fra loggen:
+
+```bash
+docker compose -f docker-compose.prod.yml --env-file .env.prod exec postgres psql -U app -d studio -c "UPDATE users SET login_attempts=0, lock_until=NULL WHERE email='deg@firma.no';"
+docker compose -f docker-compose.prod.yml --env-file .env.prod logs --since 2m studio | grep -o 'reset/[A-Za-z0-9]*' | tail -1
+```
+
+**GitHub-webhook** – holder oppgavestatus i Studio i takt med GitHub. Generer en hemmelighet
+(`openssl rand -hex 24`), sett `GITHUB_WEBHOOK_SECRET` i `.env.prod`, `up -d studio`, og legg til webhook i hvert
+nettside-repo: URL `https://<studio>/api/github/webhook`, content type `application/json`, samme secret,
+hendelser *Pull requests* og *Workflow runs*. Slå også på «Allow GitHub Actions to create and approve pull requests»
+(Settings → Actions → General) i repoet.
+
 ## Testdomene og flytting til ekte domene
 
 Nye sider bygges alltid på et testdomene, fordi kundens ekte domene sjelden er tilgjengelig før
