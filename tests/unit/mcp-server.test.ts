@@ -316,6 +316,34 @@ describe("guard: tone og løfter", () => {
       ]),
     );
   });
+  it("slipper forkortelser i B2B-tekst", () => {
+    expect(checkAgainstGuide("Vi er GDPR- og ISO 9001-sertifisert", guide).ok).toBe(true);
+    expect(checkAgainstGuide("Vi samarbeider med NAV og UDI.", guide).ok).toBe(true);
+  });
+  it("store ord uten utropstegn gir bare advarsel", () => {
+    const r = checkAgainstGuide("Vi leverer RASKE og TRYGGE nettsider.", guide);
+    expect(r.ok).toBe(true);
+    expect(r.issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ rule: "shouting", severity: "warning" }),
+      ]),
+    );
+  });
+  it("teller ikke store ord fra godkjente fakta eller useWords", () => {
+    const g = {
+      ...guide,
+      voice: { ...guide.voice, useWords: [...guide.voice.useWords, "HTTPS"] },
+      facts: [
+        ...guide.facts,
+        { claim: "Vi følger GDPR.", source: "Kunden", approved: true },
+        { claim: "Vi er ARKIV-godkjent.", source: "Kunden", approved: false },
+      ],
+    };
+    const r = checkAgainstGuide("Alt går over HTTPS og følger GDPR. MER info.", g);
+    expect(r.issues.filter((i) => i.rule === "shouting")).toEqual([]);
+    const u = checkAgainstGuide("Vi er ARKIV-godkjent. SJEKK selv.", g);
+    expect(u.issues.map((i) => i.rule)).toContain("shouting");
+  });
   it("slipper rolig tekst", () => {
     const r = checkAgainstGuide("Vi bygger nettsider du kan redigere selv.", guide);
     expect(r.ok).toBe(true);
